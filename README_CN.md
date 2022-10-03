@@ -42,53 +42,52 @@
 
 <br/>
 
-### Introduction
-LoongStudio Codegen is based on the Mybatis an open source Restful API CodeGen.
+### 介绍
+Longstudio Codegen是基于Mybatis的开源Restful API 代码生成器.
 
-Learn more about Codegen at [https://loongstudio.github.io/docs/](https://loongstudio.github.io/docs/)
+了解更多关于Codegen的信息，请访问 [https://loongstudio.github.io/docs/](https://loongstudio.github.io/docs/)
 
-[中文说明/Chinese Documentation](README_CN.md)
+[英文说明/English Documentation](README.md)
 
-### Features
+### 特性
 
-* concise operation interface
-* Dynamic data source switching
-* Easy to use template management
-* Convenient tree view search operation
-* Quickly generate restful API template code
-* Support for multiple data sources, include mysql, sqlite...
+* 简洁的操作界面
+* 动态数据源切换
+* 易于使用的模板管理
+* 方便的树视图搜索操作
+* 快速生成restful API模板代码
+* 支持多个数据源，包括mysql, sqlite…
 
 
-### Development
+### 开发
 
-1. Fork main branch
-2. Use IDE open the project
-3. Modify and adding VM Option
+1. Fork main分支
+2. 使用IDE打开项目
+3. 修改并添加虚拟机选项
 ```shell
 --module-path "D:\Program Files\Java\javafx-sdk-18.0.1\lib" --add-modules=javafx.controls,javafx.fxml
 ```
 
-4. Start the project, enjoy yourself
+4. 开始项目，尽情享用
 
-### Install
+### 安装
 
-Download the binaries released for the operating system and install them
+下载对应操作系统发布的二进制文件并安装
 
+### 页面
 
-### Page
-
-##### Home
+##### 主页
 
 ![home](https://user-images.githubusercontent.com/40263163/192548526-a450349d-95a0-439d-82e9-340e4d1b28a4.png)
 
-##### Template
+##### 模板
 
 ![template](https://user-images.githubusercontent.com/40263163/192548748-f55cdf46-f129-4771-9630-16d0835b9457.png)
 
-##### Connection
+##### 连接
 
 ![connection](https://user-images.githubusercontent.com/40263163/192548904-c71a858a-25ca-41f7-9497-89020ae3bc6e.png)
 
 ### License
 
-LoongStudio Codegen is under the Apache 2.0 license. See the [Apache License 2.0](http://www.apache.org/licenses/LICENSE-2.0) file for details.
+Loongstudio Codegen是在 Apache 2.0 许可下. 查看 [Apache License 2.0](http://www.apache.org/licenses/LICENSE-2.0) 文件详情.

@@ -1,0 +1,60 @@
+package ${package.ServiceImpl};
+
+import ${package.Entity}.${entity};
+import ${package.Mapper}.${table.mapperName};
+import ${package.Service}.${table.serviceName};
+import ${superServiceImplClassPackage};
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+/**
+ * ${table.serviceImplName}
+ *
+ * @author ${author}
+ * @version 1.0.0
+ * @since ${date}
+ */
+@Service
+public class ${table.serviceImplName} extends ${superServiceImplClass}<${table.mapperName}, ${entity}> implements ${table.serviceName} {
+
+@Autowired
+private ${table.mapperName} mapper;
+
+@Override
+public IPage<${entity}> list(OperationEntity operationEntity,QueryWrapper<${entity}> queryWrapper){
+        return super.page(new Page<>(operationEntity.getPageNo(),operationEntity.getPageSize()),queryWrapper);
+        }
+
+@Override
+public ${entity} show(String id){
+        return super.getById(id);
+        }
+
+@Override
+public void create(${entity} entity){
+        super.save(entity);
+        }
+
+@Override
+public void edit(${entity} entity){
+        super.updateById(entity);
+        }
+
+@Override
+public void delete(List<String> idList){
+        super.removeByIds(idList);
+        }
+
+@Override
+public void exportExcel(HttpServletRequest request,HttpServletResponse response,Class<${entity}> clazz,OperationEntity.Excel excel,QueryWrapper<${entity}> queryWrapper,OperationEntity operationEntity)throws Exception{
+        POIUtil.exportExcel(request,response,clazz,excel,list(operationEntity,queryWrapper).getRecords());
+        }
+
+@Override
+public void importExcel(MultipartFile file,Class<${entity}> clazz){
+        List<${entity}> entityList=(List<${entity}>)POIUtil.importExcel(file,clazz);
+        super.saveBatch(entityList,entityList.size());
+        }
+
+        }
+

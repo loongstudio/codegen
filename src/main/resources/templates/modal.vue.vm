@@ -1,0 +1,144 @@
+<template>
+    <a-drawer
+            :title="title"
+            :width="720"
+            @close="onClose"
+            :visible="visible"
+            :body-style="{ paddingBottom: '80px' }"
+    >
+        <a-form ref="form" :model="model" :rules="rules" layout="vertical" @finish="handleFinish">
+            <a-row :gutter="16">
+
+                #foreach($field in ${table.fields})
+                <a-col :span="10">
+                    <a-form-item label="${field.comment}" name="${field.propertyName}">
+                        <a-input
+                                v-model:value="model.${field.propertyName}"
+                                placeholder="请输入${field.comment}"
+                                :readOnly="!!disableSubmit"
+                        />
+                    </a-form-item>
+                </a-col>
+                #end
+            </a-row>
+
+            <div class="model-button-wrapper" v-show="!disableSubmit">
+                <a-form-item>
+                    <a-button html-type="submit" style="margin-right: 8px" @click="onClose">取消</a-button>
+                    <a-button html-type="submit" type="primary" :loading="confirmLoading">提交</a-button>
+                </a-form-item>
+            </div>
+        </a-form>
+    </a-drawer>
+</template>
+
+<script>
+  import {post, put} from 'network/request'
+  import {message} from 'ant-design-vue'
+
+  export default {
+        name: '${entity}Modal',
+        components: {},
+        emits: ['close-edit-drawer'],
+        props: ['urls'],
+        data () {
+            return {
+                parentUrls: this.urls,
+                name: '',
+                owner: '',
+                type: '',
+                approver: '',
+                dateTime: '',
+                description: '',
+                title: '',
+                userId: '',
+                visible: false,
+                disableSubmit: false,
+                roleDisabled: false, // 是否是角色维护调用该页面
+                modalWidth: 800,
+                drawerWidth: 700,
+                modalToggleFlag: true,
+                confirmDirty: false,
+                dateFormat: 'YYYY-MM-DD',
+                rules: {
+                    #foreach($field in ${table.fields})
+                        ${field.propertyName}: [
+                            {
+                                required: true,
+                                message: '请输入${field.comment}'
+                            }
+                        ],
+                    #end
+                },
+                model: {},
+                uploadLoading: false,
+                confirmLoading: false,
+                headers: {},
+                url: '',
+                tenantsOptions: [],
+                rolesOptions: [],
+                nextDepartOptions: []
+            }
+        },
+        methods: {
+            add () {
+                this.refresh()
+                this.edit()
+            },
+
+            edit (record) {
+                const that = this
+                that.visible = true
+                if (record) {
+                    that.userId = record.id
+                    that.model = Object.assign({}, {
+                    }, record)
+                } else {
+                    that.model = {}
+                }
+            },
+
+            refresh () {
+                this.userId = ''
+            },
+
+            query (record) {
+                this.edit(record)
+            },
+
+            onClose () {
+                this.visible = false
+                this.disableSubmit = false
+                this.$refs.form.resetFields()
+            },
+
+            handleFinish () {
+                const that = this
+                that.confirmLoading = true
+                let obj
+                if (!this.model.id) {
+                    this.model.id = this.userId
+                    obj = post(this.parentUrls.add, this.model)
+                } else {
+                    obj = put(this.parentUrls.edit, this.model)
+                }
+                obj.then((res) => {
+                    const responseBody = res.data
+                    if (responseBody.success) {
+                        message.success(responseBody.message)
+                    } else {
+                        message.warning(responseBody.message)
+                    }
+                }).finally(() => {
+                    that.confirmLoading = false
+                    that.onClose()
+                })
+            }
+        }
+    }
+</script>
+
+<style lang="scss">
+    @import "../../style";
+</style>
+

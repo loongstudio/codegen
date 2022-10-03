@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="${package.Mapper}.${table.mapperName}">
+
+#if(${enableCache})
+    <cache type="${cacheClassName}"/>
+
+#end
+#if(${baseResultMap})
+    <resultMap id="BaseResultMap" type="${package.Entity}.${entity}">
+        #foreach($field in ${table.fields})
+            #if(${field.keyFlag})
+                <id column="${field.name}" property="${field.propertyName}"/>
+            #end
+        #end
+        #foreach($field in ${table.commonFields})
+            <result column="${field.name}" property="${field.propertyName}"/>
+        #end
+        #foreach($field in ${table.fields})
+            #if(!${field.keyFlag})
+                <result column="${field.name}" property="${field.propertyName}"/>
+            #end
+        #end
+    </resultMap>
+
+#end
+#if(${baseColumnList})
+    <sql id="Base_Column_List">
+            #foreach($field in ${table.commonFields})
+                ${field.columnName},
+            #end
+            ${table.fieldNames}
+    </sql>
+
+#end
+</mapper>

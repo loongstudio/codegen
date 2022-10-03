@@ -1,0 +1,205 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+  Copyright (c) 2015, 2019, Gluon and/or its affiliates.
+  All rights reserved. Use is subject to license terms.
+
+  This file is available and licensed under the following license:
+
+  Redistribution and use in source and binary forms, with or without
+  modification, are permitted provided that the following conditions
+  are met:
+
+  - Redistributions of source code must retain the above copyright
+    notice, this list of conditions and the following disclaimer.
+  - Redistributions in binary form must reproduce the above copyright
+    notice, this list of conditions and the following disclaimer in
+    the documentation and/or other materials provided with the distribution.
+  - Neither the name of Oracle Corporation nor the names of its
+    contributors may be used to endorse or promote products derived
+    from this software without specific prior written permission.
+
+  THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+  "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+  LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+  A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
+  OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+  SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
+  LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
+  DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
+  THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+  (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+  OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+-->
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.TreeView?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<BorderPane fx:id="rootBorderPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.loongstudio.codegen.controller.IndexController">
+    <top>
+        <MenuBar style="-fx-background-color: white; -fx-border-color: white;" BorderPane.alignment="CENTER">
+            <menus>
+                <Menu mnemonicParsing="false" text="Datasource">
+                    <items>
+                        <MenuItem mnemonicParsing="false" onAction="#createMySQLDatasource" text="MySQL" />
+                    </items>
+                </Menu>
+                <Menu mnemonicParsing="false" onShown="#openRecentMenu" text="Template">
+                    <items>
+                        <MenuItem fx:id="openMenuItem" mnemonicParsing="false" onAction="#open" text="Open" />
+                    </items>
+                    <items>
+                        <Menu fx:id="openRecentMenu" mnemonicParsing="false" text="Open Recent" />
+                    </items>
+                </Menu>
+                <Menu mnemonicParsing="false" text="Help">
+                    <items>
+                        <MenuItem fx:id="aboutMenuItem" onAction="#about" mnemonicParsing="false" text="About" />
+                    </items>
+                </Menu>
+            </menus>
+        </MenuBar>
+    </top>
+    <left>
+      <VBox fx:id="treeViewVBox" alignment="TOP_CENTER" onKeyPressed="#pressed" prefWidth="250.0" style="-fx-background-color: white;" BorderPane.alignment="TOP_LEFT">
+         <children>
+              <TreeView fx:id="databasesTreeView" focusTraversable="false" onMouseClicked="#focus" prefHeight="740.0" prefWidth="250.0" style="-fx-background-color: white;">
+               <cursor>
+                  <Cursor fx:constant="DEFAULT" />
+               </cursor>
+            </TreeView>
+         </children>
+      </VBox>
+    </left>
+    <center>
+        <VBox alignment="CENTER" style="-fx-background-color: white;" BorderPane.alignment="CENTER">
+         <children>
+            <HBox alignment="CENTER" prefHeight="100.0">
+               <children>
+                  <Text fill="#5584ff" strokeType="OUTSIDE" strokeWidth="0.0" text="Codegen" textAlignment="JUSTIFY">
+                     <font>
+                        <Font name="System Bold" size="20.0" />
+                     </font>
+                     <HBox.margin>
+                        <Insets />
+                     </HBox.margin>
+                  </Text>
+               </children>
+            </HBox>
+            <Separator halignment="LEFT" prefWidth="200.0">
+               <VBox.margin>
+                  <Insets />
+               </VBox.margin>
+            </Separator>
+            <GridPane alignment="CENTER" hgap="10.0" vgap="10.0">
+              <columnConstraints>
+                <ColumnConstraints halignment="RIGHT" hgrow="SOMETIMES" maxWidth="148.0" minWidth="121.66668701171875" prefWidth="133.0" />
+                <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="473.0" minWidth="10.0" prefWidth="460.0" />
+              </columnConstraints>
+              <rowConstraints>
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+              </rowConstraints>
+               <children>
+                   <Label text="Folder:" />
+                   <Label text="Parent Package Name:" textAlignment="JUSTIFY" GridPane.rowIndex="1" />
+                   <Label text="Module Name:" textAlignment="JUSTIFY" GridPane.rowIndex="2" />
+                   <Label text="Entity Name:" textAlignment="JUSTIFY" GridPane.rowIndex="4" />
+                   <Label text="Mapper Name:" textAlignment="JUSTIFY" GridPane.rowIndex="5" />
+                   <Label text="Service Name:" textAlignment="JUSTIFY" GridPane.rowIndex="6" />
+                   <Label text="Controller Name:" textAlignment="JUSTIFY" GridPane.rowIndex="7" />
+                   <Label text="Table Name:" textAlignment="JUSTIFY" GridPane.rowIndex="3" />
+                   <TextField fx:id="parentPackageNameTextField" focusTraversable="false" promptText="Please enter parent package name" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                   <TextField fx:id="moduleNameTextField" focusTraversable="false" promptText="Please enter module name" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                   <TextField fx:id="tableNameTextField" disable="true" editable="false" focusTraversable="false" promptText="Please select table name" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                   <TextField fx:id="entityNameTextField" disable="true" editable="false" focusTraversable="false" promptText="Please select entity name" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                   <TextField fx:id="mapperNameTextField" disable="true" editable="false" focusTraversable="false" promptText="Please select mapper name" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+                   <TextField fx:id="serviceNameTextField" disable="true" editable="false" focusTraversable="false" promptText="Please select service name" GridPane.columnIndex="1" GridPane.rowIndex="6" />
+                   <TextField fx:id="controllerNameTextField" disable="true" editable="false" focusTraversable="false" promptText="Please select controller name" GridPane.columnIndex="1" GridPane.rowIndex="7" />
+                  <HBox alignment="CENTER_LEFT" spacing="10.0" GridPane.columnIndex="1">
+                     <children>
+                         <TextField fx:id="folderTextField" focusTraversable="false" prefWidth="400.0" promptText="Please enter or select a folder" />
+                         <Button fx:id="choiceButton" mnemonicParsing="false" onMouseClicked="#choiceFolder" prefWidth="90.0" style="-fx-background-color: white; -fx-border-color: #5584ff; -fx-border-radius: 5;" text="choice" textAlignment="JUSTIFY">
+                           <HBox.margin>
+                              <Insets />
+                           </HBox.margin>
+                         </Button>
+                     </children>
+                  </HBox>
+
+               </children>
+               <VBox.margin>
+                  <Insets bottom="20.0" left="50.0" right="50.0" top="20.0" />
+               </VBox.margin>
+            </GridPane>
+            <Separator halignment="LEFT" prefWidth="200.0">
+               <VBox.margin>
+                  <Insets bottom="10.0" />
+               </VBox.margin>
+            </Separator>
+            <HBox alignment="CENTER" prefHeight="100.0" spacing="50.0">
+               <children>
+                  <Button fx:id="saveButton" mnemonicParsing="false" onMouseClicked="#save" prefHeight="30.0" prefWidth="100.0" style="-fx-background-color: white; -fx-border-color: #5584ff; -fx-border-radius: 5;" text="save" textAlignment="JUSTIFY">
+                     <font>
+                        <Font name="System Italic" size="15.0" />
+                     </font>
+                  </Button>
+                  <Button fx:id="resetButton" mnemonicParsing="false" onMouseClicked="#reset" prefHeight="30.0" prefWidth="100.0" style="-fx-background-color: white; -fx-border-color: #5584ff; -fx-border-radius: 5;" text="reset" textAlignment="JUSTIFY">
+                     <font>
+                        <Font name="System Italic" size="15.0" />
+                     </font>
+                  </Button>
+                  <Button fx:id="submitButton" mnemonicParsing="false" onMouseClicked="#submit" prefHeight="30.0" prefWidth="100.0" style="-fx-background-color: #5584ff; -fx-border-color: #5584ff; -fx-border-radius: 5;" text="submit" textAlignment="JUSTIFY" textFill="WHITE">
+                     <font>
+                        <Font name="System Italic" size="15.0" />
+                     </font>
+                  </Button>
+               </children>
+            </HBox>
+         </children>
+        </VBox>
+    </center>
+    <right>
+        <VBox prefWidth="250.0" style="-fx-background-color: white; -fx-border-color: white;" BorderPane.alignment="CENTER">
+         <BorderPane.margin>
+            <Insets top="1.0" />
+         </BorderPane.margin></VBox>
+    </right>
+   <bottom>
+      <HBox style="-fx-background-color: white; -fx-border-color: white;">
+         <children>
+            <HBox fx:id="searchViewVBox" alignment="CENTER" prefHeight="30.0" prefWidth="250.0" style="-fx-background-color: white;" visible="false">
+               <children>
+                  <ImageView fx:id="fixedImageView" fitHeight="16.0" fitWidth="16.0" onMouseClicked="#fixed" pickOnBounds="true" preserveRatio="true" />
+                  <ImageView fx:id="searchImageView" fitHeight="16.0" fitWidth="16.0" pickOnBounds="true" preserveRatio="true" />
+                  <TextField fx:id="searchTextField" alignment="TOP_LEFT" onKeyPressed="#searchKeyPressed" prefHeight="25.0" prefWidth="250.0" promptText="Search" style="-fx-background-color: white;" />
+                  <ImageView fx:id="clearImageView" fitHeight="16.0" fitWidth="16.0" onMouseClicked="#clear" pickOnBounds="true" preserveRatio="true" />
+               </children>
+            </HBox>
+         </children>
+      </HBox>
+   </bottom>
+</BorderPane>

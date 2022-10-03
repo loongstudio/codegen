@@ -1,0 +1,21 @@
+package ${package.Mapper};
+
+import ${package.Entity}.${entity};
+import ${superMapperClassPackage};
+import org.springframework.stereotype.Repository;
+#if(${mapperAnnotation})
+import org.apache.ibatis.annotations.Mapper;
+#end
+
+/**
+ * ${table.mapperName}
+ *
+ * @author ${author}
+ * @version 1.0.0
+ * @since ${date}
+ */
+@Repository
+public interface ${table.mapperName} extends ${superMapperClass}<${entity}> {
+
+}
+

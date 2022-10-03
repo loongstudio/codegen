@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<included>
+    <springProperty scope="context" name="springApplicationName" source="spring.application.name"
+                    defaultValue="service"/>
+    <springProperty scope="context" name="loggingFileName" source="logging.file.name"
+                    defaultValue="${springApplicationName}.log"/>
+    <springProperty scope="context" name="loggingFilePath" source="logging.file.path" defaultValue="./logs"/>
+    <property name="CONSOLE_LOG_PATTERN" value="%d{yyyy-MM-dd HH:mm:ss.SSS} %5p ${PID:- } --- [%t] %-40.40logger{39} : %m%n"/>
+    <property name="CONSOLE_LOG_CHARSET" value="UTF-8"/>
+    <property name="FILE_LOG_PATTERN" value="%d{yyyy-MM-dd HH:mm:ss.SSS} %5p ${PID:- } --- [%t] %-40.40logger{39} : %m%n"/>
+    <property name="FILE_LOG_CHARSET" value="UTF-8"/>
+    <property name="LOG_PATH" value="./log"/>
+    <property name="LOG_NAME" value="service.log"/>
+    <property name="LOG_FILE" value="${LOG_PATH}/${LOG_NAME}"/>
+
+    <logger name="java.sql" level="ERROR"/>
+    <logger name="com.loongstudio" level="ERROR"/>
+    <logger name="org.apache.ibatis" level="ERROR"/>
+    <logger name="com.zaxxer.hikari" level="ERROR"/>
+    <logger name="org.apache.velocity" level="ERROR"/>
+    <logger name="org.springframework" level="ERROR"/>
+</included>

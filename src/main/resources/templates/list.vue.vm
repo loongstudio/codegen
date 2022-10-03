@@ -1,0 +1,286 @@
+<template>
+    <div id="table-wrapper">
+        <div class="table-search-wrapper">
+            <a-form layout="inline" @keyup.enter="searchQuery">
+                <a-row :gutter="24" align="middle">
+                    #foreach($field in ${table.fields})
+                        <a-col :md="6" :sm="12">
+                            <a-form-item label="${field.comment}" name="${field.propertyName}">
+                                <a-input
+                                        allowClear
+                                        placeholder="输入${field.comment}查询"
+                                        type="text"
+                                        v-model:value="queryParam.${field.propertyName}"
+                                />
+                            </a-form-item>
+                        </a-col>
+                    #end
+                    <a-col :md="6" :sm="8">
+                        <span class="table-search-submitButtons">
+                  <a-button @click="searchQuery" type="primary">
+                    <template #icon><SearchOutlined/></template>
+                    查询
+                  </a-button>
+                  <a-button @click="searchReset" type="primary" style="margin-left: 8px">
+                    <template #icon><ReloadOutlined/></template>
+                    重置
+                  </a-button>
+                </span>
+                    </a-col>
+                </a-row>
+            </a-form>
+        </div>
+
+        <!-- 操作按钮区域 -->
+        <div class="table-operator-wrapper">
+            <!-- 操作按钮区域 -->
+            <a-button @click="handleAdd" type="primary">
+                <template #icon>
+                    <PlusOutlined/>
+                </template>
+                添加
+            </a-button>
+            <a-upload name="file" :showUploadList="false" :multiple="false" @change="handleImport" :action="importAction" :headers="importHeaders">
+                <a-button type="primary">
+                    <template #icon>
+                        <ImportOutlined/>
+                    </template>
+                    导入
+                </a-button>
+            </a-upload>
+            <a-button type="primary" @click="handleExport('$!{table.comment}列表')">
+                <template #icon>
+                    <ExportOutlined/>
+                </template>
+                导出
+            </a-button>
+            <a-button type="primary" @click="handleDeleteBatch()">
+                <template #icon>
+                    <ExportOutlined/>
+                </template>
+                批量删除
+            </a-button>
+        </div>
+
+        <!-- 表单数据区域 -->
+        <div class="table-info-wrapper">
+            <div class="ant-alert ant-alert-info" style="margin-bottom: 16px">
+                <i class="anticon anticon-info-circle ant-alert-icon"></i>已选择&nbsp;<a
+                    style="font-weight: 600">{{ selectedRowKeys.length }}</a>项&nbsp;&nbsp;
+                <a style="margin-left: 24px" @click="clearSelected">清空</a>
+            </div>
+
+            <a-table
+                    :value="zhCN.locale"
+                    ref="table"
+                    bordered
+                    size="middle"
+                    rowKey="id"
+                    :columns="columns"
+                    :dataSource="dataSource"
+                    :pagination="pagination"
+                    :loading="loading"
+                    :row-selection="{
+            selectedRowKeys: selectedRowKeys,
+            onChange: onSelectChange,
+          }"
+            >
+                <template #operation="{ record }">
+                    <a @click="handleEdit(record)">编辑</a>
+                    <a-divider type="vertical"/>
+
+                    <a-dropdown>
+                        <a class="ant-dropdown-link" @click.prevent>
+                            更多
+                            <DownOutlined/>
+                        </a>
+                        <template #overlay>
+                            <a-menu>
+                                <a-menu-item>
+                                    <a @click="handleQuery(record)">详情</a>
+                                </a-menu-item>
+                                <a-menu-item>
+                                    <a-popconfirm
+                                            v-if="dataSource.length"
+                                            title="确定删除吗?"
+                                            @confirm="() => handleDel(record.id)"
+                                    >
+                                        <a>删除</a>
+                                    </a-popconfirm>
+                                </a-menu-item>
+                            </a-menu>
+                        </template>
+                    </a-dropdown>
+                </template>
+
+                <!--   表格字段自定义渲染       -->
+                <template #avatarRender>
+                    <div class="anty-img-wrap">
+                        <a-avatar shape="square" size="small">
+                            <template #icon>
+                                <UserOutlined/>
+                            </template>
+                        </a-avatar>
+                    </div>
+                </template>
+            </a-table>
+        </div>
+        #set($path = "")
+        #foreach($p in ${table.name.split("_")})
+            #if("$p" != "")
+                #if("$path" == "")
+                    #set($path=${p})
+                #else
+                    #set($path=$path+"-"+${p})
+                #end
+            #end
+        #end
+        <div class="table-model-wrapper">
+            <${path}-modal :urls="url" ref="modalForm" @ok="modalFormOk">
+        </${path}-modal>
+    </div>
+    </div>
+</template>
+
+<script>
+  import {onMounted, reactive, ref} from 'vue'
+  import {cloneDeep} from 'lodash-es'
+  import ${entity}Modal from './${package.ModuleName}/modals/${entity}Modal'
+  ## import ${entity}Modal from './modals/${entity}Modal'
+  import {
+    DownOutlined,
+    ExportOutlined,
+    ImportOutlined,
+    PlusOutlined,
+    ReloadOutlined,
+    SearchOutlined,
+    UserOutlined
+  } from '@ant-design/icons-vue'
+  import zhCN from 'ant-design-vue/es/locale/zh_CN'
+  import QuotationListMixins from 'mixins/QuotationListMixins'
+  import store from 'store'
+
+  export default {
+        name: '${entity}List',
+        mixins: [QuotationListMixins],
+        components: {
+            SearchOutlined,
+            ReloadOutlined,
+            PlusOutlined,
+            ImportOutlined,
+            ExportOutlined,
+            DownOutlined,
+            UserOutlined,
+            ${entity}Modal
+        },
+        computed: {
+            importAction () {
+                return `${store.getters.baseURL}${this.url.importExcel}`
+            },
+            importHeaders () {
+                const authorization = store.getters.authorization
+                return { Authorization: authorization }
+            }
+        },
+        setup () {
+            // 给子组件定义一个ref变量
+            const child = ref < HTMLElement > null
+            const editableData = reactive({})
+            const queryParam = ref({})
+            const columns = [
+                {
+                    title: '序号',
+                    dataIndex: '',
+                    key: 'rowIndex',
+                    width: 60,
+                    align: 'center',
+                    customRender: function (t, r, index) {
+                        return parseInt(t.index) + 1
+                    }
+                },
+                #foreach($field in ${table.fields})
+                    {
+                        title: '${field.comment}',
+                        align: 'center',
+                        dataIndex: '${field.propertyName}',
+                        width: 120,
+                        sorter: true
+                    },
+                #end
+                {
+                    title: '操作',
+                    key: 'operation',
+                    slots: {
+                        customRender: 'operation'
+                    },
+                    align: 'center',
+                    width: 170
+                }
+            ]
+
+            #set($path = "")
+            #foreach($p in ${table.name.split("_")})
+                #if("$p" != "")
+                    #if("$path" == "")
+                        #set($path=${p})
+                    #else
+                        #set($path=$path+"/"+${p})
+                    #end
+                #end
+            #end
+            const url = {
+                add: '#if(${package.ModuleName})#end/${path}/add',
+                edit: '#if(${package.ModuleName})#end/${path}/edit',
+                query: '#if(${package.ModuleName})#end/${path}/query',
+                list: '#if(${package.ModuleName})#end/${path}/list',
+                delete: '#if(${package.ModuleName})#end/${path}/delete',
+                deleteBatch: '#if(${package.ModuleName})#end/${path}/deleteBatch',
+                exportExcel: '#if(${package.ModuleName})#end/${path}/exportExcel',
+                importExcel: '#if(${package.ModuleName})#end/${path}/importExcel'
+            }
+
+            // 请保证视图渲染完毕后再执行操作
+            onMounted(() => {
+                // 执行子组件里面的ajax函数
+                // child.value.getList();
+
+                // 打开子组件里面的弹窗
+                // child.value.isShowDialog = true;
+            })
+
+            const edit = (key) => {
+                editableData[key] = cloneDeep(
+                        this.dataSource.value.filter((item) => key === item.key)[0]
+                )
+            }
+
+            const save = (key) => {
+                Object.assign(
+                        this.dataSource.value.filter((item) => key === item.key)[0],
+                        editableData[key]
+                )
+                delete editableData[key]
+            }
+
+            const del = (key) => {
+                this.dataSource.value = this.dataSource.value.filter((item) => item.key !== key)
+            }
+
+            return {
+                queryParam,
+                columns,
+                zhCN,
+                editableData,
+                edit,
+                save,
+                del,
+                child,
+                url
+            }
+        }
+    }
+</script>
+
+<style lang="scss">
+    @import "../style";
+</style>

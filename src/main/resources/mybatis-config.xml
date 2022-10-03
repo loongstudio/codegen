@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+    <plugins>
+        <plugin interceptor="com.github.pagehelper.PageInterceptor">
+            <property name="param1" value="value1"/>
+        </plugin>
+    </plugins>
+    <environments default="development">
+        <environment id="development">
+            <transactionManager type="JDBC"/>
+            <dataSource type="com.loongstudio.codegen.component.datasource.HikariCPDatasourceFactory">
+                <property name="driver" value="org.sqlite.JDBC"/>
+                <property name="url" value="jdbc:sqlite:D:/Program Data/Github/loongstudio/codegen/db/codegen.db"/>
+                <property name="username" value=""/>
+                <property name="password" value=""/>
+            </dataSource>
+        </environment>
+    </environments>
+    <mappers>
+<!--        <mapper resource="com/loongstudio/codegen/api/mapper/mapper/TemplateMapper.mapper"/>-->
+        <package name="com.loongstudio.codegen.api.mapper"/>
+        <package name="com.loongstudio.codegen.mapper"/>
+    </mappers>
+</configuration>

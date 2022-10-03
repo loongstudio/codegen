@@ -1,0 +1,28 @@
+package ${package.Service};
+
+import ${package.Entity}.${entity};
+import ${superServiceClassPackage};
+
+/**
+ * ${table.serviceName}
+ *
+ * @author ${author}
+ * @version 1.0.0
+ * @since ${date}
+ */
+public interface ${table.serviceName} extends ${superServiceClass}<${entity}> {
+
+        IPage<${entity}> list(OperationEntity operationEntity, QueryWrapper<${entity}> queryWrapper);
+
+        ${entity} show(String id);
+
+        void create(${entity} entity);
+
+        void edit(${entity} entity);
+
+        void delete(List<String> idList);
+
+        void exportExcel(HttpServletRequest request, HttpServletResponse response, Class<${entity}> clazz, OperationEntity.Excel excel, QueryWrapper<${entity}> queryWrapper, OperationEntity operationEntity) throws Exception;
+
+        void importExcel(MultipartFile file, Class<${entity}> clazz);
+}
