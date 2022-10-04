@@ -16,6 +16,7 @@ import com.loongstudio.codegen.model.CodegenModel;
 import com.loongstudio.codegen.model.DatasourceModel;
 import com.loongstudio.codegen.model.TreeItemModel;
 import com.loongstudio.codegen.util.AlertUtil;
+import com.loongstudio.codegen.util.ImageUtil;
 import com.loongstudio.codegen.util.ImageViewUtil;
 import com.loongstudio.codegen.util.SqlSessionUtils;
 import com.loongstudio.core.constant.CommonConstant;
@@ -27,7 +28,6 @@ import javafx.event.Event;
 import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.TextFieldTreeCell;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
@@ -215,7 +215,7 @@ public class IndexController extends BaseController {
     private void loadDatasource() {
         log.debug("===== load all datasource. =====");
         databasesTreeView.setShowRoot(Boolean.TRUE);
-        ImageView imageView = ImageViewUtil.getImageView(getImageUrl(CodegenConstant.ICON_CONNECTION), 20, 20);
+        ImageView imageView = ImageViewUtil.getImageView(ImageUtil.getImageUrl(CodegenConstant.ICON_CONNECTION), 20, 20);
         TreeItem<String> root = new TreeItem<>("connection", imageView);
 
         databasesTreeView.setRoot(root);
@@ -237,9 +237,9 @@ public class IndexController extends BaseController {
     private void loadSearchWindow() {
         log.debug("===== init search window. =====");
         fixedImageView.setUserData(Boolean.FALSE);
-        fixedImageView.setImage(new Image(getImageUrl(CodegenConstant.ICON_FIXED)));
-        searchImageView.setImage(new Image(getImageUrl(CodegenConstant.ICON_SEARCH_ACTIVE)));
-        clearImageView.setImage(new Image(getImageUrl(CodegenConstant.ICON_CLEAR)));
+        fixedImageView.setImage(ImageUtil.getImage(CodegenConstant.ICON_FIXED));
+        searchImageView.setImage(ImageUtil.getImage(CodegenConstant.ICON_SEARCH_ACTIVE));
+        clearImageView.setImage(ImageUtil.getImage(CodegenConstant.ICON_CLEAR));
 
         searchTextField.textProperty().addListener((observableValue, v1, v2) -> {
             TreeItem<String> root = databasesTreeView.getRoot();
@@ -442,8 +442,8 @@ public class IndexController extends BaseController {
                 return;
             }
             switch (datasourceEnum) {
-                case MYSQL -> mysqlImages.setImage(new Image(getImageUrl(CodegenConstant.ICON_MYSQL_ACTIVE)));
-                case SQLITE -> mysqlImages.setImage(new Image(getImageUrl(CodegenConstant.ICON_SQLITE_ACTIVE)));
+                case MYSQL -> mysqlImages.setImage(ImageUtil.getImage(CodegenConstant.ICON_MYSQL_ACTIVE));
+                case SQLITE -> mysqlImages.setImage(ImageUtil.getImage(CodegenConstant.ICON_SQLITE_ACTIVE));
                 default -> log.debug("===== default type: {}. =====", datasourceEnum.getSchemaName());
             }
             treeItem.setExpanded(Boolean.TRUE);
@@ -455,8 +455,8 @@ public class IndexController extends BaseController {
         closeItem.setOnAction(event1 -> {
             log.debug("===== close connection. =====");
             switch (datasourceEnum) {
-                case MYSQL -> mysqlImages.setImage(new Image(getImageUrl(CodegenConstant.ICON_MYSQL)));
-                case SQLITE -> mysqlImages.setImage(new Image(getImageUrl(CodegenConstant.ICON_SQLITE)));
+                case MYSQL -> mysqlImages.setImage(ImageUtil.getImage(CodegenConstant.ICON_MYSQL));
+                case SQLITE -> mysqlImages.setImage(ImageUtil.getImage(CodegenConstant.ICON_SQLITE));
                 default -> log.debug("===== default type: {}. =====", datasourceEnum.getSchemaName());
             }
             changeStatus(DATASOURCE_CACHE, datasource, Boolean.FALSE);
@@ -514,7 +514,7 @@ public class IndexController extends BaseController {
                 AlertUtil.error("Connection Failure.");
                 return;
             }
-            mysqlImages.setImage(new Image(getImageUrl(CodegenConstant.ICON_DATABASE_ACTIVE)));
+            mysqlImages.setImage(ImageUtil.getImage(CodegenConstant.ICON_DATABASE_ACTIVE));
             treeItem.setExpanded(Boolean.TRUE);
             changeStatus(DATABASE_CACHE, datasource, Boolean.TRUE);
             databasesTreeView.refresh();
@@ -523,7 +523,7 @@ public class IndexController extends BaseController {
         MenuItem closeItem = new MenuItem("close database");
         closeItem.setOnAction(event1 -> {
             log.debug("===== close database. =====");
-            mysqlImages.setImage(new Image(getImageUrl(CodegenConstant.ICON_DATABASE)));
+            mysqlImages.setImage(ImageUtil.getImage(CodegenConstant.ICON_DATABASE));
             changeStatus(DATABASE_CACHE, datasource, treeItem.getValue(), Boolean.FALSE);
             removeCache(TABLE_CACHE, treeItem.getChildren().stream().map(TreeItem::getValue).collect(Collectors.toList()));
             treeItem.getChildren().clear();
@@ -554,13 +554,13 @@ public class IndexController extends BaseController {
                 try (SqlSession session = SqlSessionUtils.buildSessionFactory(config).openSession(Boolean.TRUE)) {
                     databaseList = session.getMapper(MySQLMapper.class).showDatabases();
                 }
-                graphic.setImage(new Image(getImageUrl(CodegenConstant.ICON_MYSQL_ACTIVE)));
+                graphic.setImage(ImageUtil.getImage(CodegenConstant.ICON_MYSQL_ACTIVE));
             }
             case SQLITE -> {
                 try (SqlSession session = SqlSessionUtils.buildSessionFactory(config).openSession(Boolean.TRUE)) {
                     databaseList = session.getMapper(SQLiteMapper.class).showDatabases();
                 }
-                graphic.setImage(new Image(getImageUrl(CodegenConstant.ICON_SQLITE_ACTIVE)));
+                graphic.setImage(ImageUtil.getImage(CodegenConstant.ICON_SQLITE_ACTIVE));
             }
             default -> log.debug("===== default type: {}. =====", datasourceEnum.getSchemaName());
         }
@@ -579,7 +579,7 @@ public class IndexController extends BaseController {
         SqlSessionUtils.test(datasource);
 
         ImageView mysqlImages = (ImageView) treeItem.getGraphic();
-        mysqlImages.setImage(new Image(getImageUrl(CodegenConstant.ICON_DATABASE_ACTIVE)));
+        mysqlImages.setImage(ImageUtil.getImage(CodegenConstant.ICON_DATABASE_ACTIVE));
         List<String> tableNameList = new ArrayList<>();
         DatasourceModel config = new DatasourceModel();
         BeanUtils.copyProperties(datasource, config);
@@ -606,7 +606,7 @@ public class IndexController extends BaseController {
         }
 
         treeItem.getChildren().clear();
-        String url = getImageUrl(image);
+        String url = ImageUtil.getImageUrl(image);
 
         nameList.forEach(name -> {
             addItem(treeItem, datasource, name, url, Boolean.FALSE);
@@ -639,10 +639,10 @@ public class IndexController extends BaseController {
         Boolean active = (Boolean) fixedImageView.getUserData();
         if (active) {
             fixedImageView.setUserData(Boolean.FALSE);
-            fixedImageView.setImage(new Image(getImageUrl(CodegenConstant.ICON_FIXED)));
+            fixedImageView.setImage(ImageUtil.getImage(CodegenConstant.ICON_FIXED));
         } else {
             fixedImageView.setUserData(Boolean.TRUE);
-            fixedImageView.setImage(new Image(getImageUrl(CodegenConstant.ICON_FIXED_ACTIVE)));
+            fixedImageView.setImage(ImageUtil.getImage(CodegenConstant.ICON_FIXED_ACTIVE));
         }
     }
 

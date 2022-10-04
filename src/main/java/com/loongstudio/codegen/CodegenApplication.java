@@ -2,6 +2,7 @@ package com.loongstudio.codegen;
 
 import com.loongstudio.codegen.constant.CodegenConstant;
 import com.loongstudio.codegen.enums.FXMLPageEnum;
+import com.loongstudio.codegen.util.ImageUtil;
 import com.loongstudio.core.constant.CommonConstant;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -22,8 +23,10 @@ public class CodegenApplication extends Application {
         String resource = StringUtils.joinWith(CommonConstant.SLASH, CodegenConstant.FXML_DIRECTORY, FXMLPageEnum.INDEX.getFxml());
         FXMLLoader fxmlLoader = new FXMLLoader(CodegenApplication.class.getResource(resource));
         Scene scene = new Scene(fxmlLoader.load());
+        stage.getIcons().add(ImageUtil.getImage(CodegenConstant.ICON_LOGO));
         stage.setTitle("Codegen");
         stage.setScene(scene);
         stage.show();
     }
+
 }

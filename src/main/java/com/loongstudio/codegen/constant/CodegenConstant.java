@@ -77,4 +77,6 @@ public abstract class CodegenConstant {
     public static final String ICON_DETAILS = "details.png";
 
     public static final String ICON_LOAD = "load.png";
+
+    public static final String ICON_LOGO = "logo.png";
 }

@@ -13,6 +13,7 @@ import com.loongstudio.codegen.enums.OperationEnum;
 import com.loongstudio.codegen.enums.SqlKeyword;
 import com.loongstudio.codegen.model.TemplateModel;
 import com.loongstudio.codegen.util.AlertUtil;
+import com.loongstudio.codegen.util.ImageUtil;
 import com.loongstudio.codegen.util.ImageViewUtil;
 import com.loongstudio.codegen.util.SqlSessionUtils;
 import javafx.collections.ObservableList;
@@ -206,10 +207,10 @@ public class TemplateController extends BaseController {
             return tableCell;
         });
         this.operationTableColumn.setCellFactory((col) -> {
-            final ImageView loadImageView = ImageViewUtil.getImageView(getImageUrl(CodegenConstant.ICON_LOAD), 16, 16);
-            final ImageView detailsImageView = ImageViewUtil.getImageView(getImageUrl(CodegenConstant.ICON_DETAILS), 16, 16);
-            final ImageView editImageView = ImageViewUtil.getImageView(getImageUrl(CodegenConstant.ICON_EDIT), 16, 16);
-            final ImageView deleteImageView = ImageViewUtil.getImageView(getImageUrl(CodegenConstant.ICON_DELETE), 16, 16);
+            final ImageView loadImageView = ImageViewUtil.getImageView(ImageUtil.getImageUrl(CodegenConstant.ICON_LOAD), 16, 16);
+            final ImageView detailsImageView = ImageViewUtil.getImageView(ImageUtil.getImageUrl(CodegenConstant.ICON_DETAILS), 16, 16);
+            final ImageView editImageView = ImageViewUtil.getImageView(ImageUtil.getImageUrl(CodegenConstant.ICON_EDIT), 16, 16);
+            final ImageView deleteImageView = ImageViewUtil.getImageView(ImageUtil.getImageUrl(CodegenConstant.ICON_DELETE), 16, 16);
             TableCell<TemplateModel, String> tableCell = new TableCell<>() {
                 @Override
                 protected void updateItem(String var1, boolean var2) {
@@ -277,10 +278,10 @@ public class TemplateController extends BaseController {
             }
         });
 
-        queryButton.setGraphic(ImageViewUtil.getImageView(getImageUrl(CodegenConstant.ICON_SEARCH), 16, 16));
-        resetButton.setGraphic(ImageViewUtil.getImageView(getImageUrl(CodegenConstant.ICON_RESET), 16, 16));
-        refreshButton.setGraphic(ImageViewUtil.getImageView(getImageUrl(CodegenConstant.ICON_REFRESH), 16, 16));
-        batchDeleteButton.setGraphic(ImageViewUtil.getImageView(getImageUrl(CodegenConstant.ICON_BATCH_DELETE), 16, 16));
+        queryButton.setGraphic(ImageViewUtil.getImageView(ImageUtil.getImageUrl(CodegenConstant.ICON_SEARCH), 16, 16));
+        resetButton.setGraphic(ImageViewUtil.getImageView(ImageUtil.getImageUrl(CodegenConstant.ICON_RESET), 16, 16));
+        refreshButton.setGraphic(ImageViewUtil.getImageView(ImageUtil.getImageUrl(CodegenConstant.ICON_REFRESH), 16, 16));
+        batchDeleteButton.setGraphic(ImageViewUtil.getImageView(ImageUtil.getImageUrl(CodegenConstant.ICON_BATCH_DELETE), 16, 16));
     }
 
     protected void listReset() {

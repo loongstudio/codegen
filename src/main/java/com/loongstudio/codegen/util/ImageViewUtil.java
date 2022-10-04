@@ -21,4 +21,12 @@ public final class ImageViewUtil {
         return imageView;
     }
 
+    public static ImageView getImageView(String image, double height, double width, Object datasource) {
+        ImageView imageView = new ImageView(image);
+        imageView.setFitHeight(height);
+        imageView.setFitWidth(width);
+        imageView.setUserData(datasource);
+        return imageView;
+    }
+
 }

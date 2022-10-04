@@ -10,6 +10,8 @@ import com.loongstudio.codegen.enums.FXMLPageEnum;
 import com.loongstudio.codegen.enums.SqlKeyword;
 import com.loongstudio.codegen.model.TreeItemModel;
 import com.loongstudio.codegen.util.AlertUtil;
+import com.loongstudio.codegen.util.ImageUtil;
+import com.loongstudio.codegen.util.ImageViewUtil;
 import com.loongstudio.core.constant.CommonConstant;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -85,7 +87,7 @@ public abstract class BaseController implements Initializable {
         dialogStage.setTitle(title);
         dialogStage.setMaximized(Boolean.FALSE);
         dialogStage.setResizable(resize);
-//        dialogStage.getIcons().add(new Image(StringUtils.joinWith(CommonConstant.SLASH, STATIC_DIRECTORY, ICON_DIRECTORY, "autograph.png")));
+        dialogStage.getIcons().add(ImageUtil.getImage(CodegenConstant.ICON_LOGO));
         dialogStage.initOwner(getPrimaryStage());
         dialogStage.initModality(Modality.APPLICATION_MODAL);
         dialogStage.show();
@@ -176,10 +178,7 @@ public abstract class BaseController implements Initializable {
     }
 
     private TreeItem<String> initItem(Datasource datasource, String name, String image, Boolean expanded) {
-        ImageView imageView = new ImageView(image);
-        imageView.setFitHeight(20);
-        imageView.setFitWidth(20);
-        imageView.setUserData(datasource);
+        ImageView imageView = ImageViewUtil.getImageView(image, 20, 20, datasource);
 
         TreeItem<String> treeItem = new TreeItem<>();
         treeItem.setValue(name);
@@ -191,19 +190,21 @@ public abstract class BaseController implements Initializable {
     protected String getDatasourceImages(Datasource datasource, Boolean expanded) {
         String image = null;
         switch (DatasourceEnum.match(datasource.getType())) {
-            case MYSQL -> image = getImageUrl(expanded ? CodegenConstant.ICON_MYSQL_ACTIVE : CodegenConstant.ICON_MYSQL);
-            case SQLITE -> image = getImageUrl(expanded ? CodegenConstant.ICON_SQLITE_ACTIVE : CodegenConstant.ICON_SQLITE);
+            case MYSQL ->
+                    image = ImageUtil.getImageUrl(expanded ? CodegenConstant.ICON_MYSQL_ACTIVE : CodegenConstant.ICON_MYSQL);
+            case SQLITE ->
+                    image = ImageUtil.getImageUrl(expanded ? CodegenConstant.ICON_SQLITE_ACTIVE : CodegenConstant.ICON_SQLITE);
             default -> log.debug("===== default type. =====");
         }
         return image;
     }
 
     protected String getDatabaseImages(Boolean expanded) {
-        return getImageUrl(expanded ? CodegenConstant.ICON_DATABASE_ACTIVE : CodegenConstant.ICON_DATABASE);
+        return ImageUtil.getImageUrl(expanded ? CodegenConstant.ICON_DATABASE_ACTIVE : CodegenConstant.ICON_DATABASE);
     }
 
     protected String getTableImages() {
-        return getImageUrl(CodegenConstant.ICON_TABLE);
+        return ImageUtil.getImageUrl(CodegenConstant.ICON_TABLE);
     }
 
     protected String getImageUrl(String image) {
