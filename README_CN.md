@@ -1,12 +1,8 @@
-# LoongStudio Codegen
+# Codegen
 
-<p align="center">
-  <a href="https://loongstudio.github.io/docs">
-   LoongStudio Codegen
-  </a>
-</p>
+![codegen](./static/logo.png)
 
-<p align="center">
+<p align="left">
   <a href="https://openjdk.org/projects/jdk/17">
     <img alt="star" class="no-zoom" src="https://img.shields.io/badge/Java-17-blue">
   </a>
