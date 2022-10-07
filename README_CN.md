@@ -1,6 +1,6 @@
 # Codegen
 
-![codegen](./static/logo.png)
+![logo](https://user-images.githubusercontent.com/40263163/194675495-957bf41a-89e0-4bf7-aaaa-fcade5568953.png)
 
 <p align="left">
   <a href="https://openjdk.org/projects/jdk/17">
@@ -74,15 +74,15 @@ Longstudio Codegen是基于Mybatis的开源Restful API 代码生成器.
 
 ##### 主页
 
-![home](https://user-images.githubusercontent.com/40263163/192548526-a450349d-95a0-439d-82e9-340e4d1b28a4.png)
+![home](https://user-images.githubusercontent.com/40263163/194675582-46deb5b6-b2aa-4ae4-a505-0eda26e443a8.png)
 
 ##### 模板
 
-![template](https://user-images.githubusercontent.com/40263163/192548748-f55cdf46-f129-4771-9630-16d0835b9457.png)
+![template](https://user-images.githubusercontent.com/40263163/194675536-81b08190-11a0-466a-82f0-8620cbfecb49.png)
 
 ##### 连接
 
-![connection](https://user-images.githubusercontent.com/40263163/192548904-c71a858a-25ca-41f7-9497-89020ae3bc6e.png)
+![connection](https://user-images.githubusercontent.com/40263163/194675528-fea63196-3f28-437d-addd-171d89939e0e.png)
 
 ### License
 
