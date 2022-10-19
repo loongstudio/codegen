@@ -15,12 +15,20 @@
  */
 package com.loongstudio.codegen.enums;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+
+import java.util.Arrays;
+import java.util.Map;
+import java.util.Optional;
+import java.util.function.Function;
+import java.util.stream.Collectors;
+
 /**
  * Sql Method
- *
- * @author hubin
- * @since 2016-01-23
  */
+@Getter
+@AllArgsConstructor
 public enum SqlMethod {
     /**
      * 插入
@@ -71,25 +79,15 @@ public enum SqlMethod {
     SELECT_OBJS("selectObjs", "查询满足条件所有数据", "<script>%s SELECT %s FROM %s %s %s %s\n</script>");
 
     private final String method;
+
     private final String desc;
+
     private final String sql;
 
-    SqlMethod(String method, String desc, String sql) {
-        this.method = method;
-        this.desc = desc;
-        this.sql = sql;
-    }
+    private static final Map<Integer, SqlMethod> map = Arrays.stream(values()).collect(Collectors.toMap(Enum::ordinal, Function.identity()));
 
-    public String getMethod() {
-        return method;
-    }
-
-    public String getDesc() {
-        return desc;
-    }
-
-    public String getSql() {
-        return sql;
+    public static Optional<SqlMethod> get(Integer ordinal) {
+        return Optional.ofNullable(map.get(ordinal));
     }
 
 }

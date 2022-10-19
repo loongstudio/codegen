@@ -15,12 +15,20 @@
  */
 package com.loongstudio.codegen.enums;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+
+import java.util.Arrays;
+import java.util.Map;
+import java.util.Optional;
+import java.util.function.Function;
+import java.util.stream.Collectors;
+
 /**
- * SQL like 枚举
- *
- * @author Caratacus
- * @since 2016-12-4
+ * SQL like
  */
+@Getter
+@AllArgsConstructor
 public enum SqlLike {
     /**
      * %值
@@ -33,5 +41,12 @@ public enum SqlLike {
     /**
      * %值%
      */
-    DEFAULT
+    DEFAULT;
+
+    private static final Map<Integer, SqlLike> map = Arrays.stream(values()).collect(Collectors.toMap(Enum::ordinal, Function.identity()));
+
+    public static Optional<SqlLike> get(Integer ordinal) {
+        return Optional.ofNullable(map.get(ordinal));
+    }
+
 }

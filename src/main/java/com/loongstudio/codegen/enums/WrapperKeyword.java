@@ -17,13 +17,18 @@ package com.loongstudio.codegen.enums;
 
 import com.loongstudio.codegen.conditions.ISqlSegment;
 import lombok.AllArgsConstructor;
+import lombok.Getter;
+
+import java.util.Arrays;
+import java.util.Map;
+import java.util.Optional;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 
 /**
- * wrapper 内部使用枚举
- *
- * @author miemie
- * @since 2018-07-30
+ * wrapper
  */
+@Getter
 @AllArgsConstructor
 public enum WrapperKeyword implements ISqlSegment {
     /**
@@ -36,5 +41,11 @@ public enum WrapperKeyword implements ISqlSegment {
     @Override
     public String getSqlSegment() {
         return keyword;
+    }
+
+    private static final Map<Integer, WrapperKeyword> map = Arrays.stream(values()).collect(Collectors.toMap(Enum::ordinal, Function.identity()));
+
+    public static Optional<WrapperKeyword> get(Integer ordinal) {
+        return Optional.ofNullable(map.get(ordinal));
     }
 }

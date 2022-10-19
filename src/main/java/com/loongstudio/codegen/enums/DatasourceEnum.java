@@ -3,6 +3,12 @@ package com.loongstudio.codegen.enums;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
+import java.util.Arrays;
+import java.util.Map;
+import java.util.Optional;
+import java.util.function.Function;
+import java.util.stream.Collectors;
+
 /**
  * DatasourceEnum
  *
@@ -22,6 +28,12 @@ public enum DatasourceEnum {
     private final String schemaName;
 
     private final String driverClassName;
+
+    private static final Map<Integer, DatasourceEnum> map = Arrays.stream(values()).collect(Collectors.toMap(Enum::ordinal, Function.identity()));
+
+    public static Optional<DatasourceEnum> get(Integer ordinal) {
+        return Optional.ofNullable(map.get(ordinal));
+    }
 
     public static DatasourceEnum match(int code) {
         if (code >= 0 && code < values().length) {

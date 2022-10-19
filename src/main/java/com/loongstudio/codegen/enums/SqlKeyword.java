@@ -19,13 +19,18 @@ package com.loongstudio.codegen.enums;
 import com.loongstudio.codegen.conditions.ISqlSegment;
 import com.loongstudio.core.constant.CommonConstant;
 import lombok.AllArgsConstructor;
+import lombok.Getter;
+
+import java.util.Arrays;
+import java.util.Map;
+import java.util.Optional;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 
 /**
  * SQL 保留关键字枚举
- *
- * @author hubin
- * @since 2018-05-28
  */
+@Getter
 @AllArgsConstructor
 public enum SqlKeyword implements ISqlSegment {
     AND("AND"),
@@ -58,5 +63,11 @@ public enum SqlKeyword implements ISqlSegment {
     @Override
     public String getSqlSegment() {
         return this.keyword;
+    }
+
+    private static final Map<String, SqlKeyword> map = Arrays.stream(values()).collect(Collectors.toMap(v -> v.keyword, Function.identity()));
+
+    public static Optional<SqlKeyword> get(String ordinal) {
+        return Optional.ofNullable(map.get(ordinal));
     }
 }
