@@ -47,13 +47,12 @@ Learn more about Codegen at [https://loongstudio.github.io/docs/](https://loongs
 
 ### Features
 
-* concise operation interface
-* Dynamic data source switching
-* Easy to use template management
-* Convenient tree view search operation
-* Quickly generate restful API template code
-* Support for multiple data sources, include mysql, sqlite...
-
+* **Dimplicity of operator**: Simple operation interface
+* **Dynamic datasource**: Supports dynamic data source switching
+* **User-Friendly**: Easy to use template management
+* **Open Shortcuts**: Convenient tree view search operation
+* **Code generation**: Quickly generate Restful API template code
+* **Multiple Data Source**: Include MySQL、Mariadb、SQLite and Postgresql...
 
 ### Development
 
