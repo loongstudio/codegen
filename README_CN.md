@@ -74,15 +74,19 @@ Longstudio Codegen是基于Mybatis的开源Restful API 代码生成器.
 
 ##### 主页
 
-![home](https://user-images.githubusercontent.com/40263163/194675582-46deb5b6-b2aa-4ae4-a505-0eda26e443a8.png)
+![home_zh](https://user-images.githubusercontent.com/40263163/197484742-9cfe89f1-3dfb-4e5b-acb2-2896ffb088c6.png)
 
 ##### 模板
 
-![template](https://user-images.githubusercontent.com/40263163/194675536-81b08190-11a0-466a-82f0-8620cbfecb49.png)
+![template_zh](https://user-images.githubusercontent.com/40263163/197484816-af17f1b8-6c9d-4d08-a840-58d74c91a91f.png)
 
 ##### 连接
 
-![connection](https://user-images.githubusercontent.com/40263163/194675528-fea63196-3f28-437d-addd-171d89939e0e.png)
+![datasource_zh](https://user-images.githubusercontent.com/40263163/197484842-68a3be4f-5ac2-45ad-9f12-5eae8fcf5707.png)
+
+##### 关于
+
+![about_zh](https://user-images.githubusercontent.com/40263163/197484897-32eec337-29e7-4e9c-bfcf-dac618d163b9.png)
 
 ### License
 
