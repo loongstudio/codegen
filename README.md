@@ -41,7 +41,7 @@
 ### Introduction
 LoongStudio Codegen is based on the Mybatis an open source Restful API CodeGen.
 
-Learn more about Codegen at [https://loongstudio.github.io/docs/](https://loongstudio.github.io/docs/)
+Learn more about Codegen at [codegen-doc](https://loongstudio.github.io/codegen-doc)
 
 [中文说明/Chinese Documentation](README_CN.md)
 
