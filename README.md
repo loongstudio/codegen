@@ -75,15 +75,21 @@ Download the binaries released for the operating system and install them
 
 ##### Home
 
-![home](https://user-images.githubusercontent.com/40263163/194675582-46deb5b6-b2aa-4ae4-a505-0eda26e443a8.png)
+![home](https://user-images.githubusercontent.com/40263163/197484229-592efa3c-0fa6-4706-9bdf-adc4bafaf701.png)
+
 
 ##### Template
 
-![template](https://user-images.githubusercontent.com/40263163/194675536-81b08190-11a0-466a-82f0-8620cbfecb49.png)
+![template](https://user-images.githubusercontent.com/40263163/197484252-d4c29c7e-c722-427d-b6ec-bab3e244056d.png)
+
 
 ##### Connection
 
-![connection](https://user-images.githubusercontent.com/40263163/194675528-fea63196-3f28-437d-addd-171d89939e0e.png)
+![datasource](https://user-images.githubusercontent.com/40263163/197484366-16e86ec7-2c66-48bb-b888-d8f614b4f45e.png)
+
+##### About
+
+![about](https://user-images.githubusercontent.com/40263163/197484430-7fa61dfc-b9a6-4c69-ab0c-6ff74e96144f.png)
 
 ### License
 
