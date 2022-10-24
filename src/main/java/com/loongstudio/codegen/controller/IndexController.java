@@ -746,6 +746,7 @@ public class IndexController extends BaseController {
                         .haveVue(Boolean.FALSE)
                         .superEntityColumnList(SUPER_ENTITY_COLUMNS)
                         .build());
+        AlertUtil.info(ResourceBundleUtil.getProperty("Success"));
     }
 
     public void open(ActionEvent actionEvent) {
