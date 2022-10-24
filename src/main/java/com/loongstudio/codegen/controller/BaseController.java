@@ -12,6 +12,7 @@ import com.loongstudio.codegen.model.TreeItemModel;
 import com.loongstudio.codegen.util.AlertUtil;
 import com.loongstudio.codegen.util.ImageUtil;
 import com.loongstudio.codegen.util.ImageViewUtil;
+import com.loongstudio.codegen.util.ResourceBundleUtil;
 import com.loongstudio.core.constant.CommonConstant;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -30,6 +31,7 @@ import java.lang.ref.SoftReference;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.ResourceBundle;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 
@@ -75,8 +77,9 @@ public abstract class BaseController implements Initializable {
         if (cache && Objects.nonNull(parentNodeRef)) {
             return parentNodeRef.get();
         }
-        String resource = StringUtils.joinWith(CommonConstant.SLASH, CodegenConstant.FXML_DIRECTORY, fxml.getFxml());
-        FXMLLoader loader = new FXMLLoader(CodegenApplication.class.getResource(resource));
+        String resource = ResourceBundleUtil.getResource(fxml.getFxml());
+        String i18nResource = ResourceBundleUtil.getBasename();
+        FXMLLoader loader = new FXMLLoader(CodegenApplication.class.getResource(resource), ResourceBundle.getBundle(i18nResource));
 
         dialogStage = new Stage();
         try {

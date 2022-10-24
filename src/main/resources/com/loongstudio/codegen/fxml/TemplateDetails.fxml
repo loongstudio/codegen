@@ -55,7 +55,7 @@
          <children>
             <HBox alignment="CENTER" prefHeight="100.0" style="-fx-background-color: white;">
                <children>
-                  <Text fx:id="titleText" fill="#5584ff" strokeType="OUTSIDE" strokeWidth="0.0" text="Template Edit">
+                  <Text fx:id="titleText" fill="#5584ff" strokeType="OUTSIDE" strokeWidth="0.0" text="%TemplateEdit">
                      <font>
                         <Font name="System Bold" size="20.0" />
                      </font>
@@ -85,37 +85,37 @@
                   <RowConstraints />
               </rowConstraints>
                <children>
-                  <Label text="ID:" textAlignment="JUSTIFY" visible="false" />
-                   <Label text="Folder:" textAlignment="JUSTIFY" GridPane.rowIndex="1" />
-                   <Label text="Name:" textAlignment="JUSTIFY" GridPane.rowIndex="2" />
-                   <Label text="Parent Package:" textAlignment="JUSTIFY" GridPane.rowIndex="3" />
-                   <Label text="Module:" textAlignment="JUSTIFY" GridPane.rowIndex="4" />
-                   <Label text="Datasource Name:" textAlignment="JUSTIFY" GridPane.rowIndex="5" />
-                   <Label text="Database Name:" textAlignment="JUSTIFY" GridPane.rowIndex="6" />
-                   <Label text="Table Name:" textAlignment="JUSTIFY" GridPane.rowIndex="7" />
-                   <Label text="Description:" textAlignment="JUSTIFY" GridPane.rowIndex="8" />
-                   <Label text="Created At:" textAlignment="JUSTIFY" GridPane.rowIndex="9" />
-                   <Label text="Updated At:" textAlignment="JUSTIFY" GridPane.rowIndex="10" />
-                  <TextField fx:id="idTextField" prefWidth="639.0" promptText="Please enter id." visible="false" GridPane.columnIndex="1" />
+                   <Label text="ID" textAlignment="JUSTIFY" visible="false" />
+                   <Label text="%Folder" textAlignment="JUSTIFY" GridPane.rowIndex="1" />
+                   <Label text="%Name" textAlignment="JUSTIFY" GridPane.rowIndex="2" />
+                   <Label text="%ParentPackage" textAlignment="JUSTIFY" GridPane.rowIndex="3" />
+                   <Label text="%Module" textAlignment="JUSTIFY" GridPane.rowIndex="4" />
+                   <Label text="%DatasourceName" textAlignment="JUSTIFY" GridPane.rowIndex="5" />
+                   <Label text="%DatabaseName" textAlignment="JUSTIFY" GridPane.rowIndex="6" />
+                   <Label text="%TableName" textAlignment="JUSTIFY" GridPane.rowIndex="7" />
+                   <Label text="%Description" textAlignment="JUSTIFY" GridPane.rowIndex="8" />
+                   <Label text="%CreatedAt" textAlignment="JUSTIFY" GridPane.rowIndex="9" />
+                   <Label text="%UpdatedAt" textAlignment="JUSTIFY" GridPane.rowIndex="10" />
+                  <TextField fx:id="idTextField" prefWidth="639.0" promptText="%PleaseEnter" visible="false" GridPane.columnIndex="1" />
                   <HBox alignment="CENTER_LEFT" GridPane.columnIndex="1" GridPane.rowIndex="1">
                      <children>
-                        <TextField fx:id="folderTextField" focusTraversable="false" prefWidth="490.0" promptText="Please enter or select a folder." />
-                         <Button fx:id="choiceButton" mnemonicParsing="false" onMouseClicked="#choiceFolder" prefWidth="90.0" style="-fx-background-color: white; -fx-border-color: #5584ff; -fx-border-radius: 5;" text="choice" textAlignment="JUSTIFY">
+                        <TextField fx:id="folderTextField" focusTraversable="false" prefWidth="490.0" promptText="%PleaseEnterOrSelectAFolder" />
+                         <Button fx:id="choiceButton" mnemonicParsing="false" onMouseClicked="#choiceFolder" prefWidth="90.0" style="-fx-background-color: white; -fx-border-color: #5584ff; -fx-border-radius: 5;" text="%choice" textAlignment="JUSTIFY">
                              <HBox.margin>
                                  <Insets left="10.0" />
                              </HBox.margin>
                          </Button>
                      </children>
                   </HBox>
-                  <TextField fx:id="nameTextField" focusTraversable="false" prefWidth="639.0" promptText="Please enter name." GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                  <TextField fx:id="parentPackageTextField" focusTraversable="false" prefWidth="639.0" promptText="Please enter parent package." GridPane.columnIndex="1" GridPane.rowIndex="3" />
-                  <TextField fx:id="moduleTextField" focusTraversable="false" prefWidth="639.0" promptText="Please enter module." GridPane.columnIndex="1" GridPane.rowIndex="4" />
-                  <TextField fx:id="datasourceNameTextField" focusTraversable="false" prefWidth="639.0" promptText="Please enter datasource name." GridPane.columnIndex="1" GridPane.rowIndex="5" />
-                  <TextField fx:id="databaseNameTextField" focusTraversable="false" prefWidth="639.0" promptText="Please enter database name." GridPane.columnIndex="1" GridPane.rowIndex="6" />
-                  <TextField fx:id="tableNameTextField" focusTraversable="false" prefWidth="639.0" promptText="Please enter table name." GridPane.columnIndex="1" GridPane.rowIndex="7" />
-                  <TextField fx:id="descriptionTextField" focusTraversable="false" prefWidth="639.0" promptText="Please enter description." GridPane.columnIndex="1" GridPane.rowIndex="8" />
-                  <TextField fx:id="createdAtTextField" focusTraversable="false" prefWidth="639.0" promptText="Please enter created at." GridPane.columnIndex="1" GridPane.rowIndex="9" />
-                  <TextField fx:id="updatedAtTextField" focusTraversable="false" prefWidth="639.0" promptText="Please enter updated at." GridPane.columnIndex="1" GridPane.rowIndex="10" />
+                  <TextField fx:id="nameTextField" focusTraversable="false" prefWidth="639.0" promptText="%PleaseEnter" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                  <TextField fx:id="parentPackageTextField" focusTraversable="false" prefWidth="639.0" promptText="%PleaseEnter" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                  <TextField fx:id="moduleTextField" focusTraversable="false" prefWidth="639.0" promptText="%PleaseEnter" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                  <TextField fx:id="datasourceNameTextField" focusTraversable="false" prefWidth="639.0" promptText="%PleaseEnter" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+                  <TextField fx:id="databaseNameTextField" focusTraversable="false" prefWidth="639.0" promptText="%PleaseEnter" GridPane.columnIndex="1" GridPane.rowIndex="6" />
+                  <TextField fx:id="tableNameTextField" focusTraversable="false" prefWidth="639.0" promptText="%PleaseEnter" GridPane.columnIndex="1" GridPane.rowIndex="7" />
+                  <TextField fx:id="descriptionTextField" focusTraversable="false" prefWidth="639.0" promptText="%PleaseEnter" GridPane.columnIndex="1" GridPane.rowIndex="8" />
+                  <TextField fx:id="createdAtTextField" focusTraversable="false" prefWidth="639.0" promptText="%PleaseEnter" GridPane.columnIndex="1" GridPane.rowIndex="9" />
+                  <TextField fx:id="updatedAtTextField" focusTraversable="false" prefWidth="639.0" promptText="%PleaseEnter" GridPane.columnIndex="1" GridPane.rowIndex="10" />
                </children>
                <VBox.margin>
                   <Insets bottom="20.0" left="50.0" right="50.0" top="20.0" />
@@ -128,7 +128,7 @@
             </Separator>
             <HBox alignment="CENTER_RIGHT" prefHeight="60.0" spacing="20.0">
                <children>
-                  <Button fx:id="confirmButton" mnemonicParsing="false" onAction="#confirm" prefHeight="30.0" prefWidth="100.0" style="-fx-background-color: #5584FF; -fx-background-radius: 5;" text="confirm" textAlignment="JUSTIFY" textFill="WHITE">
+                  <Button fx:id="confirmButton" mnemonicParsing="false" onAction="#confirm" prefHeight="30.0" prefWidth="100.0" style="-fx-background-color: #5584FF; -fx-background-radius: 5;" text="%Confirm" textAlignment="JUSTIFY" textFill="WHITE">
                      <font>
                         <Font name="System Italic" size="15.0" />
                      </font>
@@ -139,7 +139,7 @@
                         <Insets />
                      </opaqueInsets>
                   </Button>
-                  <Button fx:id="cancelButton" mnemonicParsing="false" onAction="#cancel" prefHeight="30.0" prefWidth="100.0" style="-fx-background-color: white; -fx-border-color: #5584FF; -fx-border-radius: 5;" text="cancel" textAlignment="JUSTIFY">
+                  <Button fx:id="cancelButton" mnemonicParsing="false" onAction="#cancel" prefHeight="30.0" prefWidth="100.0" style="-fx-background-color: white; -fx-border-color: #5584FF; -fx-border-radius: 5;" text="%Cancel" textAlignment="JUSTIFY">
                      <font>
                         <Font name="System Italic" size="15.0" />
                      </font>

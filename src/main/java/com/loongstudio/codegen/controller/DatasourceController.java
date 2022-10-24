@@ -5,6 +5,7 @@ import com.loongstudio.codegen.api.entity.Datasource;
 import com.loongstudio.codegen.api.entity.Template;
 import com.loongstudio.codegen.api.mapper.DatasourceMapper;
 import com.loongstudio.codegen.util.AlertUtil;
+import com.loongstudio.codegen.util.ResourceBundleUtil;
 import com.loongstudio.codegen.util.SqlSessionUtils;
 import com.loongstudio.core.toolkit.Sequence;
 import com.loongstudio.core.util.IPUtil;
@@ -76,11 +77,12 @@ public class DatasourceController extends BaseController {
 
         oldTreeItem = treeItem;
         initDatasource(datasource);
-        titleText.setText("Edit Connection");
+
+        titleText.setText(ResourceBundleUtil.getProperty("EditConnection"));
     }
 
     public void init(Datasource datasource, Integer type) {
-        titleText.setText("Save Connection");
+        titleText.setText(ResourceBundleUtil.getProperty("SaveConnection"));
         if (Objects.isNull(datasource)) {
             typeTextField.setText(type.toString());
             return;
@@ -94,7 +96,7 @@ public class DatasourceController extends BaseController {
             this.checkStringParam(List.of(datasource.getId(), datasource.getName(), datasource.getUsername(), datasource.getPassword()));
             this.checkIntegerParam(List.of(datasource.getType(), datasource.getIp(), datasource.getPort()));
         } catch (IllegalArgumentException e) {
-            AlertUtil.warn("The parameter cannot be empty!");
+            AlertUtil.warn(ResourceBundleUtil.getProperty("NullPointerException"));
             return;
         }
 
@@ -122,7 +124,7 @@ public class DatasourceController extends BaseController {
             datasource.setPassword(passwordField.getText());
 
             SqlSessionUtils.test(datasource);
-            AlertUtil.info("Connection Success.");
+            AlertUtil.info(ResourceBundleUtil.getProperty("Success"));
         } catch (RuntimeException e) {
             e.printStackTrace();
             AlertUtil.warn("Connection Failure.");
@@ -134,7 +136,7 @@ public class DatasourceController extends BaseController {
         try {
             this.checkStringParam(List.of(connectNameTextField.getText(), typeTextField.getText(), ipTextField.getText(), portTextField.getText(), usernameTextField.getText(), passwordField.getText()));
         } catch (IllegalArgumentException e) {
-            AlertUtil.warn("The parameter cannot be empty!");
+            AlertUtil.warn(ResourceBundleUtil.getProperty("NullPointerException"));
             return;
         }
         String id = idTextField.getText();
@@ -156,7 +158,7 @@ public class DatasourceController extends BaseController {
         try {
             SqlSessionUtils.test(datasource);
         } catch (RuntimeException e) {
-            AlertUtil.error("Connection Failure.");
+            AlertUtil.error(ResourceBundleUtil.getProperty("Failure"));
             return;
         }
         try (SqlSession session = SqlSessionUtils.buildSessionFactory().openSession(Boolean.TRUE)) {
@@ -164,12 +166,12 @@ public class DatasourceController extends BaseController {
             if (StringUtils.isEmpty(id)) {
                 datasource.setId(String.valueOf(App.applicationContext.getBean(Sequence.class).nextId()));
                 mapper.insert(datasource);
-                AlertUtil.info("Save Success.");
+                AlertUtil.info(ResourceBundleUtil.getProperty("Success"));
             } else {
                 datasource.setId(id);
                 mapper.updateById(datasource);
                 indexController.getDatabasesTreeView().getRoot().getChildren().remove(oldTreeItem);
-                AlertUtil.info("Edit Success.");
+                AlertUtil.info(ResourceBundleUtil.getProperty("Success"));
             }
         }
         TreeView<String> treeView = indexController.getDatabasesTreeView();

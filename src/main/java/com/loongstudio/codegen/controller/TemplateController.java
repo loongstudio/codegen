@@ -12,10 +12,7 @@ import com.loongstudio.codegen.enums.FXMLPageEnum;
 import com.loongstudio.codegen.enums.OperationEnum;
 import com.loongstudio.codegen.enums.SqlKeyword;
 import com.loongstudio.codegen.model.TemplateModel;
-import com.loongstudio.codegen.util.AlertUtil;
-import com.loongstudio.codegen.util.ImageUtil;
-import com.loongstudio.codegen.util.ImageViewUtil;
-import com.loongstudio.codegen.util.SqlSessionUtils;
+import com.loongstudio.codegen.util.*;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.geometry.Pos;
@@ -155,11 +152,11 @@ public class TemplateController extends BaseController {
         // 设置多选模式
         this.templateTableView.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
         this.idTableColumn.setCellValueFactory(new PropertyValueFactory<>("id"));
-        this.nameTableColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
-        this.folderTableColumn.setCellValueFactory(new PropertyValueFactory<>("folder"));
-        this.parentPackageTableColumn.setCellValueFactory(new PropertyValueFactory<>("parentPackage"));
-        this.moduleTableColumn.setCellValueFactory(new PropertyValueFactory<>("module"));
-        this.createdAtTableColumn.setCellValueFactory(new PropertyValueFactory<>("createdAt"));
+        this.nameTableColumn.setCellValueFactory(new PropertyValueFactory<>(ResourceBundleUtil.getProperty("Name")));
+        this.folderTableColumn.setCellValueFactory(new PropertyValueFactory<>(ResourceBundleUtil.getProperty("Folder")));
+        this.parentPackageTableColumn.setCellValueFactory(new PropertyValueFactory<>(ResourceBundleUtil.getProperty("ParentPackage")));
+        this.moduleTableColumn.setCellValueFactory(new PropertyValueFactory<>(ResourceBundleUtil.getProperty("Module")));
+        this.createdAtTableColumn.setCellValueFactory(new PropertyValueFactory<>(ResourceBundleUtil.getProperty("CreatedAt")));
         this.noTableColumn.setCellFactory((col) -> new TableCell<>() {
             @Override
             protected void updateItem(String item, boolean empty) {
@@ -240,7 +237,7 @@ public class TemplateController extends BaseController {
                 closeDialogStage();
             });
             detailsImageView.setOnMouseClicked(evenHandler -> {
-                TemplateDetailsController controller = (TemplateDetailsController) loadPage("Template Details", FXMLPageEnum.TEMPLATE_DETAILS, Boolean.FALSE, Boolean.FALSE);
+                TemplateDetailsController controller = (TemplateDetailsController) loadPage(ResourceBundleUtil.getProperty("TemplateDetails"), FXMLPageEnum.TEMPLATE_DETAILS, Boolean.FALSE, Boolean.FALSE);
                 TemplateModel templateModel = templateTableView.getItems().get(tableCell.getIndex());
                 controller.setCurrentTemplateModel(templateModel);
                 controller.setTemplateController(this);
@@ -249,16 +246,16 @@ public class TemplateController extends BaseController {
                 controller.showDialogStage();
             });
             editImageView.setOnMouseClicked(evenHandler -> {
-                TemplateDetailsController controller = (TemplateDetailsController) loadPage("Template Edit", FXMLPageEnum.TEMPLATE_DETAILS, Boolean.FALSE, Boolean.FALSE);
+                TemplateDetailsController controller = (TemplateDetailsController) loadPage(ResourceBundleUtil.getProperty("TemplateEdit"), FXMLPageEnum.TEMPLATE_DETAILS, Boolean.FALSE, Boolean.FALSE);
                 TemplateModel templateModel = templateTableView.getItems().get(tableCell.getIndex());
                 controller.setCurrentTemplateModel(templateModel);
                 controller.setTemplateController(this);
-                controller.getTitleText().setText("Template Edit");
+                controller.getTitleText().setText(ResourceBundleUtil.getProperty("TemplateEdit"));
                 controller.init(OperationEnum.EDIT);
                 controller.showDialogStage();
             });
             deleteImageView.setOnMouseClicked(evenHandler -> {
-                if (AlertUtil.confirm("Confirm to delete template?")) {
+                if (AlertUtil.confirm(ResourceBundleUtil.getProperty("ConfirmDelete"))) {
                     TemplateModel templateModel = templateTableView.getItems().get(tableCell.getIndex());
                     try (SqlSession session = SqlSessionUtils.buildSessionFactory().openSession(Boolean.TRUE)) {
                         TemplateMapper templateMapper = session.getMapper(TemplateMapper.class);
@@ -296,13 +293,13 @@ public class TemplateController extends BaseController {
 
     public void refresh(ActionEvent actionEvent) {
         listReset();
-        AlertUtil.info("refresh success");
+        AlertUtil.info(ResourceBundleUtil.getProperty("Success"));
     }
 
     public void batchDelete(ActionEvent actionEvent) {
-        if (AlertUtil.confirm("Confirm to batch delete template?")) {
+        if (AlertUtil.confirm(ResourceBundleUtil.getProperty("ConfirmDelete"))) {
             if (CollectionUtils.isEmpty(selectedIdList)) {
-                AlertUtil.info("batch delete success");
+                AlertUtil.info(ResourceBundleUtil.getProperty("Success"));
                 return;
             }
             try (SqlSession session = SqlSessionUtils.buildSessionFactory().openSession(Boolean.TRUE)) {
@@ -310,9 +307,8 @@ public class TemplateController extends BaseController {
                 templateMapper.deleteBatchIds(selectedIdList);
             }
             listReset();
-            AlertUtil.info("batch delete success");
+            AlertUtil.info(ResourceBundleUtil.getProperty("Success"));
         }
-
     }
 
     public void query(ActionEvent actionEvent) {

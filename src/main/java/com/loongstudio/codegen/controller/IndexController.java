@@ -7,6 +7,7 @@ import com.loongstudio.codegen.api.entity.Template;
 import com.loongstudio.codegen.api.mapper.DatasourceMapper;
 import com.loongstudio.codegen.api.mapper.SQLiteMapper;
 import com.loongstudio.codegen.api.mapper.TemplateMapper;
+import com.loongstudio.codegen.component.codegen.CodegenComponent;
 import com.loongstudio.codegen.constant.CodegenConstant;
 import com.loongstudio.codegen.enums.DatasourceEnum;
 import com.loongstudio.codegen.enums.FXMLPageEnum;
@@ -15,10 +16,7 @@ import com.loongstudio.codegen.mapper.MySQLMapper;
 import com.loongstudio.codegen.model.CodegenModel;
 import com.loongstudio.codegen.model.DatasourceModel;
 import com.loongstudio.codegen.model.TreeItemModel;
-import com.loongstudio.codegen.util.AlertUtil;
-import com.loongstudio.codegen.util.ImageUtil;
-import com.loongstudio.codegen.util.ImageViewUtil;
-import com.loongstudio.codegen.util.SqlSessionUtils;
+import com.loongstudio.codegen.util.*;
 import com.loongstudio.core.constant.CommonConstant;
 import com.loongstudio.core.toolkit.Sequence;
 import com.loongstudio.core.util.StringUtil;
@@ -64,6 +62,12 @@ public class IndexController extends BaseController {
     private static final StringBuilder SEARCH_CACHE = new StringBuilder();
 
     public MenuItem aboutMenuItem;
+
+    public Menu languageMenu;
+
+    public MenuItem englishMenuItem;
+
+    public MenuItem chineseMenuItem;
 
     private Template template = new Template();
 
@@ -133,14 +137,14 @@ public class IndexController extends BaseController {
     }
 
     /**
-     * 初始化
+     * init
      */
     private void init() {
         initTreeView();
     }
 
     /**
-     * 初始化树视图
+     * init tree view
      */
     private void initTreeView() {
         log.debug("===== init left tree view. =====");
@@ -191,7 +195,7 @@ public class IndexController extends BaseController {
         this.serviceNameTextField.setText(StringUtils.joinWith(CommonConstant.EMPTY, entityName, ConstVal.SERVICE));
         this.controllerNameTextField.setText(StringUtils.joinWith(CommonConstant.EMPTY, entityName, ConstVal.CONTROLLER));
 
-        AlertUtil.info("load current template success");
+        AlertUtil.info(ResourceBundleUtil.getProperty("Success"));
     }
 
     private void loadTemplate() {
@@ -210,13 +214,13 @@ public class IndexController extends BaseController {
     }
 
     /**
-     * 加载数据源
+     * load datasource
      */
     private void loadDatasource() {
         log.debug("===== load all datasource. =====");
         databasesTreeView.setShowRoot(Boolean.TRUE);
         ImageView imageView = ImageViewUtil.getImageView(ImageUtil.getImageUrl(CodegenConstant.ICON_CONNECTION), 20, 20);
-        TreeItem<String> root = new TreeItem<>("connection", imageView);
+        TreeItem<String> root = new TreeItem<>(ResourceBundleUtil.getProperty("Connection"), imageView);
 
         databasesTreeView.setRoot(root);
         databasesTreeView.setCellFactory((TreeView<String> tv) -> handleCallback(TextFieldTreeCell.forTreeView(), tv));
@@ -232,7 +236,7 @@ public class IndexController extends BaseController {
     }
 
     /**
-     * 加载搜索窗
+     * load search window
      */
     private void loadSearchWindow() {
         log.debug("===== init search window. =====");
@@ -323,10 +327,10 @@ public class IndexController extends BaseController {
     }
 
     /**
-     * 处理菜单
+     * handle menu
      *
-     * @param cell  单元格
-     * @param level 级别
+     * @param cell  cell
+     * @param level level
      */
     private void handleMenu(TreeCell<String> cell, int level) {
         TreeItem<String> treeItem = cell.getTreeItem();
@@ -350,11 +354,11 @@ public class IndexController extends BaseController {
     }
 
     /**
-     * 处理事件
+     * handle event
      *
-     * @param treeItem 树项
-     * @param event    事件
-     * @param level    级别
+     * @param treeItem treeItem
+     * @param event    event
+     * @param level    level
      */
     private void handleEvent(TreeItem<String> treeItem, MouseEvent event, int level) {
         if (treeItem == null) {
@@ -400,7 +404,7 @@ public class IndexController extends BaseController {
                 }
             } catch (RuntimeException e) {
                 e.printStackTrace();
-                AlertUtil.error("Connection Failure.");
+                AlertUtil.error(ResourceBundleUtil.getProperty("Failure"));
             }
         }
         databasesTreeView.refresh();
@@ -420,25 +424,25 @@ public class IndexController extends BaseController {
     }
 
     /**
-     * 处理连接
+     * handle datasource
      *
-     * @param cell       单元格
-     * @param treeItem   树项
-     * @param datasource 数据源
+     * @param cell       cell
+     * @param treeItem   treeItem
+     * @param datasource datasource
      */
     private void handleDatasource(TreeCell<String> cell, TreeItem<String> treeItem, Datasource datasource) {
         final ContextMenu contextMenu = new ContextMenu();
         ImageView mysqlImages = (ImageView) treeItem.getGraphic();
         DatasourceEnum datasourceEnum = DatasourceEnum.match(datasource.getType());
 
-        MenuItem openItem = new MenuItem("open connection");
+        MenuItem openItem = new MenuItem(ResourceBundleUtil.getProperty("OpenConnection"));
         openItem.setOnAction(event1 -> {
             log.debug("===== open connection. =====");
             try {
                 initDatabaseView(treeItem, datasource);
             } catch (RuntimeException e) {
                 e.printStackTrace();
-                AlertUtil.error("Connection Failure.");
+                AlertUtil.error(ResourceBundleUtil.getProperty("Failure"));
                 return;
             }
             switch (datasourceEnum) {
@@ -451,7 +455,7 @@ public class IndexController extends BaseController {
             databasesTreeView.refresh();
         });
 
-        MenuItem closeItem = new MenuItem("close connection");
+        MenuItem closeItem = new MenuItem(ResourceBundleUtil.getProperty("CloseConnection"));
         closeItem.setOnAction(event1 -> {
             log.debug("===== close connection. =====");
             switch (datasourceEnum) {
@@ -466,7 +470,7 @@ public class IndexController extends BaseController {
             databasesTreeView.refresh();
         });
 
-        MenuItem editItem = new MenuItem("edit connection");
+        MenuItem editItem = new MenuItem(ResourceBundleUtil.getProperty("EditConnection"));
         editItem.setOnAction(event1 -> {
             log.debug("===== edit connection. =====");
             DatasourceController controller = (DatasourceController) loadPage("Edit Connection", FXMLPageEnum.DATASOURCE, Boolean.FALSE, Boolean.FALSE);
@@ -476,10 +480,10 @@ public class IndexController extends BaseController {
             databasesTreeView.refresh();
         });
 
-        MenuItem deleteItem = new MenuItem("delete connection");
+        MenuItem deleteItem = new MenuItem(ResourceBundleUtil.getProperty("DeleteConnection"));
         deleteItem.setOnAction(event1 -> {
             log.debug("===== delete connection. =====");
-            if (AlertUtil.confirm("Confirm to delete connection?")) {
+            if (AlertUtil.confirm(ResourceBundleUtil.getProperty("ConfirmDelete"))) {
                 try (SqlSession session = SqlSessionUtils.buildSessionFactory().openSession(Boolean.TRUE)) {
                     DatasourceMapper mapper = session.getMapper(DatasourceMapper.class);
                     mapper.deleteById(datasource.getId());
@@ -494,24 +498,24 @@ public class IndexController extends BaseController {
     }
 
     /**
-     * 处理数据库
+     * handle database
      *
-     * @param cell       单元格
-     * @param treeItem   树项目
-     * @param datasource 数据源
+     * @param cell       cell
+     * @param treeItem   treeItem
+     * @param datasource datasource
      */
     private void handleDatabase(TreeCell<String> cell, TreeItem<String> treeItem, Datasource datasource) {
         final ContextMenu contextMenu = new ContextMenu();
         ImageView mysqlImages = (ImageView) treeItem.getGraphic();
 
-        MenuItem openItem = new MenuItem("open database");
+        MenuItem openItem = new MenuItem(ResourceBundleUtil.getProperty("OpenDatasource"));
         openItem.setOnAction(event1 -> {
             log.debug("===== open database. =====");
 
             try {
                 initTableView(treeItem, datasource);
             } catch (RuntimeException e) {
-                AlertUtil.error("Connection Failure.");
+                AlertUtil.error(ResourceBundleUtil.getProperty("Failure"));
                 return;
             }
             mysqlImages.setImage(ImageUtil.getImage(CodegenConstant.ICON_DATABASE_ACTIVE));
@@ -520,7 +524,7 @@ public class IndexController extends BaseController {
             databasesTreeView.refresh();
         });
 
-        MenuItem closeItem = new MenuItem("close database");
+        MenuItem closeItem = new MenuItem(ResourceBundleUtil.getProperty("CloseDatasource"));
         closeItem.setOnAction(event1 -> {
             log.debug("===== close database. =====");
             mysqlImages.setImage(ImageUtil.getImage(CodegenConstant.ICON_DATABASE));
@@ -536,10 +540,10 @@ public class IndexController extends BaseController {
     }
 
     /**
-     * 初始化数据库视图
+     * init database view
      *
-     * @param treeItem   树项目
-     * @param datasource 数据源
+     * @param treeItem   treeItem
+     * @param datasource datasource
      */
     private void initDatabaseView(TreeItem<String> treeItem, Datasource datasource) {
         log.debug("===== load all databases. =====");
@@ -568,10 +572,10 @@ public class IndexController extends BaseController {
     }
 
     /**
-     * 初始化表视图
+     * init table view
      *
-     * @param treeItem   树项目
-     * @param datasource 数据源
+     * @param treeItem   treeItem
+     * @param datasource datasource
      */
     private void initTableView(TreeItem<String> treeItem, Datasource datasource) {
         log.debug("===== load all tables. =====");
@@ -620,7 +624,7 @@ public class IndexController extends BaseController {
 
     public void createMySQLDatasource(ActionEvent actionEvent) {
         log.debug("===== create MySQL datasource =====");
-        DatasourceController controller = (DatasourceController) loadPage("Sava Connection", FXMLPageEnum.DATASOURCE, Boolean.FALSE, Boolean.FALSE);
+        DatasourceController controller = (DatasourceController) loadPage(ResourceBundleUtil.getProperty("SaveConnection"), FXMLPageEnum.DATASOURCE, Boolean.FALSE, Boolean.FALSE);
         controller.setIndexController(this);
         controller.init(null, 0);
         controller.showDialogStage();
@@ -672,7 +676,7 @@ public class IndexController extends BaseController {
 
     public void choiceFolder(MouseEvent mouseEvent) {
         DirectoryChooser chooser = new DirectoryChooser();
-        chooser.setTitle("choice folder");
+        chooser.setTitle(ResourceBundleUtil.getProperty("ChoiceFolder"));
         chooser.setInitialDirectory(new File(System.getProperty("java.io.tmpdir")));
         File file = chooser.showDialog(getPrimaryStage());
         if (Objects.isNull(file)) {
@@ -688,20 +692,20 @@ public class IndexController extends BaseController {
             TemplateMapper mapper = session.getMapper(TemplateMapper.class);
             Template old = mapper.selectByName(this.template.getName());
             if (Objects.isNull(this.datasource)) {
-                AlertUtil.warn("datasource can not be empty.");
+                AlertUtil.warn(ResourceBundleUtil.getProperty("NullPointerException"));
                 return;
             }
             this.template.setDatasourceId(this.datasource.getId());
             if (Objects.nonNull(old)) {
                 this.template.setId(old.getId());
                 mapper.updateById(template);
-                AlertUtil.info("edite success.");
+                AlertUtil.info(ResourceBundleUtil.getProperty("Success"));
             } else {
                 template.setId(String.valueOf(App.applicationContext.getBean(Sequence.class).nextId()));
                 mapper.insert(template);
             }
         }
-        AlertUtil.info("save success.");
+        AlertUtil.info(ResourceBundleUtil.getProperty("Success"));
     }
 
     public void reset(MouseEvent mouseEvent) {
@@ -726,10 +730,10 @@ public class IndexController extends BaseController {
         }
 
         if (Objects.isNull(this.datasource)) {
-            AlertUtil.warn("datasource can not be empty");
+            AlertUtil.warn(ResourceBundleUtil.getProperty("NullPointerException"));
             return;
         }
-        com.loongstudio.codegen.component.codegen.CodegenComponent component = App.applicationContext.getBean(com.loongstudio.codegen.component.codegen.CodegenComponent.class);
+        CodegenComponent component = App.applicationContext.getBean(CodegenComponent.class);
         component.generate(
                 CodegenModel.builder()
                         .url(SqlSessionUtils.buildMySQLDatabaseUrl(this.datasource.getIp(), this.datasource.getPort(), DatasourceEnum.MYSQL.getSchemaName(), this.template.getDatabaseName()))
@@ -745,7 +749,7 @@ public class IndexController extends BaseController {
     }
 
     public void open(ActionEvent actionEvent) {
-        TemplateController controller = (TemplateController) loadPage("Template Manager", FXMLPageEnum.TEMPLATE, Boolean.FALSE);
+        TemplateController controller = (TemplateController) loadPage(ResourceBundleUtil.getProperty("TemplateManager"), FXMLPageEnum.TEMPLATE, Boolean.FALSE);
         controller.setIndexController(this);
         controller.showDialogStage();
     }
@@ -759,9 +763,18 @@ public class IndexController extends BaseController {
     }
 
     public void about(ActionEvent actionEvent) {
-        AboutController controller = (AboutController) loadPage("About Codegen", FXMLPageEnum.ABOUT, Boolean.FALSE, Boolean.TRUE);
+        AboutController controller = (AboutController) loadPage(ResourceBundleUtil.getProperty("AboutCodegen"), FXMLPageEnum.ABOUT, Boolean.FALSE, Boolean.TRUE);
         controller.setParentController(this);
         controller.showDialogStage();
     }
 
+    public void switchChinese(ActionEvent actionEvent) {
+        chineseMenuItem.setGraphic(ImageViewUtil.getImageView(ImageUtil.getImageUrl(CodegenConstant.ICON_SUBMIT), 16, 16));
+        englishMenuItem.setGraphic(null);
+    }
+
+    public void switchEnglish(ActionEvent actionEvent) {
+        chineseMenuItem.setGraphic(null);
+        englishMenuItem.setGraphic(ImageViewUtil.getImageView(ImageUtil.getImageUrl(CodegenConstant.ICON_SUBMIT), 16, 16));
+    }
 }

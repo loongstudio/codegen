@@ -3,15 +3,15 @@ package com.loongstudio.codegen;
 import com.loongstudio.codegen.constant.CodegenConstant;
 import com.loongstudio.codegen.enums.FXMLPageEnum;
 import com.loongstudio.codegen.util.ImageUtil;
+import com.loongstudio.codegen.util.ResourceBundleUtil;
 import com.loongstudio.codegen.util.StageUtil;
-import com.loongstudio.core.constant.CommonConstant;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-import org.apache.commons.lang3.StringUtils;
 
 import java.io.IOException;
+import java.util.ResourceBundle;
 
 public class CodegenApplication extends Application {
 
@@ -21,9 +21,10 @@ public class CodegenApplication extends Application {
 
     @Override
     public void start(Stage stage) throws IOException {
-        String resource = StringUtils.joinWith(CommonConstant.SLASH, CodegenConstant.FXML_DIRECTORY, FXMLPageEnum.INDEX.getFxml());
-        FXMLLoader fxmlLoader = new FXMLLoader(CodegenApplication.class.getResource(resource));
-        Scene scene = new Scene(fxmlLoader.load());
+        String resource = ResourceBundleUtil.getResource(FXMLPageEnum.INDEX.getFxml());
+        String i18nResource = ResourceBundleUtil.getBasename();
+        FXMLLoader loader = new FXMLLoader(CodegenApplication.class.getResource(resource), ResourceBundle.getBundle(i18nResource));
+        Scene scene = new Scene(loader.load());
         StageUtil.init(stage, scene, "Codegen", ImageUtil.getImage(CodegenConstant.ICON_LOGO));
     }
 

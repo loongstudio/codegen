@@ -14,7 +14,7 @@ import lombok.Getter;
 @AllArgsConstructor
 public enum FXMLPageEnum {
     /**
-     * 主页面
+     * Main page
      */
     INDEX("Index.fxml"),
     DATASOURCE("Datasource.fxml"),

@@ -1,5 +1,6 @@
 package com.loongstudio.codegen.component;
 
+import com.loongstudio.codegen.component.codegen.CodegenComponent;
 import com.loongstudio.codegen.model.CodegenModel;
 import org.junit.jupiter.api.Test;
 
@@ -36,7 +37,7 @@ class CodegenComponentTest {
 
     @Test
     void generate() {
-        com.loongstudio.codegen.component.codegen.CodegenComponent component = new com.loongstudio.codegen.component.codegen.CodegenComponent();
+        CodegenComponent component = new CodegenComponent();
         component.generate(
                 CodegenModel.builder()
                         .url(URL)

@@ -47,6 +47,7 @@ Learn more about Codegen at [https://loongstudio.github.io/docs/](https://loongs
 
 ### Features
 
+* **Internationalization Support**: Supports i18n 
 * **Dimplicity of operator**: Simple operation interface
 * **Dynamic datasource**: Supports dynamic data source switching
 * **User-Friendly**: Easy to use template management

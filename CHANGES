@@ -6,4 +6,8 @@ Changes in 1.0.0
 
 Changes in 1.1.0
 
- * To add a logo
+ * add logo
+
+Changes in 1.2.0
+
+ * support i18n

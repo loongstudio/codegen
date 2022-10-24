@@ -63,27 +63,27 @@
                   <RowConstraints vgrow="SOMETIMES" />
                </rowConstraints>
                <children>
-                  <Label fx:id="versionLabel" alignment="CENTER" text="Codegen 1.0.0 (Community Edition)" textAlignment="JUSTIFY" GridPane.columnIndex="1">
+                  <Label fx:id="versionLabel" alignment="CENTER" text="%VersionLabel" textAlignment="JUSTIFY" GridPane.columnIndex="1">
                      <font>
                         <Font name="System Bold Italic" size="16.0" />
                      </font>
                   </Label>
-                  <Label fx:id="dateLabel" text="Build on September 16,2022" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                  <Label fx:id="dateLabel" text="%DataLabel" GridPane.columnIndex="1" GridPane.rowIndex="1">
                      <font>
                         <Font size="14.0" />
                      </font>
                   </Label>
-                  <Label fx:id="copyrightLabel" text="Copyright © 2022–2022 Loongstudio" GridPane.columnIndex="1" GridPane.rowIndex="4">
+                  <Label fx:id="copyrightLabel" text="%CopyrightLabel" GridPane.columnIndex="1" GridPane.rowIndex="4">
                      <font>
                         <Font size="14.0" />
                      </font>
                   </Label>
-                  <Label fx:id="jdkVersionLabel" alignment="CENTER" text="Runtime version: 17.0.3.1+2-LTS-6 " textAlignment="JUSTIFY" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                  <Label fx:id="jdkVersionLabel" alignment="CENTER" text="%JdkVersionLabel" textAlignment="JUSTIFY" GridPane.columnIndex="1" GridPane.rowIndex="2">
                      <font>
                         <Font size="14.0" />
                      </font>
                   </Label>
-                  <Label fx:id="jdkSystemLabel" alignment="CENTER" text="AMD64VM: OpenJDK 64-Bit Server VM by Loongstudio" textAlignment="JUSTIFY" GridPane.columnIndex="1" GridPane.rowIndex="3">
+                  <Label fx:id="jdkSystemLabel" alignment="CENTER" text="%JdkSystemLabel" textAlignment="JUSTIFY" GridPane.columnIndex="1" GridPane.rowIndex="3">
                      <font>
                         <Font size="14.0" />
                      </font>
@@ -98,7 +98,7 @@
             </GridPane>
             <HBox alignment="CENTER_RIGHT" spacing="20.0">
                <children>
-                  <Button fx:id="okButton" mnemonicParsing="false" onAction="#ok" prefHeight="30.0" prefWidth="100.0" style="-fx-background-color: #5584FF; -fx-background-radius: 5;" text="OK" textAlignment="JUSTIFY" textFill="WHITE">
+                  <Button fx:id="okButton" mnemonicParsing="false" onAction="#ok" prefHeight="30.0" prefWidth="100.0" style="-fx-background-color: #5584FF; -fx-background-radius: 5;" text="%Confirm" textAlignment="JUSTIFY" textFill="WHITE">
                      <font>
                         <Font name="System Italic" size="15.0" />
                      </font>
@@ -109,7 +109,7 @@
                         <Insets />
                      </opaqueInsets>
                   </Button>
-                  <Button fx:id="copyButton" mnemonicParsing="false" onAction="#copy" prefHeight="30.0" prefWidth="100.0" style="-fx-background-color: white; -fx-border-color: #C4C6CF; -fx-border-radius: 5;" text="Copy" textAlignment="JUSTIFY">
+                  <Button fx:id="copyButton" mnemonicParsing="false" onAction="#copy" prefHeight="30.0" prefWidth="100.0" style="-fx-background-color: white; -fx-border-color: #C4C6CF; -fx-border-radius: 5;" text="%Copy" textAlignment="JUSTIFY">
                      <font>
                         <Font name="System Italic" size="15.0" />
                      </font>

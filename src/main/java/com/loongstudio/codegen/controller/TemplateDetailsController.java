@@ -4,6 +4,7 @@ import com.loongstudio.codegen.api.entity.Template;
 import com.loongstudio.codegen.api.mapper.TemplateMapper;
 import com.loongstudio.codegen.enums.OperationEnum;
 import com.loongstudio.codegen.model.TemplateModel;
+import com.loongstudio.codegen.util.ResourceBundleUtil;
 import com.loongstudio.codegen.util.SqlSessionUtils;
 import com.loongstudio.core.constant.CommonConstant;
 import javafx.event.ActionEvent;
@@ -218,7 +219,7 @@ public class TemplateDetailsController extends BaseController {
 
     public void choiceFolder(MouseEvent mouseEvent) {
         DirectoryChooser chooser = new DirectoryChooser();
-        chooser.setTitle("choice folder");
+        chooser.setTitle(ResourceBundleUtil.getProperty("ChoiceFolder"));
         chooser.setInitialDirectory(new File(System.getProperty("java.io.tmpdir")));
         File file = chooser.showDialog(getPrimaryStage());
         if (Objects.isNull(file)) {

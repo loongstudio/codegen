@@ -56,7 +56,7 @@
          <children>
             <HBox alignment="CENTER" prefHeight="100.0" style="-fx-background-color: white;">
                <children>
-                  <Text fx:id="titleText" fill="#5584ff" strokeType="OUTSIDE" strokeWidth="0.0" text="Datasource Manager" textAlignment="JUSTIFY">
+                  <Text fx:id="titleText" fill="#5584ff" strokeType="OUTSIDE" strokeWidth="0.0" text="%DatasourceManager" textAlignment="JUSTIFY">
                      <font>
                         <Font name="System Bold" size="20.0" />
                      </font>
@@ -85,18 +85,18 @@
                   <RowConstraints maxHeight="0.0" minHeight="0.0" prefHeight="0.0" vgrow="SOMETIMES" />
               </rowConstraints>
                <children>
-                  <Label text="Connection Name:" />
-                  <Label text="IP:" GridPane.rowIndex="1" />
-                  <Label text="Port:" GridPane.rowIndex="2" />
-                  <Label text="Username:" GridPane.rowIndex="3" />
-                  <Label text="Password:" GridPane.rowIndex="4" />
+                  <Label text="%ConnectionName" />
+                  <Label text="%Host" GridPane.rowIndex="1" />
+                  <Label text="%Port" GridPane.rowIndex="2" />
+                  <Label text="%Username" GridPane.rowIndex="3" />
+                  <Label text="%Password" GridPane.rowIndex="4" />
                   <Label text="Id" visible="false" GridPane.rowIndex="5" />
-                  <TextField fx:id="typeTextField" focusTraversable="false" promptText="Please enter connection name" visible="false" GridPane.columnIndex="1" />
-                  <TextField fx:id="connectNameTextField" focusTraversable="false" promptText="Please enter connection name" GridPane.columnIndex="1" />
-                  <TextField fx:id="ipTextField" focusTraversable="false" promptText="Please enter ip" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                  <TextField fx:id="portTextField" focusTraversable="false" promptText="Please enter port" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                  <TextField fx:id="usernameTextField" focusTraversable="false" promptText="Please enter username" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-                  <PasswordField fx:id="passwordField" focusTraversable="false" promptText="Please enter password" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                  <TextField fx:id="typeTextField" focusTraversable="false" promptText="%PleaseEnter" visible="false" GridPane.columnIndex="1" />
+                  <TextField fx:id="connectNameTextField" focusTraversable="false" promptText="%PleaseEnter" GridPane.columnIndex="1" />
+                  <TextField fx:id="ipTextField" focusTraversable="false" promptText="%PleaseEnter" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                  <TextField fx:id="portTextField" focusTraversable="false" promptText="%PleaseEnter" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                  <TextField fx:id="usernameTextField" focusTraversable="false" promptText="%PleaseEnter" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                  <PasswordField fx:id="passwordField" focusTraversable="false" promptText="%PleaseEnter" GridPane.columnIndex="1" GridPane.rowIndex="4" />
                   <TextField fx:id="idTextField" focusTraversable="false" visible="false" GridPane.columnIndex="1" GridPane.rowIndex="5" />
                </children>
                <opaqueInsets>
@@ -113,7 +113,7 @@
             </Separator>
             <HBox alignment="CENTER_RIGHT" prefHeight="100.0" spacing="20.0">
                <children>
-                  <Button fx:id="testButton" mnemonicParsing="false" onAction="#test" prefHeight="30.0" prefWidth="100.0" style="-fx-background-color: white; -fx-border-color: #5584FF; -fx-border-radius: 5;" text="test" textAlignment="JUSTIFY">
+                  <Button fx:id="testButton" mnemonicParsing="false" onAction="#test" prefHeight="30.0" prefWidth="100.0" style="-fx-background-color: white; -fx-border-color: #5584FF; -fx-border-radius: 5;" text="%Test" textAlignment="JUSTIFY">
                      <font>
                         <Font name="System Italic" size="15.0" />
                      </font>
@@ -121,7 +121,7 @@
                         <Insets />
                      </HBox.margin>
                   </Button>
-                  <Button fx:id="confirmButton" mnemonicParsing="false" onAction="#confirm" prefHeight="30.0" prefWidth="100.0" style="-fx-background-color: #5584FF; -fx-background-radius: 5;" text="confirm" textAlignment="JUSTIFY" textFill="WHITE">
+                  <Button fx:id="confirmButton" mnemonicParsing="false" onAction="#confirm" prefHeight="30.0" prefWidth="100.0" style="-fx-background-color: #5584FF; -fx-background-radius: 5;" text="%Confirm" textAlignment="JUSTIFY" textFill="WHITE">
                      <font>
                         <Font name="System Italic" size="15.0" />
                      </font>
@@ -132,7 +132,7 @@
                         <Insets />
                      </opaqueInsets>
                   </Button>
-                  <Button fx:id="cancelButton" mnemonicParsing="false" onAction="#cancel" prefHeight="30.0" prefWidth="100.0" style="-fx-background-color: white; -fx-border-color: #C4C6CF; -fx-border-radius: 5;" text="cancel" textAlignment="JUSTIFY">
+                  <Button fx:id="cancelButton" mnemonicParsing="false" onAction="#cancel" prefHeight="30.0" prefWidth="100.0" style="-fx-background-color: white; -fx-border-color: #C4C6CF; -fx-border-radius: 5;" text="%Cancel" textAlignment="JUSTIFY">
                      <font>
                         <Font name="System Italic" size="15.0" />
                      </font>

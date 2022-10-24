@@ -15,6 +15,12 @@ public abstract class CodegenConstant {
 
     public static final String FXML_DIRECTORY = "fxml";
 
+    public static final String CODEGEN_DIRECTORY = "com/loongstudio/codegen";
+
+    public static final String I18N_DIRECTORY = "i18n";
+
+    public static final String LANGUAGE = "language";
+
     public static final String DB_DIRECTORY = "db";
 
     public static final String DB_NAME = "codegen.db";
