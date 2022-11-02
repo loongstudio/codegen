@@ -53,7 +53,7 @@ Longstudio Codegen是基于Mybatis的开源Restful API 代码生成器.
 * **方便使用**: 易于使用的模板管理
 * **快捷搜索**: 方便的树视图搜索操作
 * **代码生成**: 快速生成Restful API模板代码
-* **支持多数据源**: 包括MySQL、Mariadb、SQLite和Postgresql...
+* **支持多数据源**: 包括MySQL、Mariadb、Oracle、SQLite和Postgresql...
 
 ### 开发
 

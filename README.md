@@ -53,7 +53,7 @@ Learn more about Codegen at [codegen-doc](https://loongstudio.github.io/codegen-
 * **User-Friendly**: Easy to use template management
 * **Open Shortcuts**: Convenient tree view search operation
 * **Code generation**: Quickly generate Restful API template code
-* **Multiple Data Source**: Include MySQL、Mariadb、SQLite and Postgresql...
+* **Multiple Data Source**: Include MySQL、Mariadb、Oracle、SQLite and Postgresql...
 
 ### Development
 
