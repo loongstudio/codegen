@@ -4,31 +4,33 @@ import com.loongstudio.codegen.App;
 import com.loongstudio.codegen.api.entity.Datasource;
 import com.loongstudio.codegen.api.entity.Template;
 import com.loongstudio.codegen.api.mapper.DatasourceMapper;
-import com.loongstudio.codegen.constant.CodegenConstant;
 import com.loongstudio.codegen.enums.DatasourceEnum;
 import com.loongstudio.codegen.util.AlertUtil;
 import com.loongstudio.codegen.util.CheckUtil;
 import com.loongstudio.codegen.util.ResourceBundleUtil;
 import com.loongstudio.codegen.util.SqlSessionUtils;
 import com.loongstudio.core.toolkit.Sequence;
-import com.loongstudio.core.util.IPUtil;
 import javafx.event.ActionEvent;
 import javafx.scene.control.*;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.text.Text;
+import javafx.stage.DirectoryChooser;
+import javafx.stage.FileChooser;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.ibatis.session.SqlSession;
 
+import java.io.File;
 import java.net.URL;
 import java.util.List;
 import java.util.Objects;
 import java.util.ResourceBundle;
 
 /**
- * Datasource Controller
+ * SQLite Controller
  *
  * @author KunLong-Luo
  * @since 2022/09/25 18:08
@@ -36,13 +38,9 @@ import java.util.ResourceBundle;
 @Slf4j
 @Getter
 @Setter
-public class DatasourceController extends BaseController {
+public class SQLiteController extends BaseController {
 
     public TextField connectNameTextField;
-
-    public TextField ipTextField;
-
-    public TextField portTextField;
 
     public TextField usernameTextField;
 
@@ -62,9 +60,13 @@ public class DatasourceController extends BaseController {
 
     public TableView<Template> templateTableView;
 
-    private IndexController indexController;
+    public TextField urlTextField;
 
     public BorderPane rootBorderPane;
+
+    public Button choiceButton;
+
+    private IndexController indexController;
 
     private TreeItem<String> oldTreeItem;
 
@@ -82,12 +84,8 @@ public class DatasourceController extends BaseController {
         titleText.setText(ResourceBundleUtil.getProperty("SaveConnection"));
         typeTextField.setText(datasourceType.toString());
         idTextField.setText(null);
-        typeTextField.setText(null);
         connectNameTextField.setText(null);
-        ipTextField.setText(null);
-        portTextField.setText(null);
-        usernameTextField.setText(null);
-        passwordField.setText(null);
+        urlTextField.setText(null);
     }
 
     public void edit(Datasource datasource, TreeItem<String> treeItem) {
@@ -97,8 +95,8 @@ public class DatasourceController extends BaseController {
         }
 
         try {
-            CheckUtil.checkStringParam(List.of(datasource.getId(), datasource.getName(), datasource.getUsername(), datasource.getPassword()));
-            CheckUtil.checkIntegerParam(List.of(datasource.getType(), datasource.getIp(), datasource.getPort()));
+            CheckUtil.checkStringParam(List.of(datasource.getId(), datasource.getName(), datasource.getUrl()));
+            CheckUtil.checkIntegerParam(List.of(datasource.getType()));
         } catch (IllegalArgumentException e) {
             AlertUtil.warn(ResourceBundleUtil.getProperty("NullPointerException"));
             return;
@@ -109,31 +107,19 @@ public class DatasourceController extends BaseController {
         idTextField.setText(datasource.getId());
         typeTextField.setText(datasource.getType().toString());
         connectNameTextField.setText(datasource.getName());
-        ipTextField.setText(IPUtil.toString(datasource.getIp()));
-        portTextField.setText(datasource.getPort().toString());
-        usernameTextField.setText(datasource.getUsername());
-        passwordField.setText(datasource.getPassword());
+        urlTextField.setText(datasource.getUrl());
     }
 
     public void test(ActionEvent actionEvent) {
         log.debug("===== test connection. =====");
-
         try {
-            typeTextField.setText(Integer.toString(DatasourceEnum.MYSQL.ordinal()));
-            CheckUtil.checkStringParam(List.of(connectNameTextField.getText(), typeTextField.getText(), ipTextField.getText(), portTextField.getText(), usernameTextField.getText(), passwordField.getText()));
+            typeTextField.setText(Integer.toString(DatasourceEnum.SQLITE.ordinal()));
+            CheckUtil.checkStringParam(List.of(connectNameTextField.getText(), typeTextField.getText()));
 
             Datasource datasource = new Datasource();
             datasource.setName(connectNameTextField.getText());
             datasource.setType(Integer.parseInt(typeTextField.getText()));
-
-            String ip = ipTextField.getText();
-            if (StringUtils.equals(CodegenConstant.LOCALHOST, ip)) {
-                ip = CodegenConstant.IP;
-            }
-            datasource.setIp(IPUtil.toInteger(ip));
-            datasource.setPort(Integer.parseInt(portTextField.getText()));
-            datasource.setUsername(usernameTextField.getText());
-            datasource.setPassword(passwordField.getText());
+            datasource.setUrl(urlTextField.getText());
 
             SqlSessionUtils.test(datasource);
             AlertUtil.info(ResourceBundleUtil.getProperty("Success"));
@@ -146,7 +132,7 @@ public class DatasourceController extends BaseController {
     public void confirm(ActionEvent actionEvent) {
         log.debug("===== confirm connection. =====");
         try {
-            CheckUtil.checkStringParam(List.of(connectNameTextField.getText(), typeTextField.getText(), ipTextField.getText(), portTextField.getText(), usernameTextField.getText(), passwordField.getText()));
+            CheckUtil.checkStringParam(List.of(connectNameTextField.getText(), typeTextField.getText(), urlTextField.getText()));
         } catch (IllegalArgumentException e) {
             AlertUtil.warn(ResourceBundleUtil.getProperty("NullPointerException"));
             return;
@@ -154,22 +140,12 @@ public class DatasourceController extends BaseController {
         String id = idTextField.getText();
         String connectName = connectNameTextField.getText();
         String type = typeTextField.getText();
-        String ip = ipTextField.getText();
-        String port = portTextField.getText();
-        String username = usernameTextField.getText();
-        String password = passwordField.getText();
-
-        if (StringUtils.equals(CodegenConstant.LOCALHOST, ip)) {
-            ip = CodegenConstant.IP;
-        }
+        String url = urlTextField.getText();
 
         Datasource datasource = new Datasource();
         datasource.setName(connectName);
         datasource.setType(Integer.parseInt(type));
-        datasource.setIp(IPUtil.toInteger(ip));
-        datasource.setPort(Integer.parseInt(port));
-        datasource.setUsername(username);
-        datasource.setPassword(password);
+        datasource.setUrl(url);
 
         try {
             SqlSessionUtils.test(datasource);
@@ -203,11 +179,20 @@ public class DatasourceController extends BaseController {
         idTextField.setText(null);
         typeTextField.setText(null);
         connectNameTextField.setText(null);
-        ipTextField.setText(null);
-        portTextField.setText(null);
-        usernameTextField.setText(null);
-        passwordField.setText(null);
+        urlTextField.setText(null);
         closeDialogStage();
+    }
+
+    public void choiceFolder(MouseEvent mouseEvent) {
+        FileChooser chooser = new FileChooser();
+        chooser.setTitle(ResourceBundleUtil.getProperty("ChoiceFolder"));
+        chooser.setInitialDirectory(new File(System.getProperty("java.io.tmpdir")));
+        File file = chooser.showOpenDialog(getPrimaryStage());
+        if (Objects.isNull(file)) {
+            return;
+        }
+        this.urlTextField.setText(file.getPath());
+        log.debug("folder path: {}", file.getPath());
     }
 
 }

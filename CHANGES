@@ -11,3 +11,8 @@ Changes in 1.1.0
 Changes in 1.2.0
 
  * support i18n
+
+Changes in 1.2.1
+
+ * add oracle data source
+ * fix some bug

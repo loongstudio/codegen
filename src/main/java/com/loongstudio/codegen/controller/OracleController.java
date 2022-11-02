@@ -28,7 +28,7 @@ import java.util.Objects;
 import java.util.ResourceBundle;
 
 /**
- * Datasource Controller
+ * Oracle Controller
  *
  * @author KunLong-Luo
  * @since 2022/09/25 18:08
@@ -36,7 +36,7 @@ import java.util.ResourceBundle;
 @Slf4j
 @Getter
 @Setter
-public class DatasourceController extends BaseController {
+public class OracleController extends BaseController {
 
     public TextField connectNameTextField;
 
@@ -60,13 +60,21 @@ public class DatasourceController extends BaseController {
 
     public TextField typeTextField;
 
-    public TableView<Template> templateTableView;
-
-    private IndexController indexController;
+    public ComboBox<String> roleComboBox;
 
     public BorderPane rootBorderPane;
 
+    public TextField serviceNameTextField;
+
+    public ToggleGroup service;
+
+    private IndexController indexController;
+
+    public TableView<Template> templateTableView;
+
     private TreeItem<String> oldTreeItem;
+
+    private String selected;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -82,12 +90,14 @@ public class DatasourceController extends BaseController {
         titleText.setText(ResourceBundleUtil.getProperty("SaveConnection"));
         typeTextField.setText(datasourceType.toString());
         idTextField.setText(null);
-        typeTextField.setText(null);
         connectNameTextField.setText(null);
         ipTextField.setText(null);
         portTextField.setText(null);
         usernameTextField.setText(null);
         passwordField.setText(null);
+        serviceNameTextField.setText(null);
+        roleComboBox.getItems().addAll("Default", "SYSDBA", "SYSOPER", "SYSBACKUP", "SYSDG", "SYSKM", "SYSASM");
+        roleComboBox.setEditable(Boolean.TRUE);
     }
 
     public void edit(Datasource datasource, TreeItem<String> treeItem) {
@@ -113,27 +123,33 @@ public class DatasourceController extends BaseController {
         portTextField.setText(datasource.getPort().toString());
         usernameTextField.setText(datasource.getUsername());
         passwordField.setText(datasource.getPassword());
+        serviceNameTextField.setText(datasource.getUrl());
     }
 
     public void test(ActionEvent actionEvent) {
         log.debug("===== test connection. =====");
 
         try {
-            typeTextField.setText(Integer.toString(DatasourceEnum.MYSQL.ordinal()));
-            CheckUtil.checkStringParam(List.of(connectNameTextField.getText(), typeTextField.getText(), ipTextField.getText(), portTextField.getText(), usernameTextField.getText(), passwordField.getText()));
-
-            Datasource datasource = new Datasource();
-            datasource.setName(connectNameTextField.getText());
-            datasource.setType(Integer.parseInt(typeTextField.getText()));
-
+            typeTextField.setText(Integer.toString(DatasourceEnum.ORACLE.ordinal()));
+            try {
+                CheckUtil.checkStringParam(List.of(connectNameTextField.getText(), typeTextField.getText(), ipTextField.getText(), portTextField.getText(), usernameTextField.getText(), passwordField.getText()));
+            } catch (IllegalArgumentException e) {
+                AlertUtil.warn(ResourceBundleUtil.getProperty("NullPointerException"));
+                return;
+            }
             String ip = ipTextField.getText();
             if (StringUtils.equals(CodegenConstant.LOCALHOST, ip)) {
                 ip = CodegenConstant.IP;
             }
+
+            Datasource datasource = new Datasource();
+            datasource.setName(connectNameTextField.getText());
+            datasource.setType(Integer.parseInt(typeTextField.getText()));
             datasource.setIp(IPUtil.toInteger(ip));
             datasource.setPort(Integer.parseInt(portTextField.getText()));
-            datasource.setUsername(usernameTextField.getText());
+            datasource.setUsername(usernameTextField.getText() + " as " + roleComboBox.getValue().toLowerCase());
             datasource.setPassword(passwordField.getText());
+            datasource.setUrl(serviceNameTextField.getText());
 
             SqlSessionUtils.test(datasource);
             AlertUtil.info(ResourceBundleUtil.getProperty("Success"));
@@ -145,38 +161,22 @@ public class DatasourceController extends BaseController {
 
     public void confirm(ActionEvent actionEvent) {
         log.debug("===== confirm connection. =====");
-        try {
-            CheckUtil.checkStringParam(List.of(connectNameTextField.getText(), typeTextField.getText(), ipTextField.getText(), portTextField.getText(), usernameTextField.getText(), passwordField.getText()));
-        } catch (IllegalArgumentException e) {
-            AlertUtil.warn(ResourceBundleUtil.getProperty("NullPointerException"));
-            return;
-        }
-        String id = idTextField.getText();
-        String connectName = connectNameTextField.getText();
-        String type = typeTextField.getText();
-        String ip = ipTextField.getText();
-        String port = portTextField.getText();
-        String username = usernameTextField.getText();
-        String password = passwordField.getText();
+        test(actionEvent);
 
+        typeTextField.setText(Integer.toString(DatasourceEnum.ORACLE.ordinal()));
+        String id = idTextField.getText();
+        String ip = ipTextField.getText();
         if (StringUtils.equals(CodegenConstant.LOCALHOST, ip)) {
             ip = CodegenConstant.IP;
         }
-
         Datasource datasource = new Datasource();
-        datasource.setName(connectName);
-        datasource.setType(Integer.parseInt(type));
+        datasource.setName(connectNameTextField.getText());
+        datasource.setType(Integer.parseInt(typeTextField.getText()));
         datasource.setIp(IPUtil.toInteger(ip));
-        datasource.setPort(Integer.parseInt(port));
-        datasource.setUsername(username);
-        datasource.setPassword(password);
-
-        try {
-            SqlSessionUtils.test(datasource);
-        } catch (RuntimeException e) {
-            AlertUtil.error(ResourceBundleUtil.getProperty("Failure"));
-            return;
-        }
+        datasource.setPort(Integer.parseInt(portTextField.getText()));
+        datasource.setUsername(usernameTextField.getText() + " as " + roleComboBox.getValue().toLowerCase());
+        datasource.setPassword(passwordField.getText());
+        datasource.setUrl(serviceNameTextField.getText());
 
         try (SqlSession session = SqlSessionUtils.buildSessionFactory().openSession(Boolean.TRUE)) {
             DatasourceMapper mapper = session.getMapper(DatasourceMapper.class);
@@ -207,6 +207,7 @@ public class DatasourceController extends BaseController {
         portTextField.setText(null);
         usernameTextField.setText(null);
         passwordField.setText(null);
+        serviceNameTextField.setText(null);
         closeDialogStage();
     }
 

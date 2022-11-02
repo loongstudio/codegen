@@ -47,6 +47,10 @@
                 <Menu mnemonicParsing="false" text="%Datasource">
                     <items>
                         <MenuItem mnemonicParsing="false" onAction="#createMySQLDatasource" text="MySQL"/>
+                        <MenuItem mnemonicParsing="false" onAction="#createSQLiteDatasource" text="SQLite"/>
+                        <MenuItem mnemonicParsing="false" onAction="#createMariaDBDatasource" text="MariaDB"/>
+                        <MenuItem mnemonicParsing="false" onAction="#createPostgreSQLDatasource" text="PostgreSQL"/>
+                        <MenuItem mnemonicParsing="false" onAction="#createOracleDatasource" text="Oracle"/>
                     </items>
                 </Menu>
                 <Menu mnemonicParsing="false" onShown="#openRecentMenu" text="%Template">

@@ -23,7 +23,10 @@ public enum DatasourceEnum {
      * Datasource Enum
      */
     MYSQL("jdbc:mysql:", "com.mysql.cj.jdbc.Driver"),
-    SQLITE("jdbc:sqlite:", "org.sqlite.JDBC");
+    SQLITE("jdbc:sqlite:", "org.sqlite.JDBC"),
+    MARIA_DB("jdbc:mariadb:", "org.mariadb.jdbc.Driver"),
+    POSTGRESQL("jdbc:postgresql:", "org.postgresql.Driver"),
+    ORACLE("jdbc:oracle:thin:", "oracle.jdbc.OracleDriver");
 
     private final String schemaName;
 

@@ -13,6 +13,8 @@ import com.loongstudio.codegen.enums.DatasourceEnum;
 import com.loongstudio.codegen.enums.FXMLPageEnum;
 import com.loongstudio.codegen.enums.ItemTypeEnum;
 import com.loongstudio.codegen.mapper.MySQLMapper;
+import com.loongstudio.codegen.mapper.OracleMapper;
+import com.loongstudio.codegen.mapper.PostgresqlMapper;
 import com.loongstudio.codegen.model.CodegenModel;
 import com.loongstudio.codegen.model.DatasourceModel;
 import com.loongstudio.codegen.model.TreeItemModel;
@@ -448,7 +450,10 @@ public class IndexController extends BaseController {
             switch (datasourceEnum) {
                 case MYSQL -> mysqlImages.setImage(ImageUtil.getImage(CodegenConstant.ICON_MYSQL_ACTIVE));
                 case SQLITE -> mysqlImages.setImage(ImageUtil.getImage(CodegenConstant.ICON_SQLITE_ACTIVE));
-                default -> log.debug("===== default type: {}. =====", datasourceEnum.getSchemaName());
+                case MARIA_DB -> mysqlImages.setImage(ImageUtil.getImage(CodegenConstant.ICON_MARIA_DB_ACTIVE));
+                case POSTGRESQL -> mysqlImages.setImage(ImageUtil.getImage(CodegenConstant.ICON_POSTGRESQL_ACTIVE));
+                case ORACLE -> mysqlImages.setImage(ImageUtil.getImage(CodegenConstant.ICON_ORACLE_ACTIVE));
+                default -> mysqlImages.setImage(ImageUtil.getImage(CodegenConstant.ICON_DATASOURCE_ACTIVE));
             }
             treeItem.setExpanded(Boolean.TRUE);
             changeStatus(DATASOURCE_CACHE, datasource, Boolean.TRUE);
@@ -461,6 +466,9 @@ public class IndexController extends BaseController {
             switch (datasourceEnum) {
                 case MYSQL -> mysqlImages.setImage(ImageUtil.getImage(CodegenConstant.ICON_MYSQL));
                 case SQLITE -> mysqlImages.setImage(ImageUtil.getImage(CodegenConstant.ICON_SQLITE));
+                case MARIA_DB -> mysqlImages.setImage(ImageUtil.getImage(CodegenConstant.ICON_MARIA_DB));
+                case POSTGRESQL -> mysqlImages.setImage(ImageUtil.getImage(CodegenConstant.ICON_POSTGRESQL));
+                case ORACLE -> mysqlImages.setImage(ImageUtil.getImage(CodegenConstant.ICON_ORACLE));
                 default -> log.debug("===== default type: {}. =====", datasourceEnum.getSchemaName());
             }
             changeStatus(DATASOURCE_CACHE, datasource, Boolean.FALSE);
@@ -473,10 +481,40 @@ public class IndexController extends BaseController {
         MenuItem editItem = new MenuItem(ResourceBundleUtil.getProperty("EditConnection"));
         editItem.setOnAction(event1 -> {
             log.debug("===== edit connection. =====");
-            DatasourceController controller = (DatasourceController) loadPage("Edit Connection", FXMLPageEnum.DATASOURCE, Boolean.FALSE, Boolean.FALSE);
-            controller.setIndexController(this);
-            controller.init(datasource, treeItem);
-            controller.showDialogStage();
+            switch (datasourceEnum) {
+                case MYSQL -> {
+                    DatasourceController controller = (DatasourceController) loadPage("Edit Connection", FXMLPageEnum.DATASOURCE, Boolean.FALSE, Boolean.FALSE);
+                    controller.setIndexController(this);
+                    controller.edit(datasource, treeItem);
+                    controller.showDialogStage();
+                }
+                case SQLITE -> {
+                    SQLiteController controller = (SQLiteController) loadPage("Edit Connection", FXMLPageEnum.SQLITE_DATASOURCE, Boolean.FALSE, Boolean.FALSE);
+                    controller.setIndexController(this);
+                    controller.edit(datasource, treeItem);
+                    controller.showDialogStage();
+                }
+                case MARIA_DB -> {
+                    MariaController controller = (MariaController) loadPage("Edit Connection", FXMLPageEnum.MARIA_DATASOURCE, Boolean.FALSE, Boolean.FALSE);
+                    controller.setIndexController(this);
+                    controller.edit(datasource, treeItem);
+                    controller.showDialogStage();
+                }
+                case POSTGRESQL -> {
+                    PostgreSQLController controller = (PostgreSQLController) loadPage("Edit Connection", FXMLPageEnum.POSTGRESQL_DATASOURCE, Boolean.FALSE, Boolean.FALSE);
+                    controller.setIndexController(this);
+                    controller.edit(datasource, treeItem);
+                    controller.showDialogStage();
+                }
+                case ORACLE -> {
+                    OracleController controller = (OracleController) loadPage("Edit Connection", FXMLPageEnum.ORACLE_DATASOURCE, Boolean.FALSE, Boolean.FALSE);
+                    controller.setIndexController(this);
+                    controller.edit(datasource, treeItem);
+                    controller.showDialogStage();
+                }
+                default -> log.debug("===== default type: {}. =====", datasourceEnum.getSchemaName());
+            }
+
             databasesTreeView.refresh();
         });
 
@@ -566,6 +604,24 @@ public class IndexController extends BaseController {
                 }
                 graphic.setImage(ImageUtil.getImage(CodegenConstant.ICON_SQLITE_ACTIVE));
             }
+            case MARIA_DB -> {
+                try (SqlSession session = SqlSessionUtils.buildSessionFactory(config).openSession(Boolean.TRUE)) {
+                    databaseList = session.getMapper(MySQLMapper.class).showDatabases();
+                }
+                graphic.setImage(ImageUtil.getImage(CodegenConstant.ICON_MARIA_DB_ACTIVE));
+            }
+            case POSTGRESQL -> {
+                try (SqlSession session = SqlSessionUtils.buildSessionFactory(config).openSession(Boolean.TRUE)) {
+                    databaseList = session.getMapper(PostgresqlMapper.class).showDatabases();
+                }
+                graphic.setImage(ImageUtil.getImage(CodegenConstant.ICON_POSTGRESQL_ACTIVE));
+            }
+            case ORACLE -> {
+                try (SqlSession session = SqlSessionUtils.buildSessionFactory(config).openSession(Boolean.TRUE)) {
+                    databaseList = session.getMapper(OracleMapper.class).showDatabases();
+                }
+                graphic.setImage(ImageUtil.getImage(CodegenConstant.ICON_ORACLE_ACTIVE));
+            }
             default -> log.debug("===== default type: {}. =====", datasourceEnum.getSchemaName());
         }
         initView(treeItem, datasource, databaseList, CodegenConstant.ICON_DATABASE, ItemTypeEnum.DATABASE);
@@ -589,7 +645,7 @@ public class IndexController extends BaseController {
         BeanUtils.copyProperties(datasource, config);
         config.setDatabaseName(treeItem.getValue());
         switch (datasourceEnum) {
-            case MYSQL -> {
+            case MYSQL, MARIA_DB -> {
                 try (SqlSession session = SqlSessionUtils.buildSessionFactory(config).openSession(Boolean.TRUE)) {
                     tableNameList = session.getMapper(MySQLMapper.class).showTables();
                 }
@@ -597,6 +653,16 @@ public class IndexController extends BaseController {
             case SQLITE -> {
                 try (SqlSession session = SqlSessionUtils.buildSessionFactory(config).openSession(Boolean.TRUE)) {
                     tableNameList = session.getMapper(SQLiteMapper.class).showTables();
+                }
+            }
+            case POSTGRESQL -> {
+                try (SqlSession session = SqlSessionUtils.buildSessionFactory(config).openSession(Boolean.TRUE)) {
+                    tableNameList = session.getMapper(PostgresqlMapper.class).showTables();
+                }
+            }
+            case ORACLE -> {
+                try (SqlSession session = SqlSessionUtils.buildSessionFactory(config).openSession(Boolean.TRUE)) {
+                    tableNameList = session.getMapper(OracleMapper.class).showTables();
                 }
             }
             default -> log.debug("===== default type: {}. =====", datasourceEnum.getSchemaName());
@@ -626,7 +692,39 @@ public class IndexController extends BaseController {
         log.debug("===== create MySQL datasource =====");
         DatasourceController controller = (DatasourceController) loadPage(ResourceBundleUtil.getProperty("SaveConnection"), FXMLPageEnum.DATASOURCE, Boolean.FALSE, Boolean.FALSE);
         controller.setIndexController(this);
-        controller.init(null, 0);
+        controller.init(DatasourceEnum.MYSQL.ordinal());
+        controller.showDialogStage();
+    }
+
+    public void createSQLiteDatasource(ActionEvent actionEvent) {
+        log.debug("===== create SQLite datasource =====");
+        SQLiteController controller = (SQLiteController) loadPage(ResourceBundleUtil.getProperty("SaveConnection"), FXMLPageEnum.SQLITE_DATASOURCE, Boolean.FALSE, Boolean.FALSE);
+        controller.setIndexController(this);
+        controller.init(DatasourceEnum.SQLITE.ordinal());
+        controller.showDialogStage();
+    }
+
+    public void createMariaDBDatasource(ActionEvent actionEvent) {
+        log.debug("===== create MariaDB datasource =====");
+        MariaController controller = (MariaController) loadPage(ResourceBundleUtil.getProperty("SaveConnection"), FXMLPageEnum.MARIA_DATASOURCE, Boolean.FALSE, Boolean.FALSE);
+        controller.setIndexController(this);
+        controller.init(DatasourceEnum.MARIA_DB.ordinal());
+        controller.showDialogStage();
+    }
+
+    public void createPostgreSQLDatasource(ActionEvent actionEvent) {
+        log.debug("===== create PostgreSQL datasource =====");
+        PostgreSQLController controller = (PostgreSQLController) loadPage(ResourceBundleUtil.getProperty("SaveConnection"), FXMLPageEnum.POSTGRESQL_DATASOURCE, Boolean.FALSE, Boolean.FALSE);
+        controller.setIndexController(this);
+        controller.init(DatasourceEnum.POSTGRESQL.ordinal());
+        controller.showDialogStage();
+    }
+
+    public void createOracleDatasource(ActionEvent actionEvent) {
+        log.debug("===== create Oracle datasource =====");
+        OracleController controller = (OracleController) loadPage(ResourceBundleUtil.getProperty("SaveConnection"), FXMLPageEnum.ORACLE_DATASOURCE, Boolean.FALSE, Boolean.FALSE);
+        controller.setIndexController(this);
+        controller.init(DatasourceEnum.ORACLE.ordinal());
         controller.showDialogStage();
     }
 
@@ -734,9 +832,12 @@ public class IndexController extends BaseController {
             return;
         }
         CodegenComponent component = App.applicationContext.getBean(CodegenComponent.class);
+        DatasourceEnum datasourceEnum = DatasourceEnum.match(datasource.getType());
+        DatasourceModel config = new DatasourceModel();
+        BeanUtils.copyProperties(datasource, config);
         component.generate(
                 CodegenModel.builder()
-                        .url(SqlSessionUtils.buildMySQLDatabaseUrl(this.datasource.getIp(), this.datasource.getPort(), DatasourceEnum.MYSQL.getSchemaName(), this.template.getDatabaseName()))
+                        .url(SqlSessionUtils.buildDatabaseUrl(config, datasourceEnum))
                         .username(this.datasource.getUsername())
                         .password(this.datasource.getPassword())
                         .tableList(List.of(this.template.getTableName()))
@@ -778,4 +879,5 @@ public class IndexController extends BaseController {
         chineseMenuItem.setGraphic(null);
         englishMenuItem.setGraphic(ImageViewUtil.getImageView(ImageUtil.getImageUrl(CodegenConstant.ICON_SUBMIT), 16, 16));
     }
+
 }

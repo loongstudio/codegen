@@ -18,6 +18,13 @@ public enum FXMLPageEnum {
      */
     INDEX("Index.fxml"),
     DATASOURCE("Datasource.fxml"),
+    MARIA_DATASOURCE("MariaDatasource.fxml"),
+
+    SQLITE_DATASOURCE("SQLiteDatasource.fxml"),
+
+    POSTGRESQL_DATASOURCE("PostgreSQLDatasource.fxml"),
+
+    ORACLE_DATASOURCE("OracleDatasource.fxml"),
     TEMPLATE("Template.fxml"),
     TEMPLATE_DETAILS("TemplateDetails.fxml"),
     ABOUT("About.fxml"),

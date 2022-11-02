@@ -191,13 +191,20 @@ public abstract class BaseController implements Initializable {
     }
 
     protected String getDatasourceImages(Datasource datasource, Boolean expanded) {
-        String image = null;
+        String image;
         switch (DatasourceEnum.match(datasource.getType())) {
             case MYSQL ->
                     image = ImageUtil.getImageUrl(expanded ? CodegenConstant.ICON_MYSQL_ACTIVE : CodegenConstant.ICON_MYSQL);
             case SQLITE ->
                     image = ImageUtil.getImageUrl(expanded ? CodegenConstant.ICON_SQLITE_ACTIVE : CodegenConstant.ICON_SQLITE);
-            default -> log.debug("===== default type. =====");
+            case MARIA_DB ->
+                    image = ImageUtil.getImageUrl(expanded ? CodegenConstant.ICON_MARIA_DB_ACTIVE : CodegenConstant.ICON_MARIA_DB);
+            case POSTGRESQL ->
+                    image = ImageUtil.getImageUrl(expanded ? CodegenConstant.ICON_POSTGRESQL_ACTIVE : CodegenConstant.ICON_POSTGRESQL);
+            case ORACLE ->
+                    image = ImageUtil.getImageUrl(expanded ? CodegenConstant.ICON_ORACLE_ACTIVE : CodegenConstant.ICON_ORACLE);
+            default ->
+                    image = ImageUtil.getImageUrl(expanded ? CodegenConstant.ICON_DATABASE_ACTIVE : CodegenConstant.ICON_DATABASE);
         }
         return image;
     }

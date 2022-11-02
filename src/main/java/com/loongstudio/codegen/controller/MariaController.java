@@ -28,7 +28,7 @@ import java.util.Objects;
 import java.util.ResourceBundle;
 
 /**
- * Datasource Controller
+ * Maria Controller
  *
  * @author KunLong-Luo
  * @since 2022/09/25 18:08
@@ -36,7 +36,7 @@ import java.util.ResourceBundle;
 @Slf4j
 @Getter
 @Setter
-public class DatasourceController extends BaseController {
+public class MariaController extends BaseController {
 
     public TextField connectNameTextField;
 
@@ -82,7 +82,6 @@ public class DatasourceController extends BaseController {
         titleText.setText(ResourceBundleUtil.getProperty("SaveConnection"));
         typeTextField.setText(datasourceType.toString());
         idTextField.setText(null);
-        typeTextField.setText(null);
         connectNameTextField.setText(null);
         ipTextField.setText(null);
         portTextField.setText(null);
@@ -119,7 +118,7 @@ public class DatasourceController extends BaseController {
         log.debug("===== test connection. =====");
 
         try {
-            typeTextField.setText(Integer.toString(DatasourceEnum.MYSQL.ordinal()));
+            typeTextField.setText(Integer.toString(DatasourceEnum.MARIA_DB.ordinal()));
             CheckUtil.checkStringParam(List.of(connectNameTextField.getText(), typeTextField.getText(), ipTextField.getText(), portTextField.getText(), usernameTextField.getText(), passwordField.getText()));
 
             Datasource datasource = new Datasource();

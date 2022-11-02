@@ -9,6 +9,10 @@ package com.loongstudio.codegen.constant;
  */
 public abstract class CodegenConstant {
 
+
+    public static final String LOCALHOST = "localhost";
+    public static final String IP = "127.0.0.1";
+
     public static final String STATIC_DIRECTORY = "static";
 
     public static final String ICON_DIRECTORY = "icon";
@@ -30,6 +34,10 @@ public abstract class CodegenConstant {
     /**
      * Images
      */
+    public static final String ICON_DATASOURCE = "datasource.png";
+
+    public static final String ICON_DATASOURCE_ACTIVE = "datasource_active.png";
+
     public static final String ICON_DATABASE = "database.png";
 
     public static final String ICON_DATABASE_ACTIVE = "database_active.png";
@@ -38,9 +46,21 @@ public abstract class CodegenConstant {
 
     public static final String ICON_MYSQL_ACTIVE = "mysql_active.png";
 
+    public static final String ICON_MARIA_DB = "maria_db.png";
+
+    public static final String ICON_MARIA_DB_ACTIVE = "maria_db_active.png";
+
     public static final String ICON_SQLITE = "sqlite.png";
 
     public static final String ICON_SQLITE_ACTIVE = "sqlite_active.png";
+
+    public static final String ICON_POSTGRESQL = "postgre_sql.png";
+
+    public static final String ICON_POSTGRESQL_ACTIVE = "postgre_sql_active.png";
+
+    public static final String ICON_ORACLE = "oracle.png";
+
+    public static final String ICON_ORACLE_ACTIVE = "oracle_active.png";
 
     public static final String ICON_TABLE = "table.png";
 

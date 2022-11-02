@@ -28,7 +28,7 @@ import java.util.Objects;
 import java.util.ResourceBundle;
 
 /**
- * Datasource Controller
+ * PostgreSQL Controller
  *
  * @author KunLong-Luo
  * @since 2022/09/25 18:08
@@ -36,7 +36,7 @@ import java.util.ResourceBundle;
 @Slf4j
 @Getter
 @Setter
-public class DatasourceController extends BaseController {
+public class PostgreSQLController extends BaseController {
 
     public TextField connectNameTextField;
 
@@ -60,11 +60,13 @@ public class DatasourceController extends BaseController {
 
     public TextField typeTextField;
 
+    public TextField initDatabaseTextField;
+
+    public BorderPane rootBorderPane;
+
     public TableView<Template> templateTableView;
 
     private IndexController indexController;
-
-    public BorderPane rootBorderPane;
 
     private TreeItem<String> oldTreeItem;
 
@@ -82,12 +84,12 @@ public class DatasourceController extends BaseController {
         titleText.setText(ResourceBundleUtil.getProperty("SaveConnection"));
         typeTextField.setText(datasourceType.toString());
         idTextField.setText(null);
-        typeTextField.setText(null);
         connectNameTextField.setText(null);
         ipTextField.setText(null);
         portTextField.setText(null);
         usernameTextField.setText(null);
         passwordField.setText(null);
+        initDatabaseTextField.setText("postgres");
     }
 
     public void edit(Datasource datasource, TreeItem<String> treeItem) {
@@ -113,13 +115,14 @@ public class DatasourceController extends BaseController {
         portTextField.setText(datasource.getPort().toString());
         usernameTextField.setText(datasource.getUsername());
         passwordField.setText(datasource.getPassword());
+        initDatabaseTextField.setText(datasource.getUrl());
     }
 
     public void test(ActionEvent actionEvent) {
         log.debug("===== test connection. =====");
 
         try {
-            typeTextField.setText(Integer.toString(DatasourceEnum.MYSQL.ordinal()));
+            typeTextField.setText(Integer.toString(DatasourceEnum.POSTGRESQL.ordinal()));
             CheckUtil.checkStringParam(List.of(connectNameTextField.getText(), typeTextField.getText(), ipTextField.getText(), portTextField.getText(), usernameTextField.getText(), passwordField.getText()));
 
             Datasource datasource = new Datasource();
@@ -134,6 +137,7 @@ public class DatasourceController extends BaseController {
             datasource.setPort(Integer.parseInt(portTextField.getText()));
             datasource.setUsername(usernameTextField.getText());
             datasource.setPassword(passwordField.getText());
+            datasource.setUrl(initDatabaseTextField.getText());
 
             SqlSessionUtils.test(datasource);
             AlertUtil.info(ResourceBundleUtil.getProperty("Success"));
@@ -158,6 +162,7 @@ public class DatasourceController extends BaseController {
         String port = portTextField.getText();
         String username = usernameTextField.getText();
         String password = passwordField.getText();
+        String initDatabase = initDatabaseTextField.getText();
 
         if (StringUtils.equals(CodegenConstant.LOCALHOST, ip)) {
             ip = CodegenConstant.IP;
@@ -170,6 +175,7 @@ public class DatasourceController extends BaseController {
         datasource.setPort(Integer.parseInt(port));
         datasource.setUsername(username);
         datasource.setPassword(password);
+        datasource.setUrl(initDatabase);
 
         try {
             SqlSessionUtils.test(datasource);
@@ -207,6 +213,7 @@ public class DatasourceController extends BaseController {
         portTextField.setText(null);
         usernameTextField.setText(null);
         passwordField.setText(null);
+        initDatabaseTextField.setText(null);
         closeDialogStage();
     }
 

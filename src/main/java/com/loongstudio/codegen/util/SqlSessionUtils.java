@@ -6,6 +6,7 @@ import com.loongstudio.codegen.component.datasource.HikariCPDatasourceFactory;
 import com.loongstudio.codegen.constant.CodegenConstant;
 import com.loongstudio.codegen.enums.DatasourceEnum;
 import com.loongstudio.codegen.mapper.MySQLMapper;
+import com.loongstudio.codegen.mapper.OracleMapper;
 import com.loongstudio.codegen.model.DatasourceModel;
 import com.loongstudio.core.constant.CommonConstant;
 import com.loongstudio.core.util.IPUtil;
@@ -47,8 +48,17 @@ public final class SqlSessionUtils {
         DatasourceModel config = new DatasourceModel();
         BeanUtils.copyProperties(datasource, config);
         try (SqlSession session = SqlSessionUtils.buildSessionFactory(config).openSession(Boolean.TRUE)) {
-            MySQLMapper mapper = session.getMapper(MySQLMapper.class);
-            mapper.test();
+            DatasourceEnum datasourceEnum = DatasourceEnum.match(config.getType());
+            switch (datasourceEnum) {
+                case ORACLE -> {
+                    OracleMapper mapper = session.getMapper(OracleMapper.class);
+                    mapper.test();
+                }
+                default -> {
+                    MySQLMapper mapper = session.getMapper(MySQLMapper.class);
+                    mapper.test();
+                }
+            }
         }
     }
 
@@ -145,8 +155,14 @@ public final class SqlSessionUtils {
             case SQLITE -> {
                 return buildSQLiteUrl(config.getUrl(), datasourceEnum.getSchemaName());
             }
-            case MYSQL -> {
+            case MYSQL, MARIA_DB -> {
                 return buildMySQLDatasourceUrl(config.getIp(), config.getPort(), datasourceEnum.getSchemaName());
+            }
+            case POSTGRESQL -> {
+                return buildPostgresqlDatasourceUrl(config.getIp(), config.getPort(), datasourceEnum.getSchemaName());
+            }
+            case ORACLE -> {
+                return buildOracleDatasourceUrl(config.getIp(), config.getPort(), datasourceEnum.getSchemaName(), config.getUrl());
             }
             default -> {
                 return null;
@@ -154,13 +170,19 @@ public final class SqlSessionUtils {
         }
     }
 
-    private static String buildDatabaseUrl(DatasourceModel config, DatasourceEnum datasourceEnum) {
+    public static String buildDatabaseUrl(DatasourceModel config, DatasourceEnum datasourceEnum) {
         switch (datasourceEnum) {
             case SQLITE -> {
                 return buildSQLiteUrl(config.getUrl(), datasourceEnum.getSchemaName());
             }
-            case MYSQL -> {
+            case MYSQL, MARIA_DB -> {
                 return buildMySQLDatabaseUrl(config.getIp(), config.getPort(), datasourceEnum.getSchemaName(), config.getDatabaseName());
+            }
+            case POSTGRESQL -> {
+                return buildPostgresqlDatabaseUrl(config.getIp(), config.getPort(), datasourceEnum.getSchemaName(), config.getDatabaseName());
+            }
+            case ORACLE -> {
+                return buildOracleDatabaseUrl(config.getIp(), config.getPort(), datasourceEnum.getSchemaName(), config.getUrl(), config.getDatabaseName());
             }
             default -> {
                 return null;
@@ -172,21 +194,35 @@ public final class SqlSessionUtils {
         return StringUtils.joinWith(CommonConstant.EMPTY, schemaName, url);
     }
 
-    private static String buildMySQLDatasourceUrl(Integer ip, Integer port, String schemaName) {
-        return new StringJoiner(CommonConstant.QUESTION)
-                .add(buildUrl(ip, port, schemaName))
-                .add(CodegenConstant.CONNECTION_PARAMETERS)
-                .toString();
+    private static String buildPostgresqlDatasourceUrl(Integer ip, Integer port, String schemaName) {
+        return new StringJoiner(CommonConstant.SLASH).add(buildUrl0(ip, port, schemaName)).add("").toString();
     }
 
-    public static String buildMySQLDatabaseUrl(Integer ip, Integer port, String schemaName, String databaseName) {
-        return new StringJoiner(CommonConstant.SLASH)
-                .add(buildUrl(ip, port, schemaName))
-                .add(new StringJoiner(CommonConstant.QUESTION).add(databaseName).add(CodegenConstant.CONNECTION_PARAMETERS).toString())
-                .toString();
+    private static String buildOracleDatasourceUrl(Integer ip, Integer port, String schemaName, String sid) {
+        return new StringJoiner(CommonConstant.SLASH).add(buildUrl(ip, port, schemaName)).add(sid).toString();
+    }
+
+    private static String buildMySQLDatasourceUrl(Integer ip, Integer port, String schemaName) {
+        return new StringJoiner(CommonConstant.QUESTION).add(buildUrl0(ip, port, schemaName)).add(CodegenConstant.CONNECTION_PARAMETERS).toString();
+    }
+
+    private static String buildMySQLDatabaseUrl(Integer ip, Integer port, String schemaName, String databaseName) {
+        return new StringJoiner(CommonConstant.SLASH).add(buildUrl0(ip, port, schemaName)).add(new StringJoiner(CommonConstant.QUESTION).add(databaseName).add(CodegenConstant.CONNECTION_PARAMETERS).toString()).toString();
+    }
+
+    private static String buildPostgresqlDatabaseUrl(Integer ip, Integer port, String schemaName, String databaseName) {
+        return new StringJoiner(CommonConstant.SLASH).add(buildUrl0(ip, port, schemaName)).add(databaseName).toString();
+    }
+
+    private static String buildOracleDatabaseUrl(Integer ip, Integer port, String schemaName, String sid, String databaseName) {
+        return new StringJoiner(CommonConstant.SLASH).add(buildOracleDatasourceUrl(ip, port, schemaName, sid)).add(databaseName).toString();
     }
 
     private static String buildUrl(Integer ip, Integer port, String schemaName) {
+        return new StringJoiner(CommonConstant.SLASH + CommonConstant.SLASH).add(StringUtils.joinWith(CommonConstant.AT, schemaName, CommonConstant.EMPTY)).add(StringUtils.joinWith(CommonConstant.COLON, IPUtil.toString(ip), port)).toString();
+    }
+
+    private static String buildUrl0(Integer ip, Integer port, String schemaName) {
         return new StringJoiner(CommonConstant.SLASH + CommonConstant.SLASH)
                 .add(schemaName)
                 .add(StringUtils.joinWith(CommonConstant.COLON, IPUtil.toString(ip), port))
