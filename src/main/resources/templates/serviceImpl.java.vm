@@ -46,14 +46,14 @@ public void delete(List<String> idList){
         }
 
 @Override
-public void exportExcel(HttpServletRequest request,HttpServletResponse response,Class<${entity}> clazz,OperationEntity.Excel excel,QueryWrapper<${entity}> queryWrapper,OperationEntity operationEntity)throws Exception{
-        POIUtil.exportExcel(request,response,clazz,excel,list(operationEntity,queryWrapper).getRecords());
+public void upload(MultipartFile file,Class<${entity}> clazz){
+        List<${entity}> entityList=(List<${entity}>)POIUtil.importExcel(file,clazz);
+        super.saveBatch(entityList,entityList.size());
         }
 
 @Override
-public void importExcel(MultipartFile file,Class<${entity}> clazz){
-        List<${entity}> entityList=(List<${entity}>)POIUtil.importExcel(file,clazz);
-        super.saveBatch(entityList,entityList.size());
+public void download(HttpServletRequest request,HttpServletResponse response,Class<${entity}> clazz,OperationEntity.Excel excel,QueryWrapper<${entity}> queryWrapper,OperationEntity operationEntity)throws Exception{
+        POIUtil.exportExcel(request,response,clazz,excel,list(operationEntity,queryWrapper).getRecords());
         }
 
         }

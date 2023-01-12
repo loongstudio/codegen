@@ -6,7 +6,7 @@ import lombok.Setter;
 import java.io.Serializable;
 
 /**
- * BaseEntity
+ * ParentEntity
  *
  * @author KunLong-Luo
  * @version 1.0.0

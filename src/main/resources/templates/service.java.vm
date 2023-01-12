@@ -22,7 +22,7 @@ public interface ${table.serviceName} extends ${superServiceClass}<${entity}> {
 
         void delete(List<String> idList);
 
-        void exportExcel(HttpServletRequest request, HttpServletResponse response, Class<${entity}> clazz, OperationEntity.Excel excel, QueryWrapper<${entity}> queryWrapper, OperationEntity operationEntity) throws Exception;
+        void upload(MultipartFile file, Class<${entity}> clazz);
 
-        void importExcel(MultipartFile file, Class<${entity}> clazz);
+        void download(HttpServletRequest request, HttpServletResponse response, Class<${entity}> clazz, OperationEntity.Excel excel, QueryWrapper<${entity}> queryWrapper, OperationEntity operationEntity) throws Exception;
 }

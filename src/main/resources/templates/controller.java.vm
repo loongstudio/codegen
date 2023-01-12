@@ -108,29 +108,29 @@ return Result.success();
 }
 
 /**
- * export excel
+ * upload excel
+ *
+ * @param file file
+ *
+ * @return {@link Result}<{@link ?}>
+ */
+@PostMapping(value = "/upload")
+public Result<?> upload(@RequestBody MultipartFile file){
+service.upload(file, ${entity}.class);
+return Result.success();
+}
+
+/**
+ * download excel
  *
  * @param request         request
  * @param response        response
  * @param entity          entity
  * @param operationEntity operationEntity
  */
-@GetMapping(value = "/exportExcel")
-public void exportExcel(HttpServletRequest request,HttpServletResponse response,${entity} entity, @RequestBody OperationEntity operationEntity) throws Exception{
-service.exportExcel(request, response, ${entity}.class, operationEntity.getExcel(), super.createQueryWrapper(entity, ${entity}.class, operationEntity), operationEntity);
-}
-
-/**
- * import excel
- *
- * @param file file
- *
- * @return {@link Result}<{@link ?}>
- */
-@PostMapping(value = "/importExcel")
-public Result<?> importExcel(@RequestBody MultipartFile file){
-service.importExcel(file, ${entity}.class);
-return Result.success();
+@GetMapping(value = "/download")
+public void download(HttpServletRequest request,HttpServletResponse response,${entity} entity, @RequestBody OperationEntity operationEntity) throws Exception{
+service.download(request, response, ${entity}.class, operationEntity.getExcel(), super.createQueryWrapper(entity, ${entity}.class, operationEntity), operationEntity);
 }
 
 }
