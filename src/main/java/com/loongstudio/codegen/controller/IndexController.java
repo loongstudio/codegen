@@ -835,6 +835,7 @@ public class IndexController extends BaseController {
         DatasourceEnum datasourceEnum = DatasourceEnum.match(datasource.getType());
         DatasourceModel config = new DatasourceModel();
         BeanUtils.copyProperties(datasource, config);
+        config.setDatabaseName(template.getDatabaseName());
         component.generate(
                 CodegenModel.builder()
                         .url(SqlSessionUtils.buildDatabaseUrl(config, datasourceEnum))
