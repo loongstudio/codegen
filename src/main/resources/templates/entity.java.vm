@@ -27,7 +27,7 @@ import lombok.experimental.Accessors;
 @Accessors(chain = true)
     #end
 #end
-@ExcelSheet(value = "$!{table.comment}表")
+@ExcelSheet(value = "$!{table.comment}")
 #if(${table.convert})
 @TableName("${schemaName}${table.name}")
 #end
