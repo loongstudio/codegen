@@ -60,9 +60,9 @@ public class TemplateDetailsController extends BaseController {
 
     public TextField descriptionTextField;
 
-    public TextField createdAtTextField;
+    public TextField createTimeTextField;
 
-    public TextField updatedAtTextField;
+    public TextField updateTimeTextField;
 
     public Text titleText;
 
@@ -82,8 +82,8 @@ public class TemplateDetailsController extends BaseController {
             folderTextField.setText(null);
             parentPackageTextField.setText(null);
             moduleTextField.setText(null);
-            createdAtTextField.setText(null);
-            updatedAtTextField.setText(null);
+            createTimeTextField.setText(null);
+            updateTimeTextField.setText(null);
             descriptionTextField.setText(null);
         }
 
@@ -97,8 +97,8 @@ public class TemplateDetailsController extends BaseController {
                 datasourceNameTextField.setText(null);
                 databaseNameTextField.setText(null);
                 tableNameTextField.setText(null);
-                createdAtTextField.setText(null);
-                updatedAtTextField.setText(null);
+                createTimeTextField.setText(null);
+                updateTimeTextField.setText(null);
                 descriptionTextField.setText(null);
             }
             case DELETE -> {
@@ -113,8 +113,8 @@ public class TemplateDetailsController extends BaseController {
                 datasourceNameTextField.setEditable(Boolean.FALSE);
                 databaseNameTextField.setEditable(Boolean.FALSE);
                 tableNameTextField.setEditable(Boolean.FALSE);
-                createdAtTextField.setEditable(Boolean.FALSE);
-                updatedAtTextField.setEditable(Boolean.FALSE);
+                createTimeTextField.setEditable(Boolean.FALSE);
+                updateTimeTextField.setEditable(Boolean.FALSE);
                 descriptionTextField.setEditable(Boolean.FALSE);
                 choiceButton.setDisable(Boolean.TRUE);
 
@@ -134,8 +134,8 @@ public class TemplateDetailsController extends BaseController {
                     databaseNameTextField.setText(strings[1]);
                     tableNameTextField.setText(strings[2]);
                 }
-                createdAtTextField.setText(currentTemplateModel.getCreatedAt());
-                updatedAtTextField.setText(currentTemplateModel.getUpdatedAt());
+                createTimeTextField.setText(currentTemplateModel.getCreateTime());
+                updateTimeTextField.setText(currentTemplateModel.getUpdateTime());
                 descriptionTextField.setText(currentTemplateModel.getDescription());
             }
             case EDIT -> {
@@ -148,15 +148,15 @@ public class TemplateDetailsController extends BaseController {
                 nameTextField.setEditable(Boolean.FALSE);
                 datasourceNameTextField.setEditable(Boolean.FALSE);
                 databaseNameTextField.setEditable(Boolean.FALSE);
-                createdAtTextField.setEditable(Boolean.FALSE);
-                updatedAtTextField.setEditable(Boolean.FALSE);
+                createTimeTextField.setEditable(Boolean.FALSE);
+                updateTimeTextField.setEditable(Boolean.FALSE);
 
                 idTextField.setDisable(Boolean.TRUE);
                 nameTextField.setDisable(Boolean.TRUE);
                 datasourceNameTextField.setDisable(Boolean.TRUE);
                 databaseNameTextField.setDisable(Boolean.TRUE);
-                createdAtTextField.setDisable(Boolean.TRUE);
-                updatedAtTextField.setDisable(Boolean.TRUE);
+                createTimeTextField.setDisable(Boolean.TRUE);
+                updateTimeTextField.setDisable(Boolean.TRUE);
 
                 choiceButton.setDisable(Boolean.FALSE);
                 parentPackageTextField.setDisable(Boolean.FALSE);
@@ -180,8 +180,8 @@ public class TemplateDetailsController extends BaseController {
                     databaseNameTextField.setText(strings[1]);
                     tableNameTextField.setText(strings[2]);
                 }
-                createdAtTextField.setText(currentTemplateModel.getCreatedAt());
-                updatedAtTextField.setText(currentTemplateModel.getUpdatedAt());
+                createTimeTextField.setText(currentTemplateModel.getCreateTime());
+                updateTimeTextField.setText(currentTemplateModel.getUpdateTime());
                 descriptionTextField.setText(currentTemplateModel.getDescription());
             }
         }
@@ -203,6 +203,7 @@ public class TemplateDetailsController extends BaseController {
                 Template old = mapper.selectById(id);
                 if (Objects.nonNull(old)) {
                     template.setId(id);
+                    template.setDatasourceId(old.getDatasourceId());
                     template.setFolder(folderTextField.getText());
                     template.setParentPackage(parentPackageTextField.getText());
                     template.setModule(moduleTextField.getText());

@@ -123,7 +123,7 @@
                         <TableColumn fx:id="parentPackageTableColumn" minWidth="200.0" prefWidth="200.0" style="-fx-background-color: white; -fx-border-color: #C4C6CF;" text="%ParentPackage" />
                         <TableColumn fx:id="folderTableColumn" editable="false" minWidth="140.0" prefWidth="140.0" style="-fx-background-color: white; -fx-border-color: #C4C6CF;" text="%Folder" />
                         <TableColumn fx:id="moduleTableColumn" minWidth="80.0" style="-fx-background-color: white; -fx-border-color: #C4C6CF;" text="%Module" />
-                        <TableColumn fx:id="createdAtTableColumn" minWidth="125.0" prefWidth="125.0" style="-fx-background-color: white; -fx-border-color: #C4C6CF;" text="%CreatedAt" />
+                        <TableColumn fx:id="createTimeTableColumn" minWidth="125.0" prefWidth="125.0" style="-fx-background-color: white; -fx-border-color: #C4C6CF;" text="%CreateTime" />
                         <TableColumn fx:id="operationTableColumn" minWidth="100.0" prefWidth="100.0" style="-fx-background-color: white; -fx-border-color: #C4C6CF;" text="%Operation" />
                     </columns>
                      <opaqueInsets>

@@ -9,11 +9,11 @@ CREATE TABLE IF NOT EXISTS `template`
     `datasource_name` varchar(100) DEFAULT NULL,
     `database_name`   varchar(100) DEFAULT NULL,
     `table_name`      varchar(100) DEFAULT NULL,
-    `have_deleted`    tinyint(1)   DEFAULT 0,
+    `whether_delete`    tinyint(1)   DEFAULT 0,
     `description`     varchar(255) DEFAULT NULL,
-    `created_at`      datetime     DEFAULT NULL,
-    `updated_at`      datetime     DEFAULT NULL,
-    `created_by`      varchar(128) DEFAULT NULL,
-    `updated_by`      varchar(128) DEFAULT NULL,
+    `create_time`      datetime     DEFAULT NULL,
+    `update_time`      datetime     DEFAULT NULL,
+    `create_by`      varchar(128) DEFAULT NULL,
+    `update_by`      varchar(128) DEFAULT NULL,
     PRIMARY KEY (`id`)
 );

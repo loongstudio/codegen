@@ -15,17 +15,17 @@ import lombok.Setter;
 @Setter
 public class SqliteBaseEntity extends ParentEntity {
 
-    protected String createdBy;
+    protected String createBy;
 
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
-    protected String createdAt;
+    protected String createTime;
 
-    protected String updatedBy;
+    protected String updateBy;
 
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
-    protected String updatedAt;
+    protected String updateTime;
 
-    protected Boolean haveDeleted = Boolean.FALSE;
+    protected Boolean whetherDelete = Boolean.FALSE;
 
     protected String description;
 

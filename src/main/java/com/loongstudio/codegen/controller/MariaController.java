@@ -1,16 +1,13 @@
 package com.loongstudio.codegen.controller;
 
-import com.loongstudio.codegen.App;
 import com.loongstudio.codegen.api.entity.Datasource;
 import com.loongstudio.codegen.api.entity.Template;
-import com.loongstudio.codegen.api.mapper.DatasourceMapper;
 import com.loongstudio.codegen.constant.CodegenConstant;
 import com.loongstudio.codegen.enums.DatasourceEnum;
 import com.loongstudio.codegen.util.AlertUtil;
 import com.loongstudio.codegen.util.CheckUtil;
 import com.loongstudio.codegen.util.ResourceBundleUtil;
 import com.loongstudio.codegen.util.SqlSessionUtils;
-import com.loongstudio.core.toolkit.Sequence;
 import com.loongstudio.core.util.IPUtil;
 import javafx.event.ActionEvent;
 import javafx.scene.control.*;
@@ -20,7 +17,6 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
-import org.apache.ibatis.session.SqlSession;
 
 import java.net.URL;
 import java.util.List;
@@ -170,24 +166,15 @@ public class MariaController extends BaseController {
         datasource.setUsername(username);
         datasource.setPassword(password);
 
-        try {
-            SqlSessionUtils.test(datasource);
-        } catch (RuntimeException e) {
-            AlertUtil.error(ResourceBundleUtil.getProperty("Failure"));
+
+        if (DatasourceController.isConnectionFail(datasource)) {
             return;
         }
 
-        try (SqlSession session = SqlSessionUtils.buildSessionFactory().openSession(Boolean.TRUE)) {
-            DatasourceMapper mapper = session.getMapper(DatasourceMapper.class);
-            if (StringUtils.isEmpty(id)) {
-                datasource.setId(String.valueOf(App.applicationContext.getBean(Sequence.class).nextId()));
-                mapper.insert(datasource);
-            } else {
-                datasource.setId(id);
-                mapper.updateById(datasource);
-                indexController.getDatabasesTreeView().getRoot().getChildren().remove(oldTreeItem);
-            }
+        if (StringUtils.isEmpty(id)) {
+            indexController.getDatabasesTreeView().getRoot().getChildren().remove(oldTreeItem);
         }
+        DatasourceController.saveDatasource(id, datasource);
         AlertUtil.info(ResourceBundleUtil.getProperty("Success"));
         TreeView<String> treeView = indexController.getDatabasesTreeView();
         addDatasourceItem(treeView.getRoot(), datasource, Boolean.FALSE);

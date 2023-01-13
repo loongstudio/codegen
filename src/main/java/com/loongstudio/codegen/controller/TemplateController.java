@@ -4,7 +4,6 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.loongstudio.codegen.api.entity.Template;
 import com.loongstudio.codegen.api.entity.TemplateExample;
-import com.loongstudio.codegen.api.mapper.DatasourceMapper;
 import com.loongstudio.codegen.api.mapper.TemplateMapper;
 import com.loongstudio.codegen.constant.CodegenConstant;
 import com.loongstudio.codegen.entity.OperationEntity;
@@ -60,9 +59,9 @@ public class TemplateController extends BaseController {
 
     public TableColumn<TemplateModel, String> moduleTableColumn;
 
-    public TableColumn<TemplateModel, String> createdAtTableColumn;
+    public TableColumn<TemplateModel, String> createTimeTableColumn;
 
-    public TableColumn<TemplateModel, String> updatedAtTableColumn;
+    public TableColumn<TemplateModel, String> updateTimeTableColumn;
 
     public TableColumn<TemplateModel, String> operationTableColumn;
 
@@ -117,7 +116,7 @@ public class TemplateController extends BaseController {
 
             TemplateExample example = new TemplateExample();
             TemplateExample.Criteria criteria = example.createCriteria();
-            criteria.andHaveDeletedEqualTo(0);
+            criteria.andWhetherDeleteEqualTo(0);
             List<OperationEntity.Query> queryList = operationEntity.getQueryList();
             if (CollectionUtils.isNotEmpty(queryList)) {
                 queryList.forEach(query -> super.appendQuery(criteria, query));
@@ -152,11 +151,11 @@ public class TemplateController extends BaseController {
         // 设置多选模式
         this.templateTableView.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
         this.idTableColumn.setCellValueFactory(new PropertyValueFactory<>("id"));
-        this.nameTableColumn.setCellValueFactory(new PropertyValueFactory<>(ResourceBundleUtil.getProperty("Name")));
-        this.folderTableColumn.setCellValueFactory(new PropertyValueFactory<>(ResourceBundleUtil.getProperty("Folder")));
-        this.parentPackageTableColumn.setCellValueFactory(new PropertyValueFactory<>(ResourceBundleUtil.getProperty("ParentPackage")));
-        this.moduleTableColumn.setCellValueFactory(new PropertyValueFactory<>(ResourceBundleUtil.getProperty("Module")));
-        this.createdAtTableColumn.setCellValueFactory(new PropertyValueFactory<>(ResourceBundleUtil.getProperty("CreatedAt")));
+        this.nameTableColumn.setCellValueFactory(new PropertyValueFactory<>("Name"));
+        this.folderTableColumn.setCellValueFactory(new PropertyValueFactory<>("Folder"));
+        this.parentPackageTableColumn.setCellValueFactory(new PropertyValueFactory<>("ParentPackage"));
+        this.moduleTableColumn.setCellValueFactory(new PropertyValueFactory<>("Module"));
+        this.createTimeTableColumn.setCellValueFactory(new PropertyValueFactory<>("CreateTime"));
         this.noTableColumn.setCellFactory((col) -> new TableCell<>() {
             @Override
             protected void updateItem(String item, boolean empty) {
@@ -231,8 +230,8 @@ public class TemplateController extends BaseController {
                 TemplateModel templateModel = templateTableView.getItems().get(tableCell.getIndex());
                 try (SqlSession session = SqlSessionUtils.buildSessionFactory().openSession(Boolean.TRUE)) {
                     TemplateMapper templateMapper = session.getMapper(TemplateMapper.class);
-                    DatasourceMapper datasourceMapper = session.getMapper(DatasourceMapper.class);
-                    this.getIndexController().loadCurrentTemplate(templateMapper, datasourceMapper, templateModel.getId());
+                    this.template = templateMapper.selectById(templateModel.getId());
+                    this.getIndexController().loadCurrentTemplate();
                 }
                 closeDialogStage();
             });

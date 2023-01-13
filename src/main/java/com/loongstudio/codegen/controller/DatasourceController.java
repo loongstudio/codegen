@@ -10,6 +10,8 @@ import com.loongstudio.codegen.util.AlertUtil;
 import com.loongstudio.codegen.util.CheckUtil;
 import com.loongstudio.codegen.util.ResourceBundleUtil;
 import com.loongstudio.codegen.util.SqlSessionUtils;
+import com.loongstudio.core.time.DatePattern;
+import com.loongstudio.core.time.LocalDateTimeUtil;
 import com.loongstudio.core.toolkit.Sequence;
 import com.loongstudio.core.util.IPUtil;
 import javafx.event.ActionEvent;
@@ -23,6 +25,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.apache.ibatis.session.SqlSession;
 
 import java.net.URL;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Objects;
 import java.util.ResourceBundle;
@@ -178,22 +181,41 @@ public class DatasourceController extends BaseController {
             return;
         }
 
-        try (SqlSession session = SqlSessionUtils.buildSessionFactory().openSession(Boolean.TRUE)) {
-            DatasourceMapper mapper = session.getMapper(DatasourceMapper.class);
-            if (StringUtils.isEmpty(id)) {
-                datasource.setId(String.valueOf(App.applicationContext.getBean(Sequence.class).nextId()));
-                mapper.insert(datasource);
-            } else {
-                datasource.setId(id);
-                mapper.updateById(datasource);
-                indexController.getDatabasesTreeView().getRoot().getChildren().remove(oldTreeItem);
-            }
+        if (StringUtils.isEmpty(id)) {
+            indexController.getDatabasesTreeView().getRoot().getChildren().remove(oldTreeItem);
         }
+        DatasourceController.saveDatasource(id, datasource);
         AlertUtil.info(ResourceBundleUtil.getProperty("Success"));
         TreeView<String> treeView = indexController.getDatabasesTreeView();
         addDatasourceItem(treeView.getRoot(), datasource, Boolean.FALSE);
         closeDialogStage();
         treeView.refresh();
+    }
+
+    public static boolean isConnectionFail(Datasource datasource) {
+        try {
+            SqlSessionUtils.test(datasource);
+        } catch (RuntimeException e) {
+            AlertUtil.error(ResourceBundleUtil.getProperty("Failure"));
+            return true;
+        }
+        return false;
+    }
+
+    public static void saveDatasource(String id, Datasource datasource) {
+        try (SqlSession session = SqlSessionUtils.buildSessionFactory().openSession(Boolean.TRUE)) {
+            DatasourceMapper mapper = session.getMapper(DatasourceMapper.class);
+            String dataTime = LocalDateTimeUtil.format(LocalDateTime.now(), DatePattern.NORM_DATETIME_FORMATTER);
+            if (StringUtils.isEmpty(id)) {
+                datasource.setId(String.valueOf(App.applicationContext.getBean(Sequence.class).nextId()));
+                datasource.setCreateTime(dataTime);
+                mapper.insert(datasource);
+            } else {
+                datasource.setId(id);
+                datasource.setUpdateTime(dataTime);
+                mapper.updateById(datasource);
+            }
+        }
     }
 
     public void cancel(ActionEvent actionEvent) {

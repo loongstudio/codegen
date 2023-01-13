@@ -30,7 +30,7 @@ public class TemplateModel implements Serializable {
 
     private String description;
 
-    private String createdAt;
+    private String createTime;
 
-    private String updatedAt;
+    private String updateTime;
 }

@@ -20,6 +20,8 @@ import com.loongstudio.codegen.model.DatasourceModel;
 import com.loongstudio.codegen.model.TreeItemModel;
 import com.loongstudio.codegen.util.*;
 import com.loongstudio.core.constant.CommonConstant;
+import com.loongstudio.core.time.DatePattern;
+import com.loongstudio.core.time.LocalDateTimeUtil;
 import com.loongstudio.core.toolkit.Sequence;
 import com.loongstudio.core.util.StringUtil;
 import javafx.collections.ObservableList;
@@ -46,6 +48,7 @@ import org.springframework.beans.BeanUtils;
 
 import java.io.File;
 import java.net.URL;
+import java.time.LocalDateTime;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -59,7 +62,7 @@ import java.util.stream.Collectors;
 @Getter
 public class IndexController extends BaseController {
 
-    public static final List<String> SUPER_ENTITY_COLUMNS = List.of("id", "createdAt", "createdBy", "updatedAt", "updatedBy", "description", "haveDeleted");
+    public static final List<String> SUPER_ENTITY_COLUMNS = List.of("id", "createTime", "createBy", "updateTime", "updateBy", "description", "whetherDelete");
 
     private static final StringBuilder SEARCH_CACHE = new StringBuilder();
 
@@ -175,18 +178,16 @@ public class IndexController extends BaseController {
             templates.forEach(template -> {
                 MenuItem menuItem = new MenuItem(template.getName());
                 menuItem.setId(template.getId());
-                menuItem.setOnAction(actionEvent -> loadCurrentTemplate(templateMapper, datasourceMapper, template.getId()));
+                this.template = templateMapper.selectById(template.getId());
+                this.datasource = datasourceMapper.selectById(this.getTemplate().getDatasourceId());
+                menuItem.setOnAction(actionEvent -> loadCurrentTemplate());
                 menuItemList.add(menuItem);
             });
         }
         this.openRecentMenu.getItems().setAll(menuItemList);
     }
 
-    protected void loadCurrentTemplate(TemplateMapper templateMapper, DatasourceMapper datasourceMapper, String id) {
-        log.debug("current template id = {}", id);
-        this.template = templateMapper.selectById(id);
-        this.datasource = datasourceMapper.selectById(this.getTemplate().getDatasourceId());
-
+    protected void loadCurrentTemplate() {
         this.folderTextField.setText(this.template.getFolder());
         this.parentPackageNameTextField.setText(this.template.getParentPackage());
         this.moduleNameTextField.setText(this.template.getModule());
@@ -794,12 +795,15 @@ public class IndexController extends BaseController {
                 return;
             }
             this.template.setDatasourceId(this.datasource.getId());
+            String dataTime = LocalDateTimeUtil.format(LocalDateTime.now(), DatePattern.NORM_DATETIME_FORMATTER);
             if (Objects.nonNull(old)) {
                 this.template.setId(old.getId());
+                this.template.setUpdateTime(dataTime);
                 mapper.updateById(template);
                 AlertUtil.info(ResourceBundleUtil.getProperty("Success"));
             } else {
                 template.setId(String.valueOf(App.applicationContext.getBean(Sequence.class).nextId()));
+                this.template.setCreateTime(dataTime);
                 mapper.insert(template);
             }
         }

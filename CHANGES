@@ -16,3 +16,10 @@ Changes in 1.2.1
 
  * add oracle data source
  * fix some bug
+
+Changes in 1.2.2
+
+ * update sql file
+ * update some common filed
+ * extraction common method
+

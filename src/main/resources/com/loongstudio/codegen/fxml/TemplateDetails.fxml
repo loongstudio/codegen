@@ -94,13 +94,13 @@
                    <Label text="%DatabaseName" textAlignment="JUSTIFY" GridPane.rowIndex="6" />
                    <Label text="%TableName" textAlignment="JUSTIFY" GridPane.rowIndex="7" />
                    <Label text="%Description" textAlignment="JUSTIFY" GridPane.rowIndex="8" />
-                   <Label text="%CreatedAt" textAlignment="JUSTIFY" GridPane.rowIndex="9" />
-                   <Label text="%UpdatedAt" textAlignment="JUSTIFY" GridPane.rowIndex="10" />
+                   <Label text="%CreateTime" textAlignment="JUSTIFY" GridPane.rowIndex="9" />
+                   <Label text="%UpdateTime" textAlignment="JUSTIFY" GridPane.rowIndex="10" />
                   <TextField fx:id="idTextField" prefWidth="639.0" promptText="%PleaseEnter" visible="false" GridPane.columnIndex="1" />
                   <HBox alignment="CENTER_LEFT" GridPane.columnIndex="1" GridPane.rowIndex="1">
                      <children>
                         <TextField fx:id="folderTextField" focusTraversable="false" prefWidth="490.0" promptText="%PleaseEnterOrSelectAFolder" />
-                         <Button fx:id="choiceButton" mnemonicParsing="false" onMouseClicked="#choiceFolder" prefWidth="90.0" style="-fx-background-color: white; -fx-border-color: #5584ff; -fx-border-radius: 5;" text="%choice" textAlignment="JUSTIFY">
+                         <Button fx:id="choiceButton" mnemonicParsing="false" onMouseClicked="#choiceFolder" prefWidth="90.0" style="-fx-background-color: white; -fx-border-color: #5584ff; -fx-border-radius: 5;" text="%Choice" textAlignment="JUSTIFY">
                              <HBox.margin>
                                  <Insets left="10.0" />
                              </HBox.margin>
@@ -114,8 +114,8 @@
                   <TextField fx:id="databaseNameTextField" focusTraversable="false" prefWidth="639.0" promptText="%PleaseEnter" GridPane.columnIndex="1" GridPane.rowIndex="6" />
                   <TextField fx:id="tableNameTextField" focusTraversable="false" prefWidth="639.0" promptText="%PleaseEnter" GridPane.columnIndex="1" GridPane.rowIndex="7" />
                   <TextField fx:id="descriptionTextField" focusTraversable="false" prefWidth="639.0" promptText="%PleaseEnter" GridPane.columnIndex="1" GridPane.rowIndex="8" />
-                  <TextField fx:id="createdAtTextField" focusTraversable="false" prefWidth="639.0" promptText="%PleaseEnter" GridPane.columnIndex="1" GridPane.rowIndex="9" />
-                  <TextField fx:id="updatedAtTextField" focusTraversable="false" prefWidth="639.0" promptText="%PleaseEnter" GridPane.columnIndex="1" GridPane.rowIndex="10" />
+                  <TextField fx:id="createTimeTextField" focusTraversable="false" prefWidth="639.0" promptText="%PleaseEnter" GridPane.columnIndex="1" GridPane.rowIndex="9" />
+                  <TextField fx:id="updateTimeTextField" focusTraversable="false" prefWidth="639.0" promptText="%PleaseEnter" GridPane.columnIndex="1" GridPane.rowIndex="10" />
                </children>
                <VBox.margin>
                   <Insets bottom="20.0" left="50.0" right="50.0" top="20.0" />

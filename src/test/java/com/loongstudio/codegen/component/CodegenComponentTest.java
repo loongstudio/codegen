@@ -30,7 +30,7 @@ class CodegenComponentTest {
     //    private static final String OUTPUT_DIR = "D:\\Program Data\\Gitee\\Galen\\LoongStudio\\java-fx\\loongstudio-codegen\\src\\main\\java";
     private static final String OUTPUT_DIR = "D:\\Program Data\\Temp";
 
-    public static final List<String> SUPER_ENTITY_COLUMNS = List.of("id", "createdAt", "createdBy", "updatedAt", "updatedBy", "description", "haveDeleted");
+    public static final List<String> SUPER_ENTITY_COLUMNS = List.of("id", "createTime", "createBy", "updateTime", "updateBy", "description", "whetherDelete");
 
     // 需要生成的表
     public static final List<String> TABLE_NAMES = List.of("template");
