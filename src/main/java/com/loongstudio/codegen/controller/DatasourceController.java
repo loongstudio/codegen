@@ -87,9 +87,9 @@ public class DatasourceController extends BaseController {
         idTextField.setText(null);
         typeTextField.setText(null);
         connectNameTextField.setText(null);
-        ipTextField.setText(null);
-        portTextField.setText(null);
-        usernameTextField.setText(null);
+        ipTextField.setText("127.0.0.1");
+        portTextField.setText("3306");
+        usernameTextField.setText("root");
         passwordField.setText(null);
     }
 

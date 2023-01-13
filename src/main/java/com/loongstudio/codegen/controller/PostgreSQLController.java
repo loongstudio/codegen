@@ -81,9 +81,9 @@ public class PostgreSQLController extends BaseController {
         typeTextField.setText(datasourceType.toString());
         idTextField.setText(null);
         connectNameTextField.setText(null);
-        ipTextField.setText(null);
-        portTextField.setText(null);
-        usernameTextField.setText(null);
+        ipTextField.setText("127.0.0.1");
+        portTextField.setText("5432");
+        usernameTextField.setText("postgres");
         passwordField.setText(null);
         initDatabaseTextField.setText("postgres");
     }

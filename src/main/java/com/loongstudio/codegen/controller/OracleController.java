@@ -88,7 +88,7 @@ public class OracleController extends BaseController {
         idTextField.setText(null);
         connectNameTextField.setText(null);
         ipTextField.setText(null);
-        portTextField.setText(null);
+        portTextField.setText("1521");
         usernameTextField.setText(null);
         passwordField.setText(null);
         serviceNameTextField.setText(null);
