@@ -42,8 +42,11 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 @RequestMapping("#if(${package.ModuleName})#end/${path}")
 public class ${table.controllerName} extends BaseController<${entity}> {
 
-@Autowired
-private ${table.serviceName} service;
+private final ${table.serviceName} service;
+
+public ${table.controllerName}(${table.serviceName} service) {
+        this.service = service;
+}
 
 /**
  * list
