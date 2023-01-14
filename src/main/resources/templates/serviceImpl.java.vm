@@ -47,7 +47,7 @@ public void delete(List<String> idList){
 
 @Override
 public void upload(MultipartFile file,Class<${entity}> clazz){
-        List<${entity}> entityList=(List<${entity}>)POIUtil.importExcel(file,clazz);
+        List<${entity}> entityList=POIUtil.importExcel(file,clazz);
         super.saveBatch(entityList,entityList.size());
         }
 
