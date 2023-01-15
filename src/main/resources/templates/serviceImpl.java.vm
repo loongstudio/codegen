@@ -49,7 +49,7 @@ public void delete(List<String> idList){
 
 @Override
 public void upload(MultipartFile file,Class<${entity}> clazz){
-        List<${entity}> entityList=POIUtil.importExcel(file,clazz);
+        List<${entity}> entityList=POIUtil.upload(file,clazz);
         if (CollectionUtils.isEmpty(entityList)) {
         return;
         }
@@ -58,7 +58,7 @@ public void upload(MultipartFile file,Class<${entity}> clazz){
 
 @Override
 public void download(HttpServletRequest request,HttpServletResponse response,Class<${entity}> clazz,OperationEntity.Excel excel,QueryWrapper<${entity}> queryWrapper,OperationEntity operationEntity)throws Exception{
-        POIUtil.exportExcel(request,response,clazz,excel,list(operationEntity,queryWrapper).getRecords());
+        POIUtil.download(request,response,clazz,excel,list(operationEntity,queryWrapper).getRecords());
         }
 
         }
