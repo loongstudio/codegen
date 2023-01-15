@@ -18,8 +18,14 @@ public class ${table.serviceImplName} extends ${superServiceImplClass}<${table.m
 
 private final ${table.mapperName} mapper;
 
-public ${table.serviceImplName}(${table.mapperName} mapper) {
+private final ExcelUploader uploader;
+
+private final ExcelDownloader downloader;
+
+public ${table.serviceImplName}(${table.mapperName} mapper, ExcelDownloader downloader, ExcelUploader uploader) {
         this.mapper = mapper;
+        this.downloader = downloader;
+        this.uploader = uploader;
         }
 
 @Override
@@ -49,7 +55,7 @@ public void delete(List<String> idList){
 
 @Override
 public void upload(MultipartFile file,Class<${entity}> clazz){
-        List<${entity}> entityList=POIUtil.upload(file,clazz);
+        List<${entity}> entityList=uploader.upload(file,clazz);
         if (CollectionUtils.isEmpty(entityList)) {
         return;
         }
@@ -57,8 +63,12 @@ public void upload(MultipartFile file,Class<${entity}> clazz){
         }
 
 @Override
-public void download(HttpServletRequest request,HttpServletResponse response,Class<${entity}> clazz,OperationEntity.Excel excel,QueryWrapper<${entity}> queryWrapper,OperationEntity operationEntity)throws Exception{
-        POIUtil.download(request,response,clazz,excel,list(operationEntity,queryWrapper).getRecords());
+public void download(HttpServletResponse response,Class<${entity}> clazz,QueryWrapper<${entity}> queryWrapper,OperationEntity operationEntity)throws Exception{
+        OperationEntity.Excel excel = operationEntity.getExcel();
+        ExcelOption excelOption = new ExcelOption();
+        excelOption.setName(excel.getName());
+        excelOption.setFieldList(excel.getFieldList());
+        downloader.download(response,clazz,excelOption,list(operationEntity,queryWrapper).getRecords());
         }
 
         }

@@ -132,8 +132,8 @@ return Result.success();
  * @param operationEntity operationEntity
  */
 @GetMapping(value = "/download")
-public void download(HttpServletRequest request,HttpServletResponse response,${entity} entity, @RequestBody OperationEntity operationEntity) throws Exception{
-service.download(request, response, ${entity}.class, operationEntity.getExcel(), super.createQueryWrapper(entity, ${entity}.class, operationEntity), operationEntity);
+public void download(HttpServletResponse response,${entity} entity, @RequestBody OperationEntity operationEntity) throws Exception{
+service.download(response, ${entity}.class, super.createQueryWrapper(entity, ${entity}.class, operationEntity), operationEntity);
 }
 
 }
