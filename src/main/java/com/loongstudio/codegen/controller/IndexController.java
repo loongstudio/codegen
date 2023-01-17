@@ -776,7 +776,11 @@ public class IndexController extends BaseController {
     public void choiceFolder() {
         DirectoryChooser chooser = new DirectoryChooser();
         chooser.setTitle(ResourceBundleUtil.getProperty("ChoiceFolder"));
-        chooser.setInitialDirectory(new File(System.getProperty("java.io.tmpdir")));
+        if (StringUtils.isEmpty(folderTextField.getText())) {
+            chooser.setInitialDirectory(new File(System.getProperty("java.io.tmpdir")));
+        } else {
+            chooser.setInitialDirectory(new File(folderTextField.getText()));
+        }
         File file = chooser.showDialog(getPrimaryStage());
         if (Objects.isNull(file)) {
             return;
