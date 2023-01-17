@@ -749,7 +749,7 @@ public class IndexController extends BaseController {
         }
     }
 
-    public void pressed(KeyEvent keyEvent) {
+    public void pressed() {
         if (!searchTextField.isFocused()) {
             searchTextField.requestFocus();
         }
@@ -773,7 +773,7 @@ public class IndexController extends BaseController {
         }
     }
 
-    public void choiceFolder(MouseEvent mouseEvent) {
+    public void choiceFolder() {
         DirectoryChooser chooser = new DirectoryChooser();
         chooser.setTitle(ResourceBundleUtil.getProperty("ChoiceFolder"));
         chooser.setInitialDirectory(new File(System.getProperty("java.io.tmpdir")));
@@ -786,7 +786,7 @@ public class IndexController extends BaseController {
         log.debug("folder path: {}", file.getPath());
     }
 
-    public void save(MouseEvent mouseEvent) {
+    public void save() {
         try (SqlSession session = SqlSessionUtils.buildSessionFactory().openSession(Boolean.TRUE)) {
             TemplateMapper mapper = session.getMapper(TemplateMapper.class);
             Template old = mapper.selectByName(this.template.getName());
@@ -810,7 +810,7 @@ public class IndexController extends BaseController {
         AlertUtil.info(ResourceBundleUtil.getProperty("Success"));
     }
 
-    public void reset(MouseEvent mouseEvent) {
+    public void reset() {
         folderTextField.setText(CommonConstant.EMPTY);
         parentPackageNameTextField.setText(CommonConstant.EMPTY);
         moduleNameTextField.setText(CommonConstant.EMPTY);
@@ -821,7 +821,7 @@ public class IndexController extends BaseController {
         controllerNameTextField.setText(CommonConstant.EMPTY);
     }
 
-    public void submit(MouseEvent mouseEvent) {
+    public void submit() {
         String parentPackage = this.template.getParentPackage();
         String module = this.template.getModule();
         if (Objects.isNull(parentPackage)) {

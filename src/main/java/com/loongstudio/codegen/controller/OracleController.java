@@ -9,7 +9,6 @@ import com.loongstudio.codegen.util.CheckUtil;
 import com.loongstudio.codegen.util.ResourceBundleUtil;
 import com.loongstudio.codegen.util.SqlSessionUtils;
 import com.loongstudio.core.util.IPUtil;
-import javafx.event.ActionEvent;
 import javafx.scene.control.*;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.text.Text;
@@ -32,7 +31,7 @@ import java.util.ResourceBundle;
 @Slf4j
 @Getter
 @Setter
-public class OracleController extends BaseController {
+public class OracleController extends BaseController implements DatasourceStrategy{
 
     public TextField connectNameTextField;
 
@@ -77,11 +76,6 @@ public class OracleController extends BaseController {
 
     }
 
-    /**
-     * Initialize the connection information
-     *
-     * @param datasourceType datasourceType
-     */
     public void init(Integer datasourceType) {
         titleText.setText(ResourceBundleUtil.getProperty("SaveConnection"));
         typeTextField.setText(datasourceType.toString());
@@ -122,7 +116,7 @@ public class OracleController extends BaseController {
         serviceNameTextField.setText(datasource.getUrl());
     }
 
-    public void test(ActionEvent actionEvent) {
+    public void test() {
         log.debug("===== test connection. =====");
 
         try {
@@ -155,9 +149,9 @@ public class OracleController extends BaseController {
         }
     }
 
-    public void confirm(ActionEvent actionEvent) {
+    public void confirm() {
         log.debug("===== confirm connection. =====");
-        test(actionEvent);
+        test();
 
         typeTextField.setText(Integer.toString(DatasourceEnum.ORACLE.ordinal()));
         String id = idTextField.getText();
@@ -189,7 +183,7 @@ public class OracleController extends BaseController {
         treeView.refresh();
     }
 
-    public void cancel(ActionEvent actionEvent) {
+    public void cancel() {
         log.debug("===== cancel connection.=====");
         titleText.setText(null);
         typeTextField.setText(null);

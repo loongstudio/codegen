@@ -112,19 +112,19 @@
                <children>
                   <TableView fx:id="templateTableView" editable="true" focusTraversable="false" style="-fx-border-color: white;">
                     <columns>
-                        <TableColumn fx:id="checkTableColumn" minWidth="30.0" prefWidth="30.0" style="-fx-background-color: white; -fx-border-color: #C4C6CF;">
+                        <TableColumn fx:id="checkTableColumn" minWidth="30.0" prefWidth="30.0" style="-fx-border-color: #C4C6CF;">
                            <graphic>
                               <CheckBox fx:id="checkCheckBox" focusTraversable="false" mnemonicParsing="false" />
                            </graphic>
                         </TableColumn>
-                      <TableColumn fx:id="noTableColumn" minWidth="40.0" prefWidth="40.0" style="-fx-background-color: white; -fx-border-color: #C4C6CF;" text="%No" />
-                       <TableColumn fx:id="idTableColumn" minWidth="40.0" prefWidth="40.0" style="-fx-background-color: white; -fx-border-color: #C4C6CF;" text="id" visible="false" />
-                      <TableColumn fx:id="nameTableColumn" editable="false" minWidth="200.0" prefWidth="200.0" style="-fx-background-color: white; -fx-border-color: #C4C6CF;" text="%Name" />
-                        <TableColumn fx:id="parentPackageTableColumn" minWidth="200.0" prefWidth="200.0" style="-fx-background-color: white; -fx-border-color: #C4C6CF;" text="%ParentPackage" />
-                        <TableColumn fx:id="folderTableColumn" editable="false" minWidth="140.0" prefWidth="140.0" style="-fx-background-color: white; -fx-border-color: #C4C6CF;" text="%Folder" />
-                        <TableColumn fx:id="moduleTableColumn" minWidth="80.0" style="-fx-background-color: white; -fx-border-color: #C4C6CF;" text="%Module" />
-                        <TableColumn fx:id="createTimeTableColumn" minWidth="125.0" prefWidth="125.0" style="-fx-background-color: white; -fx-border-color: #C4C6CF;" text="%CreateTime" />
-                        <TableColumn fx:id="operationTableColumn" minWidth="100.0" prefWidth="100.0" style="-fx-background-color: white; -fx-border-color: #C4C6CF;" text="%Operation" />
+                      <TableColumn fx:id="noTableColumn" minWidth="40.0" prefWidth="40.0" style="-fx-border-color: #C4C6CF;" text="%No" />
+                       <TableColumn fx:id="idTableColumn" minWidth="40.0" prefWidth="40.0" style="-fx-border-color: #C4C6CF;" text="id" visible="false" />
+                      <TableColumn fx:id="nameTableColumn" editable="false" minWidth="200.0" prefWidth="200.0" style="-fx-border-color: #C4C6CF;" text="%Name" />
+                        <TableColumn fx:id="parentPackageTableColumn" minWidth="200.0" prefWidth="200.0" style="-fx-border-color: #C4C6CF;" text="%ParentPackage" />
+                        <TableColumn fx:id="folderTableColumn" editable="false" minWidth="140.0" prefWidth="140.0" style="-fx-border-color: #C4C6CF;" text="%Folder" />
+                        <TableColumn fx:id="moduleTableColumn" minWidth="80.0" style="-fx-border-color: #C4C6CF;" text="%Module" />
+                        <TableColumn fx:id="createTimeTableColumn" minWidth="125.0" prefWidth="125.0" style="-fx-border-color: #C4C6CF;" text="%CreateTime" />
+                        <TableColumn fx:id="operationTableColumn" minWidth="100.0" prefWidth="100.0" style="-fx-border-color: #C4C6CF;" text="%Operation" />
                     </columns>
                      <opaqueInsets>
                         <Insets />

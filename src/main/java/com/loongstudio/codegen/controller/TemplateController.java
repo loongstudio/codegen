@@ -12,8 +12,6 @@ import com.loongstudio.codegen.enums.OperationEnum;
 import com.loongstudio.codegen.enums.SqlKeyword;
 import com.loongstudio.codegen.model.TemplateModel;
 import com.loongstudio.codegen.util.*;
-import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -103,14 +101,14 @@ public class TemplateController extends BaseController {
         this.pagination.currentPageIndexProperty().addListener((observableValue, v1, v2) -> {
             Number value = observableValue.getValue();
             this.operationEntity.setPageNo(value.intValue() + 1);
-            listReset(this.template, this.operationEntity);
+            listReset(this.operationEntity);
         });
 
         this.operationEntity = new OperationEntity();
-        init(this.template, this.operationEntity);
+        init(this.operationEntity);
     }
 
-    private void init(Template template, OperationEntity operationEntity) {
+    private void init(OperationEntity operationEntity) {
         try (SqlSession session = SqlSessionUtils.buildSessionFactory().openSession(Boolean.TRUE)) {
             TemplateMapper mapper = session.getMapper(TemplateMapper.class);
 
@@ -137,13 +135,6 @@ public class TemplateController extends BaseController {
             this.templateTableView.getItems().addAll(modelList);
         }
 
-
-        // 获取选中的行序号
-        int selectedIndex = this.templateTableView.getSelectionModel().getSelectedIndex();
-        // 获取选中的单行数据
-        TemplateModel selectedItem = this.templateTableView.getSelectionModel().getSelectedItem();
-        // 获取选中的多行数据
-        ObservableList<TemplateModel> selectedItems = this.templateTableView.getSelectionModel().getSelectedItems();
         // 取消选择
         this.templateTableView.getSelectionModel().clearSelection();
         this.checkCheckBox.setSelected(Boolean.FALSE);
@@ -173,13 +164,9 @@ public class TemplateController extends BaseController {
                 @Override
                 protected void updateItem(Boolean var1, boolean var2) {
                     super.updateItem(var1, var2);
-                    HBox hBox = new HBox();
-                    hBox.getChildren().add(checkBox);
-                    hBox.setAlignment(Pos.CENTER);
-                    hBox.setPrefHeight(16);
-                    hBox.setPrefWidth(58);
-                    hBox.setSpacing(10);
+                    HBox hBox = createHBox();
 
+                    hBox.getChildren().add(checkBox);
                     if (var2) {
                         this.setText(null);
                         this.setGraphic(null);
@@ -211,13 +198,9 @@ public class TemplateController extends BaseController {
                 @Override
                 protected void updateItem(String var1, boolean var2) {
                     super.updateItem(var1, var2);
-                    HBox hBox = new HBox();
-                    hBox.getChildren().addAll(loadImageView, detailsImageView, editImageView, deleteImageView);
-                    hBox.setAlignment(Pos.CENTER);
-                    hBox.setPrefHeight(16);
-                    hBox.setPrefWidth(58);
-                    hBox.setSpacing(10);
+                    HBox hBox = createHBox();
 
+                    hBox.getChildren().addAll(loadImageView, detailsImageView, editImageView, deleteImageView);
                     if (var2) {
                         this.setText(null);
                         this.setGraphic(null);
@@ -240,7 +223,7 @@ public class TemplateController extends BaseController {
                 TemplateModel templateModel = templateTableView.getItems().get(tableCell.getIndex());
                 controller.setCurrentTemplateModel(templateModel);
                 controller.setTemplateController(this);
-                controller.getTitleText().setText("Template Details");
+                controller.getTitleText().setText(ResourceBundleUtil.getProperty("TemplateDetails"));
                 controller.init(OperationEnum.DETAIL);
                 controller.showDialogStage();
             });
@@ -280,22 +263,31 @@ public class TemplateController extends BaseController {
         batchDeleteButton.setGraphic(ImageViewUtil.getImageView(ImageUtil.getImageUrl(CodegenConstant.ICON_BATCH_DELETE), 16, 16));
     }
 
+    private HBox createHBox() {
+        HBox hBox = new HBox();
+        hBox.setAlignment(Pos.CENTER);
+        hBox.setPrefHeight(16);
+        hBox.setPrefWidth(58);
+        hBox.setSpacing(10);
+        return hBox;
+    }
+
     protected void listReset() {
         templateTableView.getItems().clear();
         init();
     }
 
-    protected void listReset(Template template, OperationEntity operationEntity) {
+    protected void listReset(OperationEntity operationEntity) {
         templateTableView.getItems().clear();
-        init(template, operationEntity);
+        init(operationEntity);
     }
 
-    public void refresh(ActionEvent actionEvent) {
+    public void refresh() {
         listReset();
         AlertUtil.info(ResourceBundleUtil.getProperty("Success"));
     }
 
-    public void batchDelete(ActionEvent actionEvent) {
+    public void batchDelete() {
         if (AlertUtil.confirm(ResourceBundleUtil.getProperty("ConfirmDelete"))) {
             if (CollectionUtils.isEmpty(selectedIdList)) {
                 AlertUtil.info(ResourceBundleUtil.getProperty("Success"));
@@ -310,7 +302,7 @@ public class TemplateController extends BaseController {
         }
     }
 
-    public void query(ActionEvent actionEvent) {
+    public void query() {
         String name = this.nameQueryTextField.getText();
         if (StringUtils.isEmpty(name)) {
             return;
@@ -323,10 +315,10 @@ public class TemplateController extends BaseController {
         query.setOperator(SqlKeyword.LIKE.getSqlSegment());
         this.operationEntity = new OperationEntity();
         this.operationEntity.setQueryList(List.of(query));
-        listReset(template, operationEntity);
+        listReset(operationEntity);
     }
 
-    public void reset(ActionEvent actionEvent) {
+    public void reset() {
         this.nameQueryTextField.clear();
         this.operationEntity.setQueryList(null);
         listReset();

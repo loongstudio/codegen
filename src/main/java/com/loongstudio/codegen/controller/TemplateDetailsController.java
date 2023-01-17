@@ -7,10 +7,8 @@ import com.loongstudio.codegen.model.TemplateModel;
 import com.loongstudio.codegen.util.ResourceBundleUtil;
 import com.loongstudio.codegen.util.SqlSessionUtils;
 import com.loongstudio.core.constant.CommonConstant;
-import javafx.event.ActionEvent;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.text.Text;
 import javafx.stage.DirectoryChooser;
 import lombok.Getter;
@@ -187,13 +185,13 @@ public class TemplateDetailsController extends BaseController {
         }
     }
 
-    public void cancel(ActionEvent actionEvent) {
+    public void cancel() {
         currentTemplateModel = null;
         templateController = null;
         closeDialogStage();
     }
 
-    public void confirm(ActionEvent actionEvent) {
+    public void confirm() {
         Template template = new Template();
 
         String id = idTextField.getText();
@@ -218,7 +216,7 @@ public class TemplateDetailsController extends BaseController {
         }
     }
 
-    public void choiceFolder(MouseEvent mouseEvent) {
+    public void choiceFolder() {
         DirectoryChooser chooser = new DirectoryChooser();
         chooser.setTitle(ResourceBundleUtil.getProperty("ChoiceFolder"));
         chooser.setInitialDirectory(new File(System.getProperty("java.io.tmpdir")));

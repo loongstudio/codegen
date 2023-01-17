@@ -2,7 +2,6 @@ package com.loongstudio.codegen.controller;
 
 import com.loongstudio.codegen.util.ClipboardUtil;
 import com.loongstudio.core.constant.CommonConstant;
-import javafx.event.ActionEvent;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import lombok.Getter;
@@ -39,11 +38,11 @@ public class AboutController extends BaseController {
 
     }
 
-    public void ok(ActionEvent actionEvent) {
+    public void ok() {
         closeDialogStage();
     }
 
-    public void copy(ActionEvent actionEvent) {
+    public void copy() {
         StringJoiner joiner = new StringJoiner(CommonConstant.CRLF);
         joiner.add(versionLabel.getText());
         joiner.add(dateLabel.getText());

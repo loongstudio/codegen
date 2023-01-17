@@ -9,7 +9,6 @@ import com.loongstudio.codegen.util.CheckUtil;
 import com.loongstudio.codegen.util.ResourceBundleUtil;
 import com.loongstudio.codegen.util.SqlSessionUtils;
 import com.loongstudio.core.util.IPUtil;
-import javafx.event.ActionEvent;
 import javafx.scene.control.*;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.text.Text;
@@ -32,7 +31,7 @@ import java.util.ResourceBundle;
 @Slf4j
 @Getter
 @Setter
-public class MariaController extends BaseController {
+public class MariaController extends BaseController implements DatasourceStrategy{
 
     public TextField connectNameTextField;
 
@@ -110,7 +109,7 @@ public class MariaController extends BaseController {
         passwordField.setText(datasource.getPassword());
     }
 
-    public void test(ActionEvent actionEvent) {
+    public void test() {
         log.debug("===== test connection. =====");
 
         try {
@@ -138,7 +137,7 @@ public class MariaController extends BaseController {
         }
     }
 
-    public void confirm(ActionEvent actionEvent) {
+    public void confirm() {
         log.debug("===== confirm connection. =====");
         try {
             CheckUtil.checkStringParam(List.of(connectNameTextField.getText(), typeTextField.getText(), ipTextField.getText(), portTextField.getText(), usernameTextField.getText(), passwordField.getText()));
@@ -182,7 +181,7 @@ public class MariaController extends BaseController {
         treeView.refresh();
     }
 
-    public void cancel(ActionEvent actionEvent) {
+    public void cancel() {
         log.debug("===== cancel connection.=====");
         titleText.setText(null);
         typeTextField.setText(null);

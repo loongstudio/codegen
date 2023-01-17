@@ -7,9 +7,7 @@ import com.loongstudio.codegen.util.AlertUtil;
 import com.loongstudio.codegen.util.CheckUtil;
 import com.loongstudio.codegen.util.ResourceBundleUtil;
 import com.loongstudio.codegen.util.SqlSessionUtils;
-import javafx.event.ActionEvent;
 import javafx.scene.control.*;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
@@ -33,7 +31,7 @@ import java.util.ResourceBundle;
 @Slf4j
 @Getter
 @Setter
-public class SQLiteController extends BaseController {
+public class SQLiteController extends BaseController implements DatasourceStrategy {
 
     public TextField connectNameTextField;
 
@@ -105,7 +103,7 @@ public class SQLiteController extends BaseController {
         urlTextField.setText(datasource.getUrl());
     }
 
-    public void test(ActionEvent actionEvent) {
+    public void test() {
         log.debug("===== test connection. =====");
         try {
             typeTextField.setText(Integer.toString(DatasourceEnum.SQLITE.ordinal()));
@@ -124,7 +122,7 @@ public class SQLiteController extends BaseController {
         }
     }
 
-    public void confirm(ActionEvent actionEvent) {
+    public void confirm() {
         log.debug("===== confirm connection. =====");
         try {
             CheckUtil.checkStringParam(List.of(connectNameTextField.getText(), typeTextField.getText(), urlTextField.getText()));
@@ -157,7 +155,7 @@ public class SQLiteController extends BaseController {
         treeView.refresh();
     }
 
-    public void cancel(ActionEvent actionEvent) {
+    public void cancel() {
         log.debug("===== cancel connection.=====");
         titleText.setText(null);
         typeTextField.setText(null);
@@ -168,7 +166,7 @@ public class SQLiteController extends BaseController {
         closeDialogStage();
     }
 
-    public void choiceFolder(MouseEvent mouseEvent) {
+    public void choiceFolder() {
         FileChooser chooser = new FileChooser();
         chooser.setTitle(ResourceBundleUtil.getProperty("ChoiceFolder"));
         chooser.setInitialDirectory(new File(System.getProperty("java.io.tmpdir")));

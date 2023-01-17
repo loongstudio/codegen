@@ -14,7 +14,6 @@ import com.loongstudio.core.time.DatePattern;
 import com.loongstudio.core.time.LocalDateTimeUtil;
 import com.loongstudio.core.toolkit.Sequence;
 import com.loongstudio.core.util.IPUtil;
-import javafx.event.ActionEvent;
 import javafx.scene.control.*;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.text.Text;
@@ -39,7 +38,7 @@ import java.util.ResourceBundle;
 @Slf4j
 @Getter
 @Setter
-public class DatasourceController extends BaseController {
+public class DatasourceController extends BaseController implements DatasourceStrategy{
 
     public TextField connectNameTextField;
 
@@ -118,7 +117,7 @@ public class DatasourceController extends BaseController {
         passwordField.setText(datasource.getPassword());
     }
 
-    public void test(ActionEvent actionEvent) {
+    public void test() {
         log.debug("===== test connection. =====");
 
         try {
@@ -146,7 +145,7 @@ public class DatasourceController extends BaseController {
         }
     }
 
-    public void confirm(ActionEvent actionEvent) {
+    public void confirm() {
         log.debug("===== confirm connection. =====");
         try {
             CheckUtil.checkStringParam(List.of(connectNameTextField.getText(), typeTextField.getText(), ipTextField.getText(), portTextField.getText(), usernameTextField.getText(), passwordField.getText()));
@@ -218,7 +217,7 @@ public class DatasourceController extends BaseController {
         }
     }
 
-    public void cancel(ActionEvent actionEvent) {
+    public void cancel() {
         log.debug("===== cancel connection.=====");
         titleText.setText(null);
         typeTextField.setText(null);
