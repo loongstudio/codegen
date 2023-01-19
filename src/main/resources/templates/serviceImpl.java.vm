@@ -63,7 +63,7 @@ public void upload(MultipartFile file,Class<${entity}> clazz){
         }
 
 @Override
-public void download(HttpServletResponse response,Class<${entity}> clazz,QueryWrapper<${entity}> queryWrapper,OperationEntity operationEntity)throws Exception{
+public void download(HttpServletResponse response,Class<${entity}> clazz,QueryWrapper<${entity}> queryWrapper,OperationEntity operationEntity){
         OperationEntity.Excel excel = operationEntity.getExcel();
         ExcelOption excelOption = new ExcelOption();
         excelOption.setName(excel.getName());
