@@ -100,15 +100,28 @@ return Result.success();
 /**
  * delete
  *
- * @param idList idList
+ * @param id id
  *
  * @return {@link Result}<{@link ?}>
  */
-@DeleteMapping(value = "/{ids}")
-public Result<?> deleteBatch(@PathVariable(name = "ids") List<String> idList){
-service.delete(idList);
+@DeleteMapping(value = "/{id}")
+public Result<?> delete(@PathVariable(name = "id") String id){
+service.delete(id);
 return Result.success();
 }
+
+/**
+ * delete batch
+ *
+ * @param idList idList
+ * @return {@link Result}<{@link ?}>
+ */
+@DeleteMapping(value = "/delete/batch")
+public Result<?> deleteBatch(@RequestBody List<String> idList) {
+service.deleteBatch(idList);
+return Result.success();
+}
+
 
 /**
  * upload excel

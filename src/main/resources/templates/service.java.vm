@@ -20,7 +20,9 @@ public interface ${table.serviceName} extends ${superServiceClass}<${entity}> {
 
         void edit(${entity} entity);
 
-        void delete(List<String> idList);
+        void delete(String id);
+
+        void deleteBatch(List<String> idList);
 
         void upload(MultipartFile file, Class<${entity}> clazz);
 
