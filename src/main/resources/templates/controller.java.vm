@@ -131,7 +131,7 @@ return Result.success();
  * @return {@link Result}<{@link ?}>
  */
 @PostMapping(value = "/upload")
-public Result<?> upload(@RequestBody MultipartFile file){
+public Result<?> upload(@RequestPart MultipartFile file){
 service.upload(file, ${entity}.class);
 return Result.success();
 }
