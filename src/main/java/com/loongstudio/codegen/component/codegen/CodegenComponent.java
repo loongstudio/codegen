@@ -27,6 +27,8 @@ public class CodegenComponent {
 
     private static final String TEMP_DIR = System.getProperty("java.io.tmpdir");
 
+    private static final String JAVA_DIR = "/src/main/java";
+
     public static final String VUE_MODULE_NAME = "vue";
 
     private static final String TEMPLATE_FILE_SUFFIX = "vm";
@@ -170,7 +172,9 @@ public class CodegenComponent {
      */
     private GlobalConfig globalConfig(String outputDir) {
         if (StringUtils.isEmpty(outputDir)) {
-            outputDir = TEMP_DIR;
+            outputDir = TEMP_DIR + JAVA_DIR;
+        } else {
+            outputDir += JAVA_DIR;
         }
         return new GlobalConfig.Builder()
                 .outputDir(outputDir)
