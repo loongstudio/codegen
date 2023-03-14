@@ -60,11 +60,16 @@ public void deleteBatch(List<String> idList){
 
 @Override
 public void upload(MultipartFile file,Class<${entity}> clazz){
-        List<${entity}> entityList=uploader.upload(file,clazz);
+        List<${entity}> entityList;
+        try {
+        entityList = uploader.upload(file.getBytes(), file.getOriginalFilename(), clazz);
+        } catch (IOException e) {
+        throw new RuntimeException(e);
+        }
         if (CollectionUtils.isEmpty(entityList)) {
         return;
         }
-        super.saveBatch(entityList,entityList.size());
+        super.saveBatch(entityList, entityList.size());
         }
 
 @Override
@@ -73,7 +78,12 @@ public void download(HttpServletResponse response,Class<${entity}> clazz,QueryWr
         ExcelOption excelOption = new ExcelOption();
         excelOption.setName(excel.getName());
         excelOption.setFieldList(excel.getFieldList());
-        downloader.download(response,clazz,excelOption,list(operationEntity,queryWrapper).getRecords());
+        ServletUtils.renderExcel(response, excel.getName());
+        try {
+        downloader.download(response.getOutputStream(), clazz, excelOption, list(operationEntity, queryWrapper).getRecords());
+        } catch (IOException e) {
+        throw new RuntimeException(e);
+        }
         }
 
         }
