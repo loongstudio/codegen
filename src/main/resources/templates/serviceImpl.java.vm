@@ -34,31 +34,6 @@ public IPage<${entity}> list(OperationEntity operationEntity,QueryWrapper<${enti
         }
 
 @Override
-public ${entity} show(String id){
-        return super.getById(id);
-        }
-
-@Override
-public void create(${entity} entity){
-        super.save(entity);
-        }
-
-@Override
-public void edit(${entity} entity){
-        super.updateById(entity);
-        }
-
-@Override
-public void delete(String id){
-        super.removeById(id);
-        }
-
-@Override
-public void deleteBatch(List<String> idList){
-        super.removeByIds(idList);
-        }
-
-@Override
 public void upload(MultipartFile file,Class<${entity}> clazz){
         List<${entity}> entityList;
         try {

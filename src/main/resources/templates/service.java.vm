@@ -14,16 +14,6 @@ public interface ${table.serviceName} extends ${superServiceClass}<${entity}> {
 
         IPage<${entity}> list(OperationEntity operationEntity, QueryWrapper<${entity}> queryWrapper);
 
-        ${entity} show(String id);
-
-        void create(${entity} entity);
-
-        void edit(${entity} entity);
-
-        void delete(String id);
-
-        void deleteBatch(List<String> idList);
-
         void upload(MultipartFile file, Class<${entity}> clazz);
 
         void download(HttpServletResponse response, Class<${entity}> clazz, QueryWrapper<${entity}> queryWrapper, OperationEntity operationEntity);

@@ -1,6 +1,7 @@
 package ${package.Controller};
 
 
+import lombok.Getter;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 #if(${restControllerStyle})
@@ -40,88 +41,14 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
     #end
 #end
 @RequestMapping("#if(${package.ModuleName})#end/${path}")
-public class ${table.controllerName} extends BaseController<${entity}> {
+public class ${table.controllerName} implements CrudController<${entity}> {
 
+@Getter
 private final ${table.serviceName} service;
 
 public ${table.controllerName}(${table.serviceName} service) {
         this.service = service;
 }
-
-/**
- * list
- * @param entity entity
- * @param operationEntity operationEntity
- * @return {@link Result}<{@link IPage}<{@link ${entity}}>>
- */
-@GetMapping
-public Result<IPage<${entity}>>list(${entity} entity, @RequestBody OperationEntity operationEntity){
-return Result.success(service.list(operationEntity, super.createQueryWrapper(entity, ${entity}.class, operationEntity)));
-}
-
-/**
- * show
- *
- * @param id id
- *
- * @return {@link Result}<{@link ${entity}}>
- */
-@GetMapping(value = "/{id}")
-public Result<${entity}> show(@PathVariable(name = "id") String id){
-return Result.success(service.show(id));
-}
-
-/**
- * create
- *
- * @param entity entity
- *
- * @return {@link Result}<{@link ?}>
- */
-@PostMapping
-public Result<?> create(@RequestBody ${entity} entity){
-service.create(entity);
-return Result.success();
-}
-
-/**
- * edit
- *
- * @param entity entity
- *
- * @return {@link Result}<{@link ?}>
- */
-@PutMapping
-public Result<?> edit(@RequestBody ${entity} entity){
-service.edit(entity);
-return Result.success();
-}
-
-/**
- * delete
- *
- * @param id id
- *
- * @return {@link Result}<{@link ?}>
- */
-@DeleteMapping(value = "/{id}")
-public Result<?> delete(@PathVariable(name = "id") String id){
-service.delete(id);
-return Result.success();
-}
-
-/**
- * delete batch
- *
- * @param idList idList
- * @return {@link Result}<{@link ?}>
- */
-@DeleteMapping(value = "/delete/batch")
-public Result<?> deleteBatch(@RequestBody List<String> idList) {
-service.deleteBatch(idList);
-return Result.success();
-}
-
 
 /**
  * upload excel
