@@ -13,6 +13,6 @@ jobs:
           dst: gitee/loongstudio
           dst_key: ${{ secrets.GITEE_PRIVATE_KEY }}
           dst_token:  ${{ secrets.GITEE_TOKEN }}
-          static_list: "codegen-doc"
+          static_list: "codegen"
           account_type: org
           debug: true
