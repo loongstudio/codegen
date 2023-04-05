@@ -9,7 +9,7 @@ import com.loongstudio.codegen.mapper.MySQLMapper;
 import com.loongstudio.codegen.mapper.OracleMapper;
 import com.loongstudio.codegen.model.DatasourceModel;
 import com.loongstudio.core.constant.CommonConstant;
-import com.loongstudio.core.util.IPUtil;
+import com.loongstudio.core.network.IPUtil;
 import com.zaxxer.hikari.HikariConfig;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.ibatis.mapping.Environment;

@@ -13,7 +13,7 @@ import com.loongstudio.codegen.util.SqlSessionUtils;
 import com.loongstudio.core.time.DatePattern;
 import com.loongstudio.core.time.LocalDateTimeUtil;
 import com.loongstudio.core.toolkit.Sequence;
-import com.loongstudio.core.util.IPUtil;
+import com.loongstudio.core.network.IPUtil;
 import javafx.scene.control.*;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.text.Text;

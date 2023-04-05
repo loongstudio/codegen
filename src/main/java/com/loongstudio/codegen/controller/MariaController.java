@@ -8,7 +8,7 @@ import com.loongstudio.codegen.util.AlertUtil;
 import com.loongstudio.codegen.util.CheckUtil;
 import com.loongstudio.codegen.util.ResourceBundleUtil;
 import com.loongstudio.codegen.util.SqlSessionUtils;
-import com.loongstudio.core.util.IPUtil;
+import com.loongstudio.core.network.IPUtil;
 import javafx.scene.control.*;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.text.Text;

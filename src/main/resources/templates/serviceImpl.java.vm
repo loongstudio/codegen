@@ -28,7 +28,6 @@ public ${table.serviceImplName}(${table.mapperName} mapper, ExcelDownloader down
         this.uploader = uploader;
         }
 
-@Override
 public IPage<${entity}> list(OperationEntity operationEntity,QueryWrapper<${entity}> queryWrapper){
         return super.page(new Page<>(operationEntity.getPageNo(),operationEntity.getPageSize()),queryWrapper);
         }

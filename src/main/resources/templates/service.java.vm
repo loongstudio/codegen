@@ -12,8 +12,6 @@ import ${superServiceClassPackage};
  */
 public interface ${table.serviceName} extends ${superServiceClass}<${entity}> {
 
-        IPage<${entity}> list(OperationEntity operationEntity, QueryWrapper<${entity}> queryWrapper);
-
         void upload(MultipartFile file, Class<${entity}> clazz);
 
         void download(HttpServletResponse response, Class<${entity}> clazz, QueryWrapper<${entity}> queryWrapper, OperationEntity operationEntity);

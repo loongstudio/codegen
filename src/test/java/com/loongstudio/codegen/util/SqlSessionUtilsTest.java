@@ -7,7 +7,7 @@ import com.loongstudio.codegen.api.mapper.TemplateMapper;
 import com.loongstudio.codegen.enums.DatasourceEnum;
 import com.loongstudio.codegen.mapper.MySQLMapper;
 import com.loongstudio.codegen.model.DatasourceModel;
-import com.loongstudio.core.util.IPUtil;
+import com.loongstudio.core.network.IPUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.ibatis.session.SqlSession;
