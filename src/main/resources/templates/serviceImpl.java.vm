@@ -19,41 +19,5 @@ public class ${table.serviceImplName} extends ${superServiceImplClass}<${table.m
 
 private final ${table.mapperName} mapper;
 
-private final ExcelUploader uploader;
-
-private final ExcelDownloader downloader;
-
-public IPage<${entity}> list(OperationEntity operationEntity,QueryWrapper<${entity}> queryWrapper){
-        return super.page(new Page<>(operationEntity.getPageNo(),operationEntity.getPageSize()),queryWrapper);
-        }
-
-@Override
-public void upload(MultipartFile file,Class<${entity}> clazz){
-        List<${entity}> entityList;
-        try {
-        entityList = uploader.upload(file.getBytes(), file.getOriginalFilename(), clazz);
-        } catch (IOException e) {
-        throw new RuntimeException(e);
-        }
-        if (CollectionUtils.isEmpty(entityList)) {
-        return;
-        }
-        super.saveBatch(entityList, entityList.size());
-        }
-
-@Override
-public void download(HttpServletResponse response,Class<${entity}> clazz,QueryWrapper<${entity}> queryWrapper,OperationEntity operationEntity){
-        OperationEntity.Excel excel = operationEntity.getExcel();
-        ExcelOption excelOption = new ExcelOption();
-        excelOption.setName(excel.getName());
-        excelOption.setFieldList(excel.getFieldList());
-        ServletUtils.renderExcel(response, excel.getName());
-        try {
-        downloader.download(response.getOutputStream(), clazz, excelOption, list(operationEntity, queryWrapper).getRecords());
-        } catch (IOException e) {
-        throw new RuntimeException(e);
-        }
-        }
-
         }
 

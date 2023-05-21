@@ -12,7 +12,4 @@ import ${superServiceClassPackage};
  */
 public interface ${table.serviceName} extends ${superServiceClass}<${entity}> {
 
-        void upload(MultipartFile file, Class<${entity}> clazz);
-
-        void download(HttpServletResponse response, Class<${entity}> clazz, QueryWrapper<${entity}> queryWrapper, OperationEntity operationEntity);
 }

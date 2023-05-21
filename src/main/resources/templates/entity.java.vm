@@ -7,13 +7,10 @@ import ${pkg};
 import lombok.Getter;
 import lombok.Setter;
 import lombok.EqualsAndHashCode;
-#if(${chainModel})
-import lombok.experimental.Accessors;
-#end
 #end
 
 /**
- * ${entity}
+ * ${table.comment}
  *
  * @author ${author}
  * @version 1.0.0
@@ -23,11 +20,7 @@ import lombok.experimental.Accessors;
 @Getter
 @Setter
 @EqualsAndHashCode(callSuper = true)
-    #if(${chainModel})
-@Accessors(chain = true)
-    #end
 #end
-@ExcelSheet(value = "$!{table.comment}")
 #if(${table.convert})
 @TableName("${schemaName}${table.name}")
 #end
@@ -48,7 +41,7 @@ public class ${entity} extends BaseEntity{
 /**
 * ${field.comment}
 */
-@ExcelCell(value = "${field.comment}")
+@ExcelProperty(value = "${field.comment}")
 #end
 #if(${field.keyFlag})
 #elseif(${field.fill})

@@ -42,34 +42,9 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 #end
 @AllArgsConstructor
 @RequestMapping("#if(${package.ModuleName})#end/${path}")
-public class ${table.controllerName} implements CrudController<${entity}> {
+public class ${table.controllerName} implements CrudExcelController<${entity}> {
 
 @Getter
 private final ${table.serviceName} service;
-
-/**
- * upload excel
- *
- * @param file file
- *
- * @return {@link Result}<{@link ?}>
- */
-@PostMapping(value = "/upload")
-public Result<?> upload(@RequestPart MultipartFile file){
-service.upload(file, ${entity}.class);
-return Result.success();
-}
-
-/**
- * download excel
- *
- * @param response        response
- * @param entity          entity
- * @param operationEntity operationEntity
- */
-@GetMapping(value = "/download")
-public void download(HttpServletResponse response,${entity} entity, @RequestBody OperationEntity operationEntity){
-service.download(response, ${entity}.class, createQueryWrapper(entity, operationEntity), operationEntity);
-}
 
 }
