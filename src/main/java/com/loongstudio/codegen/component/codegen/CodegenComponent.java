@@ -129,7 +129,7 @@ public class CodegenComponent {
                 .addInclude(tableList)
                 .enableSkipView()
                 .entityBuilder()
-                .superClass(SqliteBaseEntity.class)
+//                .superClass(SqliteBaseEntity.class)
                 .naming(NamingStrategy.underline_to_camel)
                 .columnNaming(NamingStrategy.underline_to_camel)
                 .enableLombok()
