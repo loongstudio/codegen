@@ -21,6 +21,7 @@ import lombok.EqualsAndHashCode;
 @Setter
 @EqualsAndHashCode(callSuper = true)
 @ExcelIgnoreUnannotated
+@JsonInclude(JsonInclude.Include.NON_EMPTY)
 #end
 #if(${table.convert})
 @TableName("${schemaName}${table.name}")
