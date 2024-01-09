@@ -9,9 +9,9 @@
     <description>${project.artifactId}</description>
 
     <parent>
-        <groupId>com.loongstudio</groupId>
-        <artifactId>loongstudio-service</artifactId>
-        <version>17.0.0-RELEASE</version>
+        <groupId>com.ronnaces</groupId>
+        <artifactId>loong-service</artifactId>
+        <version>1.0.0-RELEASE</version>
     </parent>
 
     <properties>
@@ -87,13 +87,11 @@
         <dependency>
             <groupId>com.baomidou</groupId>
             <artifactId>mybatis-plus-generator</artifactId>
-            <version>3.5.2</version>
         </dependency>
 
         <dependency>
             <groupId>com.baomidou</groupId>
             <artifactId>mybatis-plus-core</artifactId>
-            <version>3.5.2</version>
         </dependency>
 
         <dependency>
@@ -154,9 +152,9 @@
         </dependency>
 
         <dependency>
-            <groupId>com.loongstudio</groupId>
-            <artifactId>loongstudio-core</artifactId>
-            <version>${project.version}</version>
+            <groupId>com.ronnaces</groupId>
+            <artifactId>loong-core</artifactId>
+            <version>1.0.0-RELEASE</version>
         </dependency>
 
         <dependency>
@@ -194,7 +192,7 @@
                         <id>default-cli</id>
                         <configuration>
                             <mainClass>
-                                com.loongstudio.codegen.App
+                                com.ronnaces.loong.codegen.App
                             </mainClass>
                             <launcher>app</launcher>
                             <jlinkZipName>app</jlinkZipName>

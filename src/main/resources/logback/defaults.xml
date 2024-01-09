@@ -15,7 +15,7 @@
     <property name="LOG_FILE" value="${LOG_PATH}/${LOG_NAME}"/>
 
     <logger name="java.sql" level="DEBUG"/>
-    <logger name="com.loongstudio" level="DEBUG"/>
+    <logger name="com.ronnaces" level="DEBUG"/>
     <logger name="org.apache.ibatis" level="DEBUG"/>
     <logger name="com.zaxxer.hikari" level="DEBUG"/>
     <logger name="org.apache.velocity" level="DEBUG"/>

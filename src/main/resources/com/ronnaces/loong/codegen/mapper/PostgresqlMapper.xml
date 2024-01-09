@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ronnaces.loong.codegen.mapper.PostgresqlMapper">
+    <select id="showDatabases" resultType="java.lang.String">
+        SELECT datname FROM pg_database WHERE datistemplate = false;
+    </select>
+
+    <select id="showTables" resultType="java.lang.String">
+        SELECT tablename FROM pg_tables WHERE schemaname = 'public'
+    </select>
+
+    <select id="test" resultType="java.lang.Integer">
+        select 1
+    </select>
+</mapper>
