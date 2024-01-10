@@ -3,7 +3,6 @@ package ${package.Controller};
 
 import lombok.Getter;
 import org.springframework.web.bind.annotation.RequestMapping;
-
 #if(${restControllerStyle})
 import org.springframework.web.bind.annotation.RestController;
 #else
@@ -18,12 +17,13 @@ import ${package.Service}.${table.serviceName};
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 
 /**
- * ${table.controllerName}
+ * $!{table.comment}
  *
  * @author ${author}
  * @version 1.0.0
  * @since ${date}
  */
+@Tag(name = "$!{table.comment}")
 @Slf4j
 #if(${restControllerStyle})
 @RestController

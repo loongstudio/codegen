@@ -82,6 +82,8 @@ public class IndexController extends BaseController {
 
     private Datasource datasource;
 
+    private final DatasourceModel config = new DatasourceModel();
+
     public BorderPane rootBorderPane;
 
     public TreeView<String> databasesTreeView;
@@ -213,6 +215,11 @@ public class IndexController extends BaseController {
             moduleNameTextField.setText(value);
             this.template.setModule(value);
             log.debug("========== moduleName: {}, {}, {} ==========", value, v1, v2);
+        });
+        folderTextField.textProperty().addListener((observableValue, v1, v2) -> {
+            String value = observableValue.getValue();
+            this.template.setFolder(value);
+            log.debug("========== folder: {}, {}, {} ==========", value, v1, v2);
         });
     }
 
@@ -642,7 +649,6 @@ public class IndexController extends BaseController {
         ImageView mysqlImages = (ImageView) treeItem.getGraphic();
         mysqlImages.setImage(ImageUtil.getImage(CodegenConstant.ICON_DATABASE_ACTIVE));
         List<String> tableNameList = new ArrayList<>();
-        DatasourceModel config = new DatasourceModel();
         BeanUtils.copyProperties(datasource, config);
         config.setDatabaseName(treeItem.getValue());
         switch (datasourceEnum) {
@@ -800,6 +806,7 @@ public class IndexController extends BaseController {
             }
             this.template.setDatasourceId(this.datasource.getId());
             String dataTime = LocalDateTimeUtil.format(LocalDateTime.now(), DatePattern.NORM_DATETIME_FORMATTER);
+            this.template.setName(new StringJoiner(CommonConstant.PERIOD).add(this.datasource.getName()).add(config.getDatabaseName()).add(this.template.getTableName()).toString());
             if (Objects.nonNull(old)) {
                 this.template.setId(old.getId());
                 this.template.setUpdateTime(dataTime);

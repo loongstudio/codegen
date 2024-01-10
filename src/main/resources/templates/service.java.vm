@@ -4,12 +4,15 @@ import ${package.Entity}.${entity};
 import ${superServiceClassPackage};
 
 /**
- * ${table.serviceName}
+ * $!{table.comment}
  *
  * @author ${author}
- * @version 1.0.0
  * @since ${date}
  */
+#if(${kotlin})
+interface ${table.serviceName} : ${superServiceClass}<${entity}>
+#else
 public interface ${table.serviceName} extends ${superServiceClass}<${entity}> {
 
-}
+        }
+#end
