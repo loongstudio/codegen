@@ -214,7 +214,7 @@ public class TemplateController extends BaseController {
                 try (SqlSession session = SqlSessionUtils.buildSessionFactory().openSession(Boolean.TRUE)) {
                     TemplateMapper templateMapper = session.getMapper(TemplateMapper.class);
                     this.template = templateMapper.selectById(templateModel.getId());
-                    this.getIndexController().loadCurrentTemplate();
+                    this.getIndexController().loadCurrentTemplate(null);
                 }
                 closeDialogStage();
             });

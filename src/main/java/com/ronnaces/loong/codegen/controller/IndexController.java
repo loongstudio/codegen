@@ -180,16 +180,21 @@ public class IndexController extends BaseController {
             templates.forEach(template -> {
                 MenuItem menuItem = new MenuItem(template.getName());
                 menuItem.setId(template.getId());
-                this.template = templateMapper.selectById(template.getId());
                 this.datasource = datasourceMapper.selectById(this.getTemplate().getDatasourceId());
-                menuItem.setOnAction(actionEvent -> loadCurrentTemplate());
+                menuItem.setOnAction(actionEvent -> loadCurrentTemplate(actionEvent));
                 menuItemList.add(menuItem);
             });
         }
         this.openRecentMenu.getItems().setAll(menuItemList);
     }
 
-    protected void loadCurrentTemplate() {
+    protected void loadCurrentTemplate(ActionEvent actionEvent) {
+        MenuItem source = (MenuItem) actionEvent.getSource();
+        String id = source.getId();
+        try (SqlSession session = SqlSessionUtils.buildSessionFactory().openSession(Boolean.TRUE)) {
+            TemplateMapper templateMapper = session.getMapper(TemplateMapper.class);
+            this.template = templateMapper.selectById(id);
+        }
         this.folderTextField.setText(this.template.getFolder());
         this.parentPackageNameTextField.setText(this.template.getParentPackage());
         this.moduleNameTextField.setText(this.template.getModule());
@@ -199,8 +204,6 @@ public class IndexController extends BaseController {
         this.mapperNameTextField.setText(StringUtils.joinWith(CommonConstant.EMPTY, entityName, ConstVal.MAPPER));
         this.serviceNameTextField.setText(StringUtils.joinWith(CommonConstant.EMPTY, entityName, ConstVal.SERVICE));
         this.controllerNameTextField.setText(StringUtils.joinWith(CommonConstant.EMPTY, entityName, ConstVal.CONTROLLER));
-
-        AlertUtil.info(ResourceBundleUtil.getProperty("Success"));
     }
 
     private void loadTemplate() {
@@ -811,7 +814,6 @@ public class IndexController extends BaseController {
                 this.template.setId(old.getId());
                 this.template.setUpdateTime(dataTime);
                 mapper.updateById(template);
-                AlertUtil.info(ResourceBundleUtil.getProperty("Success"));
             } else {
                 template.setId(String.valueOf(App.applicationContext.getBean(Sequence.class).nextId()));
                 this.template.setCreateTime(dataTime);
@@ -863,7 +865,7 @@ public class IndexController extends BaseController {
                         .haveVue(Boolean.FALSE)
                         .superEntityColumnList(SUPER_ENTITY_COLUMNS)
                         .build());
-        AlertUtil.info(ResourceBundleUtil.getProperty("Success"));
+        save();
     }
 
     public void open(ActionEvent actionEvent) {

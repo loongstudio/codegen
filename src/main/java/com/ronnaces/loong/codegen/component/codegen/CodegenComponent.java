@@ -5,7 +5,6 @@ import com.baomidou.mybatisplus.generator.config.*;
 import com.baomidou.mybatisplus.generator.config.rules.NamingStrategy;
 import com.baomidou.mybatisplus.generator.engine.VelocityTemplateEngine;
 import com.ronnaces.loong.codegen.entity.CreateEntity;
-import com.ronnaces.loong.codegen.entity.SqliteBaseEntity;
 import com.ronnaces.loong.codegen.model.CodegenModel;
 import com.ronnaces.loong.core.constant.CommonConstant;
 import lombok.extern.slf4j.Slf4j;
@@ -134,6 +133,7 @@ public class CodegenComponent {
                 .naming(NamingStrategy.underline_to_camel)
                 .columnNaming(NamingStrategy.underline_to_camel)
                 .enableLombok()
+                .enableFileOverride()
                 .enableChainModel()
                 .enableTableFieldAnnotation()
                 .addSuperEntityColumns(superEntityColumnList)
