@@ -1,5 +1,6 @@
 package ${package.Entity};
 
+import com.ronnaces.loong.common.entity.CreateEntity;
 #foreach($pkg in ${table.importPackages})
 import ${pkg};
 #end
