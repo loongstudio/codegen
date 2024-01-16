@@ -33,7 +33,7 @@ build/
 .vscode/
 
 ### log ###
-*.log
+/log/
 
 ### out ###
 /out/
