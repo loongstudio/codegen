@@ -31,7 +31,7 @@ import java.util.ResourceBundle;
 @Slf4j
 @Getter
 @Setter
-public class MariaController extends BaseController implements DatasourceStrategy{
+public class MariaController extends BaseController implements DatasourceStrategy {
 
     public TextField connectNameTextField;
 
@@ -56,11 +56,8 @@ public class MariaController extends BaseController implements DatasourceStrateg
     public TextField typeTextField;
 
     public TableView<Template> templateTableView;
-
-    private IndexController indexController;
-
     public BorderPane rootBorderPane;
-
+    private IndexController indexController;
     private TreeItem<String> oldTreeItem;
 
     @Override

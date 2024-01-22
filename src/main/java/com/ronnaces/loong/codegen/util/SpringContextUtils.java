@@ -18,13 +18,12 @@ import java.util.Map;
 @Component
 public class SpringContextUtils implements ApplicationContextAware {
 
+    private static ApplicationContext applicationContext;
+    private static ApplicationContext parentApplicationContext;
+
     public SpringContextUtils() {
 
     }
-
-    private static ApplicationContext applicationContext;
-
-    private static ApplicationContext parentApplicationContext;
 
     /**
      * 获取applicationContext
@@ -33,15 +32,15 @@ public class SpringContextUtils implements ApplicationContextAware {
         return applicationContext;
     }
 
-    public static ApplicationContext getParentApplicationContext() {
-        return parentApplicationContext;
-    }
-
     @Override
     public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
         Assert.notNull(applicationContext, "SpringContextUtils injection ApplicationContext is null");
         SpringContextUtils.applicationContext = applicationContext;
         SpringContextUtils.parentApplicationContext = applicationContext.getParent();
+    }
+
+    public static ApplicationContext getParentApplicationContext() {
+        return parentApplicationContext;
     }
 
     public static Object getBean(String name) {

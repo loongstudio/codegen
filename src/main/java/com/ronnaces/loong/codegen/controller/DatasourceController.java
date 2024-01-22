@@ -10,10 +10,10 @@ import com.ronnaces.loong.codegen.util.AlertUtil;
 import com.ronnaces.loong.codegen.util.CheckUtil;
 import com.ronnaces.loong.codegen.util.ResourceBundleUtil;
 import com.ronnaces.loong.codegen.util.SqlSessionUtils;
+import com.ronnaces.loong.core.network.IPUtil;
 import com.ronnaces.loong.core.time.DatePattern;
 import com.ronnaces.loong.core.time.LocalDateTimeUtil;
 import com.ronnaces.loong.core.toolkit.Sequence;
-import com.ronnaces.loong.core.network.IPUtil;
 import javafx.scene.control.*;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.text.Text;
@@ -38,7 +38,7 @@ import java.util.ResourceBundle;
 @Slf4j
 @Getter
 @Setter
-public class DatasourceController extends BaseController implements DatasourceStrategy{
+public class DatasourceController extends BaseController implements DatasourceStrategy {
 
     public TextField connectNameTextField;
 
@@ -63,12 +63,35 @@ public class DatasourceController extends BaseController implements DatasourceSt
     public TextField typeTextField;
 
     public TableView<Template> templateTableView;
-
-    private IndexController indexController;
-
     public BorderPane rootBorderPane;
-
+    private IndexController indexController;
     private TreeItem<String> oldTreeItem;
+
+    public static boolean isConnectionFail(Datasource datasource) {
+        try {
+            SqlSessionUtils.test(datasource);
+        } catch (RuntimeException e) {
+            AlertUtil.error(ResourceBundleUtil.getProperty("Failure"));
+            return true;
+        }
+        return false;
+    }
+
+    public static void saveDatasource(String id, Datasource datasource) {
+        try (SqlSession session = SqlSessionUtils.buildSessionFactory().openSession(Boolean.TRUE)) {
+            DatasourceMapper mapper = session.getMapper(DatasourceMapper.class);
+            String dataTime = LocalDateTimeUtil.format(LocalDateTime.now(), DatePattern.NORM_DATETIME_FORMATTER);
+            if (StringUtils.isEmpty(id)) {
+                datasource.setId(String.valueOf(App.applicationContext.getBean(Sequence.class).nextId()));
+                datasource.setCreateTime(dataTime);
+                mapper.insert(datasource);
+            } else {
+                datasource.setId(id);
+                datasource.setUpdateTime(dataTime);
+                mapper.updateById(datasource);
+            }
+        }
+    }
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -189,32 +212,6 @@ public class DatasourceController extends BaseController implements DatasourceSt
         addDatasourceItem(treeView.getRoot(), datasource, Boolean.FALSE);
         closeDialogStage();
         treeView.refresh();
-    }
-
-    public static boolean isConnectionFail(Datasource datasource) {
-        try {
-            SqlSessionUtils.test(datasource);
-        } catch (RuntimeException e) {
-            AlertUtil.error(ResourceBundleUtil.getProperty("Failure"));
-            return true;
-        }
-        return false;
-    }
-
-    public static void saveDatasource(String id, Datasource datasource) {
-        try (SqlSession session = SqlSessionUtils.buildSessionFactory().openSession(Boolean.TRUE)) {
-            DatasourceMapper mapper = session.getMapper(DatasourceMapper.class);
-            String dataTime = LocalDateTimeUtil.format(LocalDateTime.now(), DatePattern.NORM_DATETIME_FORMATTER);
-            if (StringUtils.isEmpty(id)) {
-                datasource.setId(String.valueOf(App.applicationContext.getBean(Sequence.class).nextId()));
-                datasource.setCreateTime(dataTime);
-                mapper.insert(datasource);
-            } else {
-                datasource.setId(id);
-                datasource.setUpdateTime(dataTime);
-                mapper.updateById(datasource);
-            }
-        }
     }
 
     public void cancel() {

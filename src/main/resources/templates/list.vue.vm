@@ -40,7 +40,8 @@
                 </template>
                 添加
             </a-button>
-            <a-upload name="file" :showUploadList="false" :multiple="false" @change="handleImport" :action="importAction" :headers="importHeaders">
+            <a-upload name="file" :showUploadList="false" :multiple="false" @change="handleImport"
+                      :action="importAction" :headers="importHeaders">
                 <a-button type="primary">
                     <template #icon>
                         <ImportOutlined/>
@@ -279,6 +280,7 @@
             }
         }
     }
+
 </script>
 
 <style lang="scss">

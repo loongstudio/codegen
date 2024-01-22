@@ -58,16 +58,15 @@ public enum SqlKeyword implements ISqlSegment {
     ASC("ASC"),
     DESC("DESC");
 
+    private static final Map<String, SqlKeyword> map = Arrays.stream(values()).collect(Collectors.toMap(v -> v.keyword, Function.identity()));
     private final String keyword;
+
+    public static Optional<SqlKeyword> get(String ordinal) {
+        return Optional.ofNullable(map.get(ordinal));
+    }
 
     @Override
     public String getSqlSegment() {
         return this.keyword;
-    }
-
-    private static final Map<String, SqlKeyword> map = Arrays.stream(values()).collect(Collectors.toMap(v -> v.keyword, Function.identity()));
-
-    public static Optional<SqlKeyword> get(String ordinal) {
-        return Optional.ofNullable(map.get(ordinal));
     }
 }

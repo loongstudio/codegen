@@ -20,7 +20,7 @@
         </environment>
     </environments>
     <mappers>
-<!--        <mapper resource="com/loongstudio/codegen/api/mapper/mapper/TemplateMapper.mapper"/>-->
+        <!--        <mapper resource="com/loongstudio/codegen/api/mapper/mapper/TemplateMapper.mapper"/>-->
         <package name="com.ronnaces.codegen.api.mapper"/>
         <package name="com.ronnaces.codegen.mapper"/>
     </mappers>

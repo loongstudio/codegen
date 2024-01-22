@@ -38,9 +38,9 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
-<BorderPane fx:id="rootBorderPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
-            prefHeight="800.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/18"
-            xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.ronnaces.loong.codegen.controller.IndexController">
+<BorderPane xmlns:fx="http://javafx.com/fxml/1" fx:id="rootBorderPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity"
+            minWidth="-Infinity" prefHeight="800.0" prefWidth="1280.0"
+            xmlns="http://javafx.com/javafx/18" fx:controller="com.ronnaces.loong.codegen.controller.IndexController">
     <top>
         <MenuBar style="-fx-background-color: white; -fx-border-color: white;" BorderPane.alignment="CENTER">
             <menus>
@@ -70,8 +70,10 @@
                     <items>
                         <Menu fx:id="languageMenu" mnemonicParsing="false" text="%Language">
                             <items>
-                                <MenuItem fx:id="englishMenuItem" mnemonicParsing="false" onAction="#switchEnglish" text="English"/>
-                                <MenuItem fx:id="chineseMenuItem" mnemonicParsing="false" onAction="#switchChinese" text="简体中文"/>
+                                <MenuItem fx:id="englishMenuItem" mnemonicParsing="false" onAction="#switchEnglish"
+                                          text="English"/>
+                                <MenuItem fx:id="chineseMenuItem" mnemonicParsing="false" onAction="#switchChinese"
+                                          text="简体中文"/>
                             </items>
                         </Menu>
                     </items>

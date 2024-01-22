@@ -31,7 +31,7 @@ import java.util.ResourceBundle;
 @Slf4j
 @Getter
 @Setter
-public class PostgreSQLController extends BaseController implements DatasourceStrategy{
+public class PostgreSQLController extends BaseController implements DatasourceStrategy {
 
     public TextField connectNameTextField;
 

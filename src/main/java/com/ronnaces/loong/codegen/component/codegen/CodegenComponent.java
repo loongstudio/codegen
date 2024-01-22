@@ -25,33 +25,20 @@ import java.util.Map;
 @Component
 public class CodegenComponent {
 
-    private static final String TEMP_DIR = System.getProperty("java.io.tmpdir");
-
-    private static final String JAVA_DIR = "/src/main/java";
-
     public static final String VUE_MODULE_NAME = "vue";
-
-    private static final String TEMPLATE_FILE_SUFFIX = "vm";
-
     public static final String TEMPLATE_PACKAGE = "templates";
-
     public static final String CONTROLLER_CLASS_NAME = "controller.java";
-
     public static final String SERVICE_IMPL_CLASS_NAME = "serviceImpl.java";
-
     public static final String SERVICE_CLASS_NAME = "service.java";
-
     public static final String MAPPER_CLASS_NAME = "mapper.java";
-
     public static final String MAPPER_XML_NAME = "mapper.xml";
-
     public static final String ENTITY_CLASS_NAME = "entity.java";
-
     public static final String VUE_MODAL = "modal.vue";
-
     public static final String VUE_LIST = "list.vue";
-
     public static final String AUTHOR = "KunLong-Luo";
+    private static final String TEMP_DIR = System.getProperty("java.io.tmpdir");
+    private static final String JAVA_DIR = "/src/main/java";
+    private static final String TEMPLATE_FILE_SUFFIX = "vm";
 
     /**
      * generate

@@ -28,11 +28,9 @@ public enum DatasourceEnum {
     POSTGRESQL("jdbc:postgresql:", "org.postgresql.Driver"),
     ORACLE("jdbc:oracle:thin:", "oracle.jdbc.OracleDriver");
 
-    private final String schemaName;
-
-    private final String driverClassName;
-
     private static final Map<Integer, DatasourceEnum> map = Arrays.stream(values()).collect(Collectors.toMap(Enum::ordinal, Function.identity()));
+    private final String schemaName;
+    private final String driverClassName;
 
     public static Optional<DatasourceEnum> get(Integer ordinal) {
         return Optional.ofNullable(map.get(ordinal));

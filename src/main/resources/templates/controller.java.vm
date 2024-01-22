@@ -3,14 +3,14 @@ package ${package.Controller};
 
 import lombok.Getter;
 import org.springframework.web.bind.annotation.RequestMapping;
-#if(${restControllerStyle})
-import org.springframework.web.bind.annotation.RestController;
-#else
-import org.springframework.stereotype.Controller;
-#end
-#if(${superControllerClassPackage})
-import ${superControllerClassPackage};
-#end
+    #if(${restControllerStyle})
+    import org.springframework.web.bind.annotation.RestController;
+    #else
+    import org.springframework.stereotype.Controller;
+    #end
+    #if(${superControllerClassPackage})
+    import ${superControllerClassPackage};
+    #end
 
 import ${package.Entity}.${entity};
 import ${package.Service}.${table.serviceName};
@@ -25,21 +25,21 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
  */
 @Tag(name = "$!{table.comment}")
 @Slf4j
-#if(${restControllerStyle})
-@RestController
-#else
-@Controller
-#end
-#set($path = "")
-#foreach($p in ${table.name.split("_")})
-    #if("$p" != "")
-        #if("$path" == "")
-            #set($path=${p})
-        #else
-            #set($path=$path+"/"+${p})
+    #if(${restControllerStyle})
+    @RestController
+    #else
+    @Controller
+    #end
+    #set($path = "")
+    #foreach($p in ${table.name.split("_")})
+        #if("$p" != "")
+            #if("$path" == "")
+                #set($path=${p})
+            #else
+                #set($path=$path+"/"+${p})
+            #end
         #end
     #end
-#end
 @AllArgsConstructor
 @RequestMapping("/v1#if(${package.ModuleName})#end/${path}")
 public class ${table.controllerName} implements CrudExcelController<${entity}> {
@@ -47,4 +47,4 @@ public class ${table.controllerName} implements CrudExcelController<${entity}> {
 @Getter
 private final ${table.serviceName} service;
 
-}
+        }

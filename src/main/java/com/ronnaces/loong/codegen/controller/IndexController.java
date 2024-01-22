@@ -1,5 +1,6 @@
 package com.ronnaces.loong.codegen.controller;
 
+import com.baomidou.mybatisplus.core.toolkit.Sequence;
 import com.baomidou.mybatisplus.generator.config.ConstVal;
 import com.ronnaces.loong.codegen.App;
 import com.ronnaces.loong.codegen.api.entity.Datasource;
@@ -23,7 +24,6 @@ import com.ronnaces.loong.core.constant.CommonConstant;
 import com.ronnaces.loong.core.lang.StringUtil;
 import com.ronnaces.loong.core.time.DatePattern;
 import com.ronnaces.loong.core.time.LocalDateTimeUtil;
-import com.ronnaces.loong.core.toolkit.Sequence;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
@@ -65,78 +65,43 @@ public class IndexController extends BaseController {
     public static final List<String> SUPER_ENTITY_COLUMNS = List.of("id", "createTime", "createBy", "updateTime", "updateBy", "description", "whetherDelete");
 
     private static final StringBuilder SEARCH_CACHE = new StringBuilder();
-
+    private final DatasourceModel config = new DatasourceModel();
     public MenuItem aboutMenuItem;
-
     public Menu languageMenu;
-
     public MenuItem englishMenuItem;
-
     public MenuItem chineseMenuItem;
-
-    private Template template = new Template();
-
     public MenuItem openMenuItem;
 
     public Menu openRecentMenu;
-
-    private Datasource datasource;
-
-    private final DatasourceModel config = new DatasourceModel();
-
     public BorderPane rootBorderPane;
-
     public TreeView<String> databasesTreeView;
-
     public TextField searchTextField;
-
     public ImageView searchImageView;
-
     public ImageView clearImageView;
-
     public ImageView fixedImageView;
-
     public VBox treeViewVBox;
-
     public HBox searchViewVBox;
-
     public TextField folderTextField;
-
     public Button choiceButton;
-
     public TextField parentPackageNameTextField;
-
     public TextField moduleNameTextField;
-
     public TextField tableNameTextField;
-
     public TextField entityNameTextField;
-
     public TextField mapperNameTextField;
-
     public TextField serviceNameTextField;
-
     public TextField controllerNameTextField;
-
     public Button parentPackageNameButton;
-
     public Button moduleNameButton;
-
     public Button tableNameButton;
-
     public Button entityNameButton;
-
     public Button mapperNameButton;
-
     public Button serviceNameButton;
-
     public Button controllerNameButton;
-
     public Button saveButton;
-
     public Button resetButton;
-
     public Button submitButton;
+    private Template template = new Template();
+    private Datasource datasource;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {

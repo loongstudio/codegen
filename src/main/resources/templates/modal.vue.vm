@@ -10,15 +10,15 @@
             <a-row :gutter="16">
 
                 #foreach($field in ${table.fields})
-                <a-col :span="10">
-                    <a-form-item label="${field.comment}" name="${field.propertyName}">
-                        <a-input
-                                v-model:value="model.${field.propertyName}"
-                                placeholder="请输入${field.comment}"
-                                :readOnly="!!disableSubmit"
-                        />
-                    </a-form-item>
-                </a-col>
+                    <a-col :span="10">
+                        <a-form-item label="${field.comment}" name="${field.propertyName}">
+                            <a-input
+                                    v-model:value="model.${field.propertyName}"
+                                    placeholder="请输入${field.comment}"
+                                    :readOnly="!!disableSubmit"
+                            />
+                        </a-form-item>
+                    </a-col>
                 #end
             </a-row>
 
@@ -136,6 +136,7 @@
             }
         }
     }
+
 </script>
 
 <style lang="scss">

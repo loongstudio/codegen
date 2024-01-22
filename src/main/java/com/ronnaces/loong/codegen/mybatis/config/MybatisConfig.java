@@ -1,7 +1,7 @@
 package com.ronnaces.loong.codegen.mybatis.config;
 
+import com.baomidou.mybatisplus.core.toolkit.Sequence;
 import com.ronnaces.loong.codegen.component.datasource.HikariCPDatasourceFactory;
-import com.ronnaces.loong.core.toolkit.Sequence;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.mybatis.spring.SqlSessionFactoryBean;
 import org.mybatis.spring.annotation.MapperScan;

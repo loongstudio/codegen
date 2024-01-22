@@ -78,13 +78,10 @@ public enum SqlMethod {
     SELECT_MAPS_PAGE("selectMapsPage", "查询满足条件所有数据（并翻页）", "<script>\n %s SELECT %s FROM %s %s %s %s\n</script>"),
     SELECT_OBJS("selectObjs", "查询满足条件所有数据", "<script>%s SELECT %s FROM %s %s %s %s\n</script>");
 
-    private final String method;
-
-    private final String desc;
-
-    private final String sql;
-
     private static final Map<Integer, SqlMethod> map = Arrays.stream(values()).collect(Collectors.toMap(Enum::ordinal, Function.identity()));
+    private final String method;
+    private final String desc;
+    private final String sql;
 
     public static Optional<SqlMethod> get(Integer ordinal) {
         return Optional.ofNullable(map.get(ordinal));

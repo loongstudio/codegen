@@ -36,16 +36,15 @@ public enum WrapperKeyword implements ISqlSegment {
      */
     APPLY(null);
 
+    private static final Map<Integer, WrapperKeyword> map = Arrays.stream(values()).collect(Collectors.toMap(Enum::ordinal, Function.identity()));
     private final String keyword;
+
+    public static Optional<WrapperKeyword> get(Integer ordinal) {
+        return Optional.ofNullable(map.get(ordinal));
+    }
 
     @Override
     public String getSqlSegment() {
         return keyword;
-    }
-
-    private static final Map<Integer, WrapperKeyword> map = Arrays.stream(values()).collect(Collectors.toMap(Enum::ordinal, Function.identity()));
-
-    public static Optional<WrapperKeyword> get(Integer ordinal) {
-        return Optional.ofNullable(map.get(ordinal));
     }
 }

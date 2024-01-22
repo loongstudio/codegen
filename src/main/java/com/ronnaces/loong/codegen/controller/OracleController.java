@@ -31,7 +31,7 @@ import java.util.ResourceBundle;
 @Slf4j
 @Getter
 @Setter
-public class OracleController extends BaseController implements DatasourceStrategy{
+public class OracleController extends BaseController implements DatasourceStrategy {
 
     public TextField connectNameTextField;
 
@@ -62,11 +62,8 @@ public class OracleController extends BaseController implements DatasourceStrate
     public TextField serviceNameTextField;
 
     public ToggleGroup service;
-
-    private IndexController indexController;
-
     public TableView<Template> templateTableView;
-
+    private IndexController indexController;
     private TreeItem<String> oldTreeItem;
 
     private String selected;

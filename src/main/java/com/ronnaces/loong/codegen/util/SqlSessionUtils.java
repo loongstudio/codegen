@@ -37,12 +37,11 @@ import java.util.function.Function;
 public final class SqlSessionUtils {
 
     private static final String PRIMARY_SESSION_FACTORY_NAME = "primary";
+    private static final Map<String, SqlSessionFactory> SESSION_FACTORY_MAP = new ConcurrentHashMap<>();
 
     private SqlSessionUtils() {
 
     }
-
-    private static final Map<String, SqlSessionFactory> SESSION_FACTORY_MAP = new ConcurrentHashMap<>();
 
     public static void test(Datasource datasource) {
         DatasourceModel config = new DatasourceModel();

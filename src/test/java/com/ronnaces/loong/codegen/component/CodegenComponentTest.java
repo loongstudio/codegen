@@ -24,16 +24,12 @@ class CodegenComponentTest {
     public static final String PASSWORD = "nogx3PIHiZm5pBsf";
 
     public static final String MODULE_NAME = "business";
-
-    private static final String PARENT = "com.ronnaces.loong.codegen";
-
-    //    private static final String OUTPUT_DIR = "D:\\Program Data\\Gitee\\Galen\\LoongStudio\\java-fx\\loongstudio-codegen\\src\\main\\java";
-    private static final String OUTPUT_DIR = "D:\\Program Data\\Temp";
-
     public static final List<String> SUPER_ENTITY_COLUMNS = List.of("id", "createTime", "createBy", "updateTime", "updateBy", "description", "whetherDelete");
-
     // 需要生成的表
     public static final List<String> TABLE_NAMES = List.of("template");
+    private static final String PARENT = "com.ronnaces.loong.codegen";
+    //    private static final String OUTPUT_DIR = "D:\\Program Data\\Gitee\\Galen\\LoongStudio\\java-fx\\loongstudio-codegen\\src\\main\\java";
+    private static final String OUTPUT_DIR = "D:\\Program Data\\Temp";
 
     @Test
     void generate() {

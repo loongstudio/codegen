@@ -13,7 +13,6 @@ import com.ronnaces.loong.codegen.util.AlertUtil;
 import com.ronnaces.loong.codegen.util.ImageUtil;
 import com.ronnaces.loong.codegen.util.ImageViewUtil;
 import com.ronnaces.loong.codegen.util.ResourceBundleUtil;
-
 import com.ronnaces.loong.core.constant.CommonConstant;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -49,17 +48,12 @@ import java.util.concurrent.ConcurrentMap;
 @Setter
 public abstract class BaseController implements Initializable {
 
-    private Stage primaryStage;
-
-    private Stage dialogStage;
-
     protected static final List<TreeItemModel> DATASOURCE_CACHE = new ArrayList<>();
-
     protected static final List<TreeItemModel> DATABASE_CACHE = new ArrayList<>();
-
     protected static final List<TreeItemModel> TABLE_CACHE = new ArrayList<>();
-
     private static final ConcurrentMap<FXMLPageEnum, SoftReference<? extends BaseController>> PAGE_MAP = new ConcurrentHashMap<>();
+    private Stage primaryStage;
+    private Stage dialogStage;
 
     /**
      * load page
