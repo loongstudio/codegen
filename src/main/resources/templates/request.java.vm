@@ -1,4 +1,4 @@
-package ${package.Entity};
+package ${beanPackage};
 
 @Tag(name = "请求参数")
 @Getter
@@ -6,6 +6,6 @@ package ${package.Entity};
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class Request${entity} implements JoinQuery {
+public class ${entity}Request implements JoinQuery {
 
 }

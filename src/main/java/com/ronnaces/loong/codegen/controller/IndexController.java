@@ -813,7 +813,6 @@ public class IndexController extends BaseController {
             AlertUtil.warn(ResourceBundleUtil.getProperty("NullPointerException"));
             return;
         }
-        CodegenComponent component = App.applicationContext.getBean(CodegenComponent.class);
         DatasourceEnum datasourceEnum = DatasourceEnum.match(datasource.getType());
         DatasourceModel config = new DatasourceModel();
         BeanUtils.copyProperties(datasource, config);

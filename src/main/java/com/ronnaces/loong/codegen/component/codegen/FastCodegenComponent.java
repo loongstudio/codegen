@@ -43,10 +43,11 @@ public class FastCodegenComponent {
 
     private static void injectionConfig(CodegenModel model, InjectionConfig.Builder builder) {
         if (model.getHaveRequest()) {
-            builder.customFile(builderFile -> builderFile.fileName(".java")
-                    .packageName(REQUEST_PACKAGE_NAME)
-                    .templatePath(StringUtils.joinWith(CommonConstant.SLASH, TEMPLATE_PACKAGE, StringUtils.joinWith(CommonConstant.PERIOD, REQUEST_NAME, TEMPLATE_FILE_SUFFIX)))
-                    .formatNameFunction(tableInfo -> tableInfo.getEntityName() + REQUEST_NAME_FORMAT));
+            builder.beforeOutputFile((tableInfo, stringObjectMap) -> stringObjectMap.put("beanPackage", StringUtils.joinWith(CommonConstant.PERIOD, model.getParent(), model.getModuleName(), REQUEST_PACKAGE_NAME)))
+                    .customFile(builderFile -> builderFile.fileName(".java")
+                            .packageName(REQUEST_PACKAGE_NAME)
+                            .templatePath(StringUtils.joinWith(CommonConstant.SLASH, TEMPLATE_PACKAGE, StringUtils.joinWith(CommonConstant.PERIOD, REQUEST_NAME, TEMPLATE_FILE_SUFFIX)))
+                            .formatNameFunction(tableInfo -> tableInfo.getEntityName() + REQUEST_NAME_FORMAT));
         }
     }
 
