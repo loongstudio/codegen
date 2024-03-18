@@ -1,6 +1,5 @@
 package com.ronnaces.loong.codegen.component;
 
-import com.ronnaces.loong.codegen.component.codegen.CodegenComponent;
 import com.ronnaces.loong.codegen.model.CodegenModel;
 import org.junit.jupiter.api.Test;
 
@@ -44,6 +43,7 @@ class CodegenComponentTest {
                         .moduleName(MODULE_NAME)
                         .outputDir(OUTPUT_DIR)
                         .haveVue(Boolean.FALSE)
+                        .haveVue(Boolean.TRUE)
                         .superEntityColumnList(SUPER_ENTITY_COLUMNS)
                         .build()
         );

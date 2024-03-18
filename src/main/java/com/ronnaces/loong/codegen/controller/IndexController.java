@@ -8,7 +8,7 @@ import com.ronnaces.loong.codegen.api.entity.Template;
 import com.ronnaces.loong.codegen.api.mapper.DatasourceMapper;
 import com.ronnaces.loong.codegen.api.mapper.SQLiteMapper;
 import com.ronnaces.loong.codegen.api.mapper.TemplateMapper;
-import com.ronnaces.loong.codegen.component.codegen.CodegenComponent;
+import com.ronnaces.loong.codegen.component.codegen.FastCodegenComponent;
 import com.ronnaces.loong.codegen.constant.CodegenConstant;
 import com.ronnaces.loong.codegen.enums.DatasourceEnum;
 import com.ronnaces.loong.codegen.enums.FXMLPageEnum;
@@ -818,7 +818,7 @@ public class IndexController extends BaseController {
         DatasourceModel config = new DatasourceModel();
         BeanUtils.copyProperties(datasource, config);
         config.setDatabaseName(template.getDatabaseName());
-        component.generate(
+        FastCodegenComponent.generate(
                 CodegenModel.builder()
                         .url(SqlSessionUtils.buildDatabaseUrl(config, datasourceEnum))
                         .username(this.datasource.getUsername())
@@ -828,6 +828,7 @@ public class IndexController extends BaseController {
                         .moduleName(module)
                         .outputDir(this.template.getFolder())
                         .haveVue(Boolean.FALSE)
+                        .haveRequest(Boolean.TRUE)
                         .superEntityColumnList(SUPER_ENTITY_COLUMNS)
                         .build());
         save();

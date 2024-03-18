@@ -38,4 +38,6 @@ public class CodegenModel implements Serializable {
     private List<String> tableList;
 
     private Boolean haveVue;
+
+    private Boolean haveRequest;
 }

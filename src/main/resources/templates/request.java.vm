@@ -1,0 +1,11 @@
+package ${package.Entity};
+
+@Tag(name = "请求参数")
+@Getter
+@Setter
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
+public class Request${entity} implements JoinQuery {
+
+}
