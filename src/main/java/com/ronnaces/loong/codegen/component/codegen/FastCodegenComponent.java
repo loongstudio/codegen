@@ -23,8 +23,12 @@ public class FastCodegenComponent {
     public static final String MAPPER_XML_NAME = "mapper.xml";
     public static final String ENTITY_CLASS_NAME = "entity.java";
     public static final String REQUEST_NAME = "request.java";
-    public static final String REQUEST_PACKAGE_NAME = "bean";
+    public static final String RESPONSE_NAME = "response.java";
+    public static final String BEAN_PACKAGE_NAME = "bean";
+    public static final String REQUEST_PACKAGE_NAME = "bean.request";
+    public static final String RESPONSE_PACKAGE_NAME = "bean.response";
     public static final String REQUEST_NAME_FORMAT = "Request";
+    public static final String RESPONSE_NAME_FORMAT = "Request";
     public static final String AUTHOR = "KunLong-Luo";
     private static final String TEMP_DIR = System.getProperty("java.io.tmpdir");
     private static final String JAVA_DIR = "/src/main/java";
@@ -42,12 +46,20 @@ public class FastCodegenComponent {
     }
 
     private static void injectionConfig(CodegenModel model, InjectionConfig.Builder builder) {
-        if (model.getHaveRequest()) {
-            builder.beforeOutputFile((tableInfo, stringObjectMap) -> stringObjectMap.put("beanPackage", StringUtils.joinWith(CommonConstant.PERIOD, model.getParent(), model.getModuleName(), REQUEST_PACKAGE_NAME)))
+        if (model.getHaveBean()) {
+            builder.beforeOutputFile((tableInfo, stringObjectMap) -> {
+                        stringObjectMap.put("requestBeanPackage", StringUtils.joinWith(CommonConstant.PERIOD, model.getParent(), model.getModuleName(), REQUEST_PACKAGE_NAME));
+                        stringObjectMap.put("responseBeanPackage", StringUtils.joinWith(CommonConstant.PERIOD, model.getParent(), model.getModuleName(), RESPONSE_PACKAGE_NAME));
+                    })
                     .customFile(builderFile -> builderFile.fileName(".java")
                             .packageName(REQUEST_PACKAGE_NAME)
                             .templatePath(StringUtils.joinWith(CommonConstant.SLASH, TEMPLATE_PACKAGE, StringUtils.joinWith(CommonConstant.PERIOD, REQUEST_NAME, TEMPLATE_FILE_SUFFIX)))
-                            .formatNameFunction(tableInfo -> tableInfo.getEntityName() + REQUEST_NAME_FORMAT));
+                            .formatNameFunction(tableInfo -> tableInfo.getEntityName() + REQUEST_NAME_FORMAT))
+                    .customFile(builderFile -> builderFile.fileName(".java")
+                            .packageName(RESPONSE_PACKAGE_NAME)
+                            .templatePath(StringUtils.joinWith(CommonConstant.SLASH, TEMPLATE_PACKAGE, StringUtils.joinWith(CommonConstant.PERIOD, RESPONSE_NAME, TEMPLATE_FILE_SUFFIX)))
+                            .formatNameFunction(tableInfo -> tableInfo.getEntityName() + RESPONSE_NAME_FORMAT))
+            ;
         }
     }
 

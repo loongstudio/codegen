@@ -1,0 +1,11 @@
+package ${responseBeanPackage};
+
+@Tag(name = "响应参数")
+@Getter
+@Setter
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
+public class ${entity}Response {
+
+}

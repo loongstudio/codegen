@@ -827,7 +827,7 @@ public class IndexController extends BaseController {
                         .moduleName(module)
                         .outputDir(this.template.getFolder())
                         .haveVue(Boolean.FALSE)
-                        .haveRequest(Boolean.TRUE)
+                        .haveBean(Boolean.TRUE)
                         .superEntityColumnList(SUPER_ENTITY_COLUMNS)
                         .build());
         save();

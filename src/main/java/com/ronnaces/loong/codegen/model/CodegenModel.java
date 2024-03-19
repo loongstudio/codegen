@@ -39,5 +39,5 @@ public class CodegenModel implements Serializable {
 
     private Boolean haveVue;
 
-    private Boolean haveRequest;
+    private Boolean haveBean;
 }
